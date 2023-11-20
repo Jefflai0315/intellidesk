@@ -58,6 +58,7 @@ class Posture:
         light_green = (127, 233, 100)
         yellow = (0, 255, 255)
         pink = (255, 0, 255)
+        
 
         # Font type.
         font = cv2.FONT_HERSHEY_SIMPLEX
@@ -160,8 +161,8 @@ class Posture:
             else:
                 stand_or_sit = "Sitting"
                 self.sitting_frames += 1
-            cv2.putText(image,"Standing" + str(round(self.standing_frames*1/fps,1)) , (10, 130), font, 0.9, green, 2)
-            cv2.putText(image,"Sitting" + str(round(self.sitting_frames*1/fps,1)) , (int(w/3), 130), font, 0.9, light_green, 2)
+            cv2.putText(image,"Standing : " + str(round(self.standing_frames*1/fps,1)) + "s", (10, 130), font, 0.9, green, 2)
+            cv2.putText(image,"Sitting : " + str(round(self.sitting_frames*1/fps,1)) + "s", (int(w/3), 130), font, 0.9, light_green, 2)
 
 
 
@@ -170,6 +171,20 @@ class Posture:
             if neck_inclination < 20 and torso_inclination < 5:
                 self.perfect_pos_frames += 1
                 self.prolong_bad = 0
+
+                cv2.putText(image, angle_text_string, (10, 30), font, 0.7, blue, 2)
+                cv2.putText(image, str(int(neck_inclination)), (l_shldr_x + 10, l_shldr_y), font, 0.7, blue, 2)
+                cv2.putText(image, str(int(torso_inclination)), (l_hip_x + 10, l_hip_y), font, 0.7, blue, 2)
+        
+                # Join landmarks.
+                cv2.line(image, (l_shldr_x, l_shldr_y), (l_ear_x, l_ear_y), blue, 4)
+                cv2.line(image, (l_shldr_x, l_shldr_y), (l_shldr_x, l_shldr_y - 100), blue, 4)
+                cv2.line(image, (l_hip_x, l_hip_y), (l_shldr_x, l_shldr_y), blue, 4)
+                cv2.line(image, (l_hip_x, l_hip_y), (l_hip_x, l_hip_y - 100), blue, 4)
+                cv2.line(image, (l_elbow_x, l_elbow_y), (l_shldr_x, l_shldr_y), blue, 4)
+                cv2.line(image, (l_elbow_x, l_elbow_y), (l_wrist_x, l_wrist_y), blue, 4)
+                cv2.line(image, (l_hip_x, l_hip_y), (l_knee_x, l_knee_y), blue, 4)
+        
             
             
             elif  neck_inclination < 40 and torso_inclination < 10:
@@ -219,10 +234,10 @@ class Posture:
             cv2.putText(image, time_string, (10, h - 100), font, 0.9, dark_blue, 2)
             print(str(len(self.correction)))
             correction_string = 'Correction Count : ' + str(len(self.correction)) 
-            cv2.putText(image, correction_string, (int(w/3), h - 100), font, 0.9, dark_blue, 2)
+            cv2.putText(image, correction_string, (int(w/3), h - 100), font, 0.9, yellow , 2)
             # Pose time.
             bad_count_string = 'Prolong Bad Time : ' + str(round(prolong_bad_time,1)) + 's'
-            cv2.putText(image, bad_count_string, (int(2*w/3), h - 100), font, 0.9, dark_blue, 2)
+            cv2.putText(image, bad_count_string, (int(2*w/3), h - 100), font, 0.9, yellow, 2)
             # Pose time.
             time_string_perfect = 'Perfect Posture Time : ' + str(round(perfect_time, 1)) + 's'
             cv2.putText(image, time_string_perfect, (10, h - 20), font, 0.9, blue, 2)
