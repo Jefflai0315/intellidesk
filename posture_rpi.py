@@ -281,7 +281,7 @@ class Posture:
                     print(e)
             
             try:
-                query = "INSERT INTO PostureData (Timestamp, PostureCategory, PositionCategory, NeckInclination, TorsoInclination, ThighInclination) VALUES (%s, %s, %s, %s, %s, %s)"
+                query = "INSERT INTO Posture (Timestamp, PostureCategory, PositionCategory, NeckInclination, TorsoInclination, ThighInclination) VALUES (%s, %s, %s, %s, %s, %s)"
                 cursor.execute(query, (timestamp, posture_category,position_category,neck_inclination,torso_inclination,thigh_inclination))
                 connection.commit()
             except Exception as e:
