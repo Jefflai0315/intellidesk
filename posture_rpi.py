@@ -3,8 +3,24 @@ import time
 import math as m
 import cv2
 import mediapipe as mp
+import mysql.connector  # or import psycopg2 for PostgreSQL
 from datetime import datetime
 
+try:
+    connection = mysql.connector.connect(host='localhost',
+                                         database='intellidesk',
+                                         user='root',
+                                         password='intellidesk')
+    if connection.is_connected():
+        db_Info = connection.get_server_info()
+        print("Connected to MySQL Server version ", db_Info)
+        cursor = connection.cursor()
+        cursor.execute("select database();")
+        record = cursor.fetchone()
+        print("You're connected to database: ", record)
+except Exception as e:
+    print("Error while connecting to MySQL", e)
+    
 class Posture:    
 
     def __init__(self,):
@@ -128,7 +144,7 @@ class Posture:
             # Calculate angles.
             neck_inclination = self.findAngle(l_shldr_x, l_shldr_y, l_ear_x, l_ear_y)
             torso_inclination = self.findAngle(l_hip_x, l_hip_y, l_shldr_x, l_shldr_y)
-            knee_inclination = self.findAngle(l_hip_x, l_hip_y, l_knee_x, l_knee_y)
+            thigh_inclination = self.findAngle(l_hip_x, l_hip_y, l_knee_x, l_knee_y)
            
             # _inclination = findAngle(l_hip_x, l_hip_y, l_shldr_x, l_shldr_y)
         
@@ -155,11 +171,11 @@ class Posture:
             # Put text, Posture and angle inclination.
             # Text string for display.
             angle_text_string = 'Neck : ' + str(int(neck_inclination)) + '  Torso : ' + str(int(torso_inclination))
-            stand_sit_string = 'Knee Angle ' + str(int(knee_inclination)) 
+            stand_sit_string = 'Knee Angle ' + str(int(thigh_inclination)) 
 
 
             cv2.putText(image, stand_sit_string, (10, 100), font, 0.9, light_green, 2)
-            if knee_inclination > 150:
+            if thigh_inclination > 150:
                 position_category = 'standing'
                 self.standing_frames += 1
             else:
@@ -257,19 +273,19 @@ class Posture:
             if prolong_bad_time > 5 : # 5 seconds
                 correction_type = self.sendWarning()
                 self.prolong_bad =0
-                # try:
-                #     query = "INSERT INTO CorrectionHistory (Timestamp, CorrectionType) VALUES (%s, %s)"
-                #     cursor.execute(query, (timestamp, correction_type))
-                #     connection.commit()
-                # except Exception as e:
-                #     print(e)
+                try:
+                    query = "INSERT INTO CorrectionHistory (Timestamp, CorrectionType) VALUES (%s, %s)"
+                    cursor.execute(query, (timestamp, correction_type))
+                    connection.commit()
+                except Exception as e:
+                    print(e)
             
-            # try:
-            #     query = "INSERT INTO PostureData (Timestamp, PostureCategory, PositionCategory, NeckInclination, TorseInclination, KneeInclination) VALUES (%s, %s, %s, %s, %s, %s)"
-            #     cursor.execute(query, (timestamp, posture_category,position_category,neck_inclination,torso_inclination,knee_inclination))
-            #     connection.commit()
-            # except Exception as e:
-            #     print(e)
+            try:
+                query = "INSERT INTO PostureData (Timestamp, PostureCategory, PositionCategory, NeckInclination, TorsoInclination, ThighInclination) VALUES (%s, %s, %s, %s, %s, %s)"
+                cursor.execute(query, (timestamp, posture_category,position_category,neck_inclination,torso_inclination,thigh_inclination))
+                connection.commit()
+            except Exception as e:
+                print(e)
             # Write frames.
         except Exception as e:
             pass
@@ -408,7 +424,7 @@ cv2.destroyAllWindows()
 #         # Calculate angles.
 #         neck_inclination = findAngle(l_shldr_x, l_shldr_y, l_ear_x, l_ear_y)
 #         torso_inclination = findAngle(l_hip_x, l_hip_y, l_shldr_x, l_shldr_y)
-#         knee_inclination = findAngle(l_hip_x, l_hip_y, l_knee_x, l_knee_y)
+#         thigh_inclination = findAngle(l_hip_x, l_hip_y, l_knee_x, l_knee_y)
 #         # _inclination = findAngle(l_hip_x, l_hip_y, l_shldr_x, l_shldr_y)
     
 #         # Draw landmarks.
@@ -433,11 +449,11 @@ cv2.destroyAllWindows()
 #         # Put text, Posture and angle inclination.
 #         # Text string for display.
 #         angle_text_string = 'Neck : ' + str(int(neck_inclination)) + '  Torso : ' + str(int(torso_inclination))
-#         stand_sit_string = 'Knee Angle ' + str(int(knee_inclination)) 
+#         stand_sit_string = 'Knee Angle ' + str(int(thigh_inclination)) 
 
 
 #         cv2.putText(image, stand_sit_string, (10, 100), font, 0.9, light_green, 2)
-#         if knee_inclination > 150:
+#         if thigh_inclination > 150:
 #             cv2.putText(image, "Standing", (10, 130), font, 0.9, light_green, 2)
 #         else:
 #             cv2.putText(image, "Sitting", (10, 130), font, 0.9, red, 2)
