@@ -3,7 +3,29 @@ import time
 import math as m
 import cv2
 import mediapipe as mp
+import mysql.connector  # or import psycopg2 for PostgreSQL
+from datetime import datetime
 
+try:
+    connection = mysql.connector.connect(host='localhost',
+                                         database='test',
+                                         user='root',
+                                         password='Murukku!')
+    if connection.is_connected():
+        db_Info = connection.get_server_info()
+        print("Connected to MySQL Server version ", db_Info)
+        cursor = connection.cursor()
+        cursor.execute("select database();")
+        record = cursor.fetchone()
+        print("You're connected to database: ", record)
+
+except Exception as e:
+    print("Error while connecting to MySQL", e)
+finally:
+    if connection.is_connected():
+        # cursor.close()
+        # connection.close()
+        print("MySQL connection is connected")
 
 class Posture:    
 
@@ -42,7 +64,7 @@ class Posture:
 
     def sendWarning(self):
         self.correction.append(time.time())
-        pass
+        return 'bad posture'
 
     # def render(self,colour,**kwargs):
 
@@ -50,6 +72,9 @@ class Posture:
     
     def read(self):
         self.total_frames += 1
+        timestamp = datetime.now()
+        posture_category = None
+        position_category = None
             # Colors.
         blue = (255, 127, 0)
         red = (50, 50, 255)
@@ -157,9 +182,10 @@ class Posture:
 
             cv2.putText(image, stand_sit_string, (10, 100), font, 0.9, light_green, 2)
             if knee_inclination > 150:
+                position_category = 'standing'
                 self.standing_frames += 1
             else:
-                stand_or_sit = "Sitting"
+                position_category = "sitting"
                 self.sitting_frames += 1
             cv2.putText(image,"Standing : " + str(round(self.standing_frames*1/fps,1)) + "s", (10, 130), font, 0.9, green, 2)
             cv2.putText(image,"Sitting : " + str(round(self.sitting_frames*1/fps,1)) + "s", (int(w/3), 130), font, 0.9, light_green, 2)
@@ -169,6 +195,7 @@ class Posture:
             # Determine whether good posture or bad posture.
             # The threshold angles have been set based on intuition.
             if neck_inclination < 20 and torso_inclination < 5:
+                posture_category = 'perfect'
                 self.perfect_pos_frames += 1
                 self.prolong_bad = 0
 
@@ -188,7 +215,7 @@ class Posture:
             
             
             elif  neck_inclination < 40 and torso_inclination < 10:
-                # self.bad_pos_frames = 0
+                posture_category = 'good'
                 self.good_pos_frames += 1
                 self.prolong_bad = 0
         
@@ -206,7 +233,7 @@ class Posture:
                 cv2.line(image, (l_hip_x, l_hip_y), (l_knee_x, l_knee_y), green, 4)
         
             else:
-                
+                posture_category = 'bad'
                 self.bad_pos_frames  += 1
                 self.prolong_bad += 1
         
@@ -232,7 +259,7 @@ class Posture:
 
             time_string = 'Total Time : ' + str(round(self.total_frames *1/fps, 1)) + 's'
             cv2.putText(image, time_string, (10, h - 100), font, 0.9, dark_blue, 2)
-            print(str(len(self.correction)))
+           
             correction_string = 'Correction Count : ' + str(len(self.correction)) 
             cv2.putText(image, correction_string, (int(w/3), h - 100), font, 0.9, yellow , 2)
             # Pose time.
@@ -250,11 +277,26 @@ class Posture:
 
             # If you stay in bad posture for more than 3 minutes (180s) send an alert.
             if prolong_bad_time > 5 : # 5 seconds
-                self.sendWarning()
+                correction_type = self.sendWarning()
                 self.prolong_bad =0
+                try:
+                    query = "INSERT INTO CorrectionHistory (Timestamp, CorrectionType) VALUES (%s, %s)"
+                    cursor.execute(query, (timestamp, correction_type))
+                    connection.commit()
+                except Exception as e:
+                    print(e)
+            
+            try:
+                query = "INSERT INTO PostureData (Timestamp, PostureCategory, PositionCategory, NeckInclination, TorseInclination, KneeInclination) VALUES (%s, %s, %s, %s, %s, %s)"
+                cursor.execute(query, (timestamp, posture_category,position_category,neck_inclination,torso_inclination,knee_inclination))
+                connection.commit()
+            except Exception as e:
+                print(e)
             # Write frames.
         except Exception as e:
             pass
+
+
 
         return image
     
@@ -271,6 +313,8 @@ while post.cap.isOpened():
     # video_output.write(image)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
+        cursor.close()
+        connection.close()
         break
 print('Finished.')
 # cap.release()
