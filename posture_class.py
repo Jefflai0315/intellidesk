@@ -5,6 +5,8 @@ import cv2
 import mediapipe as mp
 import mysql.connector  # or import psycopg2 for PostgreSQL
 from datetime import datetime
+from ultralytics import YOLO
+import cv2
 
 # try:
 #     connection = mysql.connector.connect(host='localhost',
@@ -51,6 +53,7 @@ class Posture:
         self.face_mesh = self.mp_face_mesh.FaceMesh()
         self.mp_drawing = mp.solutions.drawing_utils
         self.mp_drawing_styles = mp.solutions.drawing_styles
+        self.model = YOLO("yolov8m.pt")
 
 
     def get_total_time(self):
@@ -71,7 +74,6 @@ class Posture:
         self.correction.append(time.time())
         return 'bad posture'
 
-    # def render(self,colour,**kwargs):
 
 
     
@@ -89,44 +91,13 @@ class Posture:
         yellow = (0, 255, 255)
         pink = (255, 0, 255)
 
-        # with self.mp_face_mesh.FaceMesh(
-        # max_num_faces=1,
-        # refine_landmarks=True,
-        # min_detection_confidence=0.5,
-        # min_tracking_confidence=0.5) as face_mesh:
-        #     while self.cap.isOpened():
-        #         success, image = self.cap.read()
-        #         if not success:
-        #             print("Ignoring empty camera frame.")
-        #             # If loading a video, use 'break' instead of 'continue'.
-        #             continue
-        #          # To improve performance, optionally mark the image as not writeable to
-        #         # pass by reference.
-        #         # image.flags.writeable = False
-        #         # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        #         results = face_mesh.process(image)
-
-        #         image.flags.writeable = True
-        #         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-        #         if results.multi_face_landmarks:
-        #             for face_landmarks in results.multi_face_landmarks:
-        #                 self.mp_drawing.draw_landmarks(
-        #                 image=image,
-        #                 landmark_list=face_landmarks,
-        #                 connections=self.mp_face_mesh.FACEMESH_IRISES,
-        #                 landmark_drawing_spec=None,
-        #                 connection_drawing_spec=self.mp_drawing_styles
-        #                 .get_default_face_mesh_iris_connections_style())
-        #         cv2.imshow('MediaPipe Face Mesh', cv2.flip(image, 1))
-        #         if cv2.waitKey(5) & 0xFF == 27:
-        #             break
-        #     self.cap.release()
+        
         
 
         # Font type.
         font = cv2.FONT_HERSHEY_SIMPLEX
         success, image = self.cap.read()
-        image = cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)
+        # image = cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)
         if not success:
             print("Null.Frames")
             return self.cap.release()
@@ -149,10 +120,6 @@ class Posture:
         lm = keypoints.pose_landmarks
         lmPose = self.mp_pose.PoseLandmark
 
-
-
-
-    
 
         # Acquire the landmark coordinates.
         # Once aligned properly, left or right should not be a concern.      
@@ -182,6 +149,8 @@ class Posture:
             l_eye_y = int(lm.landmark[lmPose.LEFT_EYE].y * h)
             r_eye_x = int(lm.landmark[lmPose.RIGHT_EYE].x * w)
             r_eye_y = int(lm.landmark[lmPose.RIGHT_EYE].y * h)
+
+            torso_length = self.findDistance(l_shldr_x, l_shldr_y, l_hip_x, l_hip_y)
             
         
             # Calculate distance between left shoulder and right shoulder points.
@@ -353,6 +322,60 @@ class Posture:
             # Write frames.
         except Exception as e:
             pass
+
+        #detect laptop
+        try: 
+            results = self.model.predict(image)
+            result = results[0]
+            screens_list=[]
+            for box in result.boxes:
+                cords = box.xyxy[0].tolist()  # [xmin, ymin, xmax, ymax]
+                class_id = box.cls[0].item()
+                conf = box.conf[0].item()
+                label = result.names[class_id]
+                if conf > 0.7 and (label == "laptop" or label == "monitor"):
+                    # Draw rectangle (bounding box)
+                    start_point = (int(cords[0]), int(cords[1]))  # Top left corner
+                    end_point = (int(cords[2]), int(cords[3]))    # Bottom right corner
+                    color = (255, 0, 0)  # Color of the rectangle (in BGR)
+                    thickness = 2       # Thickness of the rectangle border
+                    cv2.rectangle(image, start_point, end_point, color, thickness)
+                    width = cords[3]-cords[1]
+                    eye_screen_distance = self.findDistance(l_eye_x, l_eye_y, cords[0], cords[1]+width/2)
+                    screens_list.append([cords,class_id,conf,label,eye_screen_distance])
+
+                    # Put label near the top left corner of the rectangle
+                    font = cv2.FONT_HERSHEY_SIMPLEX
+                    font_scale = 5
+                    font_color = (255, 0,0)  
+                    font_thickness = 3
+                    cv2.putText(image, f'{label} {conf:.2f}', (int(cords[0]), int(cords[1]-10)), font, font_scale, font_color, font_thickness)
+                else:
+                    pass
+
+            if len(screens_list) > 0:
+                screens_list.sort(key=lambda x: x[4])
+                cords = screens_list[0][0]
+                class_id = screens_list[0][1]
+                conf = screens_list[0][2]
+                label = screens_list[0][3]
+                width=cords[3]-cords[1]
+                start_point = (int(cords[0]), int(cords[1]))
+                cv2.line(image, (l_eye_x, l_eye_y), (int(cords[0]), int(cords[1]+width/2)), red, 2)
+                eye_screen_distance = self.findDistance(l_eye_x, l_eye_y, cords[0], cords[1]+width/2)
+                print("torso length: ", torso_length)
+                torso_scale = torso_length/50 #50cm
+                eye_screen_distance = int(eye_screen_distance/torso_scale)
+                cv2.putText(image, f'eye to screen distance: {eye_screen_distance}', (w - 800, 300) ,font, 0.9, green, 2)
+            
+
+        except Exception as e:
+            print(e)
+
+        
+
+
+       
 
 
         return image
