@@ -6,26 +6,26 @@ import mediapipe as mp
 import mysql.connector  # or import psycopg2 for PostgreSQL
 from datetime import datetime
 
-try:
-    connection = mysql.connector.connect(host='localhost',
-                                         database='test',
-                                         user='root',
-                                         password='Murukku!')
-    if connection.is_connected():
-        db_Info = connection.get_server_info()
-        print("Connected to MySQL Server version ", db_Info)
-        cursor = connection.cursor()
-        cursor.execute("select database();")
-        record = cursor.fetchone()
-        print("You're connected to database: ", record)
+# try:
+#     connection = mysql.connector.connect(host='localhost',
+#                                          database='test',
+#                                          user='root',
+#                                          password='Murukku!')
+#     if connection.is_connected():
+#         db_Info = connection.get_server_info()
+#         print("Connected to MySQL Server version ", db_Info)
+#         cursor = connection.cursor()
+#         cursor.execute("select database();")
+#         record = cursor.fetchone()
+#         print("You're connected to database: ", record)
 
-except Exception as e:
-    print("Error while connecting to MySQL", e)
-finally:
-    if connection.is_connected():
-        # cursor.close()
-        # connection.close()
-        print("MySQL connection is connected")
+# except Exception as e:
+#     print("Error while connecting to MySQL", e)
+# finally:
+#     if connection.is_connected():
+#         # cursor.close()
+#         # connection.close()
+#         print("MySQL connection is connected")
 
 class Posture:    
 
@@ -47,6 +47,11 @@ class Posture:
         self.mp_pose = mp.solutions.pose
         mp_holistic = mp.solutions.holistic
         self.pose = self.mp_pose.Pose()
+        self.mp_face_mesh = mp.solutions.face_mesh
+        self.face_mesh = self.mp_face_mesh.FaceMesh()
+        self.mp_drawing = mp.solutions.drawing_utils
+        self.mp_drawing_styles = mp.solutions.drawing_styles
+
 
     def get_total_time(self):
         return time.time() - self.start_time
@@ -83,11 +88,45 @@ class Posture:
         light_green = (127, 233, 100)
         yellow = (0, 255, 255)
         pink = (255, 0, 255)
+
+        # with self.mp_face_mesh.FaceMesh(
+        # max_num_faces=1,
+        # refine_landmarks=True,
+        # min_detection_confidence=0.5,
+        # min_tracking_confidence=0.5) as face_mesh:
+        #     while self.cap.isOpened():
+        #         success, image = self.cap.read()
+        #         if not success:
+        #             print("Ignoring empty camera frame.")
+        #             # If loading a video, use 'break' instead of 'continue'.
+        #             continue
+        #          # To improve performance, optionally mark the image as not writeable to
+        #         # pass by reference.
+        #         # image.flags.writeable = False
+        #         # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        #         results = face_mesh.process(image)
+
+        #         image.flags.writeable = True
+        #         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+        #         if results.multi_face_landmarks:
+        #             for face_landmarks in results.multi_face_landmarks:
+        #                 self.mp_drawing.draw_landmarks(
+        #                 image=image,
+        #                 landmark_list=face_landmarks,
+        #                 connections=self.mp_face_mesh.FACEMESH_IRISES,
+        #                 landmark_drawing_spec=None,
+        #                 connection_drawing_spec=self.mp_drawing_styles
+        #                 .get_default_face_mesh_iris_connections_style())
+        #         cv2.imshow('MediaPipe Face Mesh', cv2.flip(image, 1))
+        #         if cv2.waitKey(5) & 0xFF == 27:
+        #             break
+        #     self.cap.release()
         
 
         # Font type.
         font = cv2.FONT_HERSHEY_SIMPLEX
         success, image = self.cap.read()
+        image = cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)
         if not success:
             print("Null.Frames")
             return self.cap.release()
@@ -109,6 +148,11 @@ class Posture:
         # Use lm and lmPose as representative of the following methods.
         lm = keypoints.pose_landmarks
         lmPose = self.mp_pose.PoseLandmark
+
+
+
+
+    
 
         # Acquire the landmark coordinates.
         # Once aligned properly, left or right should not be a concern.      
@@ -134,11 +178,15 @@ class Posture:
             # Left knee.
             l_knee_x = int(lm.landmark[lmPose.LEFT_KNEE].x * w)
             l_knee_y = int(lm.landmark[lmPose.LEFT_KNEE].y * h)
-
+            l_eye_x = int(lm.landmark[lmPose.LEFT_EYE].x * w)
+            l_eye_y = int(lm.landmark[lmPose.LEFT_EYE].y * h)
+            r_eye_x = int(lm.landmark[lmPose.RIGHT_EYE].x * w)
+            r_eye_y = int(lm.landmark[lmPose.RIGHT_EYE].y * h)
             
         
             # Calculate distance between left shoulder and right shoulder points.
             offset = self.findDistance(l_shldr_x, l_shldr_y, r_shldr_x, r_shldr_y)
+            eye_offset = self.findDistance(l_eye_x, l_eye_y, r_eye_x, r_eye_y)
         
             # Assist to align the camera to point at the side view of the person.
             # Offset threshold 30 is based on results obtained from analysis over 100 samples.
@@ -146,6 +194,11 @@ class Posture:
                 cv2.putText(image, str(int(offset)) + ' Aligned', (w - 300, 30), font, 0.9, green, 2)
             else:
                 cv2.putText(image, str(int(offset)) + ' Not Aligned', (w - 300, 30), font, 0.9, red, 2)
+
+            if eye_offset < 50:
+                cv2.putText(image, str(int(offset)) + ' Eyes Aligned', (w - 300, 100), font, 0.9, green, 2)
+            else:
+                cv2.putText(image, str(int(offset)) + ' Eyes Not Aligned', (w - 300, 100), font, 0.9, red, 2)
         
             # Calculate angles.
             neck_inclination = self.findAngle(l_shldr_x, l_shldr_y, l_ear_x, l_ear_y)
@@ -172,6 +225,11 @@ class Posture:
             cv2.circle(image, (l_elbow_x, l_elbow_y), 7, yellow, -1)
             cv2.circle(image, (l_wrist_x, l_wrist_y), 7, yellow, -1)
             cv2.circle(image, (l_knee_x, l_knee_y), 7, yellow, -1)
+
+
+            #eye
+            cv2.circle(image, (l_eye_x, l_eye_y), 7, yellow, -1)
+            cv2.circle(image, (r_eye_x, r_eye_y), 7, yellow, -1)
 
             
             # Put text, Posture and angle inclination.
@@ -281,15 +339,15 @@ class Posture:
                 self.prolong_bad =0
                 try:
                     query = "INSERT INTO CorrectionHistory (Timestamp, CorrectionType) VALUES (%s, %s)"
-                    cursor.execute(query, (timestamp, correction_type))
-                    connection.commit()
+                    # cursor.execute(query, (timestamp, correction_type))
+                    # connection.commit()
                 except Exception as e:
                     print(e)
             
             try:
                 query = "INSERT INTO PostureData (Timestamp, PostureCategory, PositionCategory, NeckInclination, TorseInclination, KneeInclination) VALUES (%s, %s, %s, %s, %s, %s)"
-                cursor.execute(query, (timestamp, posture_category,position_category,neck_inclination,torso_inclination,knee_inclination))
-                connection.commit()
+                # cursor.execute(query, (timestamp, posture_category,position_category,neck_inclination,torso_inclination,knee_inclination))
+                # connection.commit()
             except Exception as e:
                 print(e)
             # Write frames.
@@ -297,8 +355,8 @@ class Posture:
             pass
 
 
-
         return image
+
     
 
 post = Posture()
@@ -313,8 +371,8 @@ while post.cap.isOpened():
     # video_output.write(image)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
-        cursor.close()
-        connection.close()
+        # cursor.close()
+        # connection.close()
         break
 print('Finished.')
 # cap.release()
