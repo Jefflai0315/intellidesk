@@ -13,15 +13,13 @@ from firebase_admin import db
 from collections import defaultdict
 from threading import Timer
 from statistics import mean, mode
+import numpy as np
 
 cred = credentials.Certificate("intellidesk-174c9-firebase-adminsdk-garkf-abe9a9fb75.json")
 firebase_admin.initialize_app(cred, {
                               'databaseURL' : "https://intellidesk-174c9-default-rtdb.asia-southeast1.firebasedatabase.app/"
                               })
-
 ref = db.reference('Posture/')
-
-
 
 # try:
 #     connection = mysql.connector.connect(host='localhost',
@@ -45,7 +43,6 @@ ref = db.reference('Posture/')
 #         print("MySQL connection is connected")
 
 class Posture:    
-
     def __init__(self,):
         self.start_time = time.time()
         self.total_time = self.get_total_time()
@@ -71,7 +68,6 @@ class Posture:
         self.mp_drawing = mp.solutions.drawing_utils
         self.mp_drawing_styles = mp.solutions.drawing_styles
         self.model = YOLO("yolov8m.pt")
-
         self.data_points = defaultdict(list)
 
 
@@ -81,9 +77,7 @@ class Posture:
     def findDistance(self,x1, y1, x2, y2):
         dist = m.sqrt((x2-x1)**2+(y2-y1)**2)
         return dist
-    
 
-    # Calculate angle.
     def findAngle(self,x1, y1, x2, y2):
         theta = m.acos((y2 -y1)*(-y1) / (m.sqrt((x2 - x1)**2 + (y2 - y1)**2) * y1))
         degree = int(180/m.pi)*theta
@@ -121,7 +115,7 @@ class Posture:
         posture_category = None
         position_category = None
         fist_detected = False
-            # Colors.
+         # Colors.
         blue = (255, 127, 0)
         red = (50, 50, 255)
         green = (127, 255, 0)
@@ -129,9 +123,6 @@ class Posture:
         light_green = (127, 233, 100)
         yellow = (0, 255, 255)
         pink = (255, 0, 255)
-
-        
-        
 
         # Font type.
         font = cv2.FONT_HERSHEY_SIMPLEX
@@ -153,9 +144,8 @@ class Posture:
         # Convert the image back to BGR.
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-        lm = keypoints.pose_landmarks
-        lmPose = self.mp_pose.PoseLandmark
-
+        # lm = keypoints.pose_landmarks
+        # lmPose = self.mp_pose.PoseLandmark
 
         try: 
             results = self.model.predict(image)
@@ -201,32 +191,39 @@ class Posture:
                         largest_person_cords = cords
                         cv2.rectangle(image, start_point, end_point, color, thickness)
 
-                #normalize the rectangle
-                # largest_person_cords[0] /= w
-                # largest_person_cords[1] /= h 
-                # largest_person_cords[2] /= w
-                # largest_person_cords[3] /= h
+        
 
+                def process_image(image, bbox):
+                    # Crop the image
+                    x_min, y_min, x_max, y_max = map(int, bbox)
+                    # Crop the image
+                    crop_img = image[y_min:y_max, x_min:x_max]
 
+                    # Pad the cropped image to maintain original size
+                    h, w, _ = image.shape
+                    padded_img = np.zeros((h, w, 3), dtype=np.uint8)
+                    padded_img[y_min:y_min+crop_img.shape[0], x_min:x_min+crop_img.shape[1]] = crop_img
 
-                # if largest_person_cords:
-                #     # Ensure the coordinates are within the image boundaries
-                #     x_min, y_min, x_max, y_max = [max(0, int(coord)) for coord in largest_person_cords]
-                #     x_max = min(x_max, image.shape[1])
-                #     y_max = min(y_max, image.shape[0])
+                    return padded_img
 
-                #     # Crop the image to the largest person's bounding box
-                #     cropped_image = image[y_min:y_max, x_min:x_max]
+                if largest_person_cords:
+                    # Ensure the coordinates are within the image boundaries
+                    x_min, y_min, x_max, y_max = [max(0, int(coord)) for coord in largest_person_cords]
+                    x_max = min(x_max, image.shape[1])
+                    y_max = min(y_max, image.shape[0])
 
-                #     # Process the cropped image with MediaPipe Pose
-                #     cropped_rgb = cv2.cvtColor(cropped_image, cv2.COLOR_BGR2RGB)
-                #     keypoints = self.pose.process(cropped_rgb)
+                    # Crop the image to the largest person's bounding box
+                    # cropped_image = image[y_min:y_max, x_min:x_max]
+                    # Crop and pad the image
+                    padded_img = process_image(image, largest_person_cords)
+                    padded_img = cv2.cvtColor(padded_img, cv2.COLOR_BGR2RGB)
+                    keypoints = self.pose.process(padded_img)
 
-                #     # Convert the image back to BGR.
-                #     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+                    # Convert the image back to BGR.
+                    padded_img = cv2.cvtColor(padded_img, cv2.COLOR_RGB2BGR)
 
-                #     lm = keypoints.pose_landmarks
-                #     lmPose = self.mp_pose.PoseLandmark
+                    lm = keypoints.pose_landmarks
+                    lmPose = self.mp_pose.PoseLandmark
 
 
             if len(screens_list) > 0:
