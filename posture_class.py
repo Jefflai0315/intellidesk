@@ -7,6 +7,21 @@ import mysql.connector  # or import psycopg2 for PostgreSQL
 from datetime import datetime
 from ultralytics import YOLO
 import cv2
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+from collections import defaultdict
+from threading import Timer
+from statistics import mean, mode
+
+cred = credentials.Certificate("intellidesk-174c9-firebase-adminsdk-garkf-abe9a9fb75.json")
+firebase_admin.initialize_app(cred, {
+                              'databaseURL' : "https://intellidesk-174c9-default-rtdb.asia-southeast1.firebasedatabase.app/"
+                              })
+
+ref = db.reference('Posture/')
+
+
 
 # try:
 #     connection = mysql.connector.connect(host='localhost',
@@ -35,6 +50,7 @@ class Posture:
         self.start_time = time.time()
         self.total_time = self.get_total_time()
         self.standing_frames = 0
+        self.current_standing_frames =0
         self.sitting_frames = 0 
         self.good_pos_frames = 0 
         self.bad_pos_frames = 0
@@ -47,13 +63,16 @@ class Posture:
         self.cap = cv2.VideoCapture(0)
 
         self.mp_pose = mp.solutions.pose
-        mp_holistic = mp.solutions.holistic
         self.pose = self.mp_pose.Pose()
         self.mp_face_mesh = mp.solutions.face_mesh
         self.face_mesh = self.mp_face_mesh.FaceMesh()
+        self.mp_hands = mp.solutions.hands
+        self.hands = self.mp_hands.Hands()
         self.mp_drawing = mp.solutions.drawing_utils
         self.mp_drawing_styles = mp.solutions.drawing_styles
         self.model = YOLO("yolov8m.pt")
+
+        self.data_points = defaultdict(list)
 
 
     def get_total_time(self):
@@ -74,7 +93,26 @@ class Posture:
         self.correction.append(time.time())
         return 'bad posture'
 
+    def is_fist(hand_landmarks):
+    # Get the landmarks for the fingertips, MCP joints, and wrist
+        index_tip_y = hand_landmarks.landmark[8].y 
+        index_mcp_y = hand_landmarks.landmark[5].y 
+        middle_tip_y = hand_landmarks.landmark[12].y 
+        middle_mcp_y = hand_landmarks.landmark[9].y 
+        ring_tip_y = hand_landmarks.landmark[16].y 
+        ring_mcp_y = hand_landmarks.landmark[13].y 
+        pinky_tip_y = hand_landmarks.landmark[20].y
+        pinky_mcp_y = hand_landmarks.landmark[17].y 
+        print(hand_landmarks)
 
+        # Check for a fist gesture
+        if (index_tip_y > index_mcp_y and
+            middle_tip_y > middle_mcp_y and
+            ring_tip_y > ring_mcp_y and
+            pinky_tip_y > pinky_mcp_y ): 
+            return True
+        else:
+            return False
 
     
     def read(self):
@@ -82,6 +120,7 @@ class Posture:
         timestamp = datetime.now()
         posture_category = None
         position_category = None
+        fist_detected = False
             # Colors.
         blue = (255, 127, 0)
         red = (50, 50, 255)
@@ -107,26 +146,128 @@ class Posture:
         h, w = image.shape[:2]
         # print(h,w)
 
-        # Convert the BGR image to RGB.
+        # # Convert the BGR image to RGB.
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
-        # Process the image.
         keypoints = self.pose.process(image)
 
         # Convert the image back to BGR.
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-        # Use lm and lmPose as representative of the following methods.
         lm = keypoints.pose_landmarks
         lmPose = self.mp_pose.PoseLandmark
+
+
+        try: 
+            results = self.model.predict(image)
+            result = results[0]
+            screens_list=[]
+            largest_person_area = 0
+            largest_person_cords = None
+            for box in result.boxes:
+                cords = box.xyxy[0].tolist()  # [xmin, ymin, xmax, ymax]
+                class_id = box.cls[0].item()
+                conf = box.conf[0].item()
+                label = result.names[class_id]
+                if conf > 0.7 and (label == "laptop" or label == "monitor"):
+                    # Draw rectangle (bounding box)
+                    start_point = (int(cords[0]), int(cords[1]))  # Top left corner
+                    end_point = (int(cords[2]), int(cords[3]))    # Bottom right corner
+                    color = (255, 0, 0)  # Color of the rectangle (in BGR)
+                    thickness = 2       # Thickness of the rectangle border
+                    cv2.rectangle(image, start_point, end_point, color, thickness)
+                    width = cords[3]-cords[1]
+                    eye_screen_distance = self.findDistance(l_eye_x, l_eye_y, cords[0], cords[1]+width/2)
+                    screens_list.append([cords,class_id,conf,label,eye_screen_distance])
+
+                    # Put label near the top left corner of the rectangle
+                    font = cv2.FONT_HERSHEY_SIMPLEX
+                    font_scale = 5
+                    font_color = (255, 0,0)  
+                    font_thickness = 3
+                    cv2.putText(image, f'{label} {conf:.2f}', (int(cords[0]), int(cords[1]-10)), font, font_scale, font_color, font_thickness)
+                else:
+                    pass
+
+                if conf > 0.7 and (label =='person'):
+                    start_point = (int(cords[0]), int(cords[1]))  # Top left corner
+                    end_point = (int(cords[2]), int(cords[3]))    # Bottom right corner
+                    color = (0, 255, 0)  # Color of the rectangle (in BGR)
+                    thickness = 2       # Thickness of the rectangle border
+                    
+                    # area of the rectangle
+                    area = (cords[2] - cords[0]) * (cords[3] - cords[1])
+                    if area > largest_person_area:
+                        largest_person_area = area
+                        largest_person_cords = cords
+                        cv2.rectangle(image, start_point, end_point, color, thickness)
+
+                #normalize the rectangle
+                # largest_person_cords[0] /= w
+                # largest_person_cords[1] /= h 
+                # largest_person_cords[2] /= w
+                # largest_person_cords[3] /= h
+
+
+
+                # if largest_person_cords:
+                #     # Ensure the coordinates are within the image boundaries
+                #     x_min, y_min, x_max, y_max = [max(0, int(coord)) for coord in largest_person_cords]
+                #     x_max = min(x_max, image.shape[1])
+                #     y_max = min(y_max, image.shape[0])
+
+                #     # Crop the image to the largest person's bounding box
+                #     cropped_image = image[y_min:y_max, x_min:x_max]
+
+                #     # Process the cropped image with MediaPipe Pose
+                #     cropped_rgb = cv2.cvtColor(cropped_image, cv2.COLOR_BGR2RGB)
+                #     keypoints = self.pose.process(cropped_rgb)
+
+                #     # Convert the image back to BGR.
+                #     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+                #     lm = keypoints.pose_landmarks
+                #     lmPose = self.mp_pose.PoseLandmark
+
+
+            if len(screens_list) > 0:
+                screens_list.sort(key=lambda x: x[4])
+                cords = screens_list[0][0]
+                class_id = screens_list[0][1]
+                conf = screens_list[0][2]
+                label = screens_list[0][3]
+                width=cords[3]-cords[1]
+                start_point = (int(cords[0]), int(cords[1]))
+                cv2.line(image, (l_eye_x, l_eye_y), (int(cords[0]), int(cords[1]+width/2)), red, 2)
+                eye_screen_distance = self.findDistance(l_eye_x, l_eye_y, cords[0], cords[1]+width/2)
+                print("torso length: ", torso_length)
+                # torso_scale = torso_length/52 #50cm
+                scale = width/23
+                eye_screen_distance = int(eye_screen_distance/scale)
+                cv2.putText(image, f'eye to screen distance: {eye_screen_distance}', (w - 800, 300) ,font, 0.9, green, 2)
+            
+
+        except Exception as e:
+            print(e)
+
+      
+       
 
 
         # Acquire the landmark coordinates.
         # Once aligned properly, left or right should not be a concern.      
         # Left shoulder.
         try:
+            
             l_shldr_x = int(lm.landmark[lmPose.LEFT_SHOULDER].x * w)
             l_shldr_y = int(lm.landmark[lmPose.LEFT_SHOULDER].y * h)
+            print(l_shldr_x, l_shldr_y)
+            if largest_person_cords[0] <= l_shldr_x <= largest_person_cords[2] and largest_person_cords[1] <= l_shldr_y <= largest_person_cords[3]:
+                # print('within the bb')
+                pass
+            else: 
+                # print('outside the bb')
+                pass
+                
             # Right shoulder
             r_shldr_x = int(lm.landmark[lmPose.RIGHT_SHOULDER].x * w)
             r_shldr_y = int(lm.landmark[lmPose.RIGHT_SHOULDER].y * h)
@@ -217,7 +358,30 @@ class Posture:
             cv2.putText(image,"Standing : " + str(round(self.standing_frames*1/fps,1)) + "s", (10, 130), font, 0.9, green, 2)
             cv2.putText(image,"Sitting : " + str(round(self.sitting_frames*1/fps,1)) + "s", (int(w/3), 130), font, 0.9, light_green, 2)
 
+            if position_category == "standing":
+                cv2.putText(image, 'standing', (int(w/2), int(h/2)-100), font, 0.9, red, 2)
+               
+                self.current_standing_frames += 1
+                if (1/fps) *self.current_standing_frames > 5:
+                    # print("Please hold a fist to move the table up.")
+                    # cv2.putText(image, 'Please hold a fist to move the table up.', (int(w/2), int(h/2)), font, 0.9, red, 2)
+                    cv2.putText(image, 'table movnig up .', (int(w/2), int(h/2)), font, 0.9, red, 2)
+               
+                    # results = self.hands.process(image)
 
+                    # print(results.multi_hand_landmarks)
+
+                    # # Check for fist gesture in both hands (if both hands are detected)
+                    # if results.multi_hand_landmarks:
+                    #     for hand_landmarks in results.multi_hand_landmarks:
+                        
+                    #         if self.is_fist(hand_landmarks):
+                    #             fist_detected = True
+                    #             print('table move to position')
+                    #             cv2.putText(image, 'table move to position.', (int(w/2), int(h/2)+100), font, 0.9, red, 2)
+                    #             break   
+            else:
+                self.current_standing_frames =0
 
             # Determine whether good posture or bad posture.
             # The threshold angles have been set based on intuition.
@@ -314,68 +478,21 @@ class Posture:
                     print(e)
             
             try:
-                query = "INSERT INTO PostureData (Timestamp, PostureCategory, PositionCategory, NeckInclination, TorseInclination, KneeInclination) VALUES (%s, %s, %s, %s, %s, %s)"
+                self.data_points['Timestamp'].append(timestamp)
+                self.data_points['PostureCategory'].append(posture_category)
+                self.data_points['PositionCategory'].append(position_category)
+                self.data_points['NeckInclination'].append(neck_inclination)
+                self.data_points['TorseInclination'].append(torso_inclination)
+                self.data_points['KneeInclination'].append(knee_inclination)
+                # query = "INSERT INTO PostureData (Timestamp, PostureCategory, PositionCategory, NeckInclination, TorseInclination, KneeInclination) VALUES (%s, %s, %s, %s, %s, %s)"
                 # cursor.execute(query, (timestamp, posture_category,position_category,neck_inclination,torso_inclination,knee_inclination))
                 # connection.commit()
             except Exception as e:
                 print(e)
             # Write frames.
+            
         except Exception as e:
             pass
-
-        #detect laptop
-        try: 
-            results = self.model.predict(image)
-            result = results[0]
-            screens_list=[]
-            for box in result.boxes:
-                cords = box.xyxy[0].tolist()  # [xmin, ymin, xmax, ymax]
-                class_id = box.cls[0].item()
-                conf = box.conf[0].item()
-                label = result.names[class_id]
-                if conf > 0.7 and (label == "laptop" or label == "monitor"):
-                    # Draw rectangle (bounding box)
-                    start_point = (int(cords[0]), int(cords[1]))  # Top left corner
-                    end_point = (int(cords[2]), int(cords[3]))    # Bottom right corner
-                    color = (255, 0, 0)  # Color of the rectangle (in BGR)
-                    thickness = 2       # Thickness of the rectangle border
-                    cv2.rectangle(image, start_point, end_point, color, thickness)
-                    width = cords[3]-cords[1]
-                    eye_screen_distance = self.findDistance(l_eye_x, l_eye_y, cords[0], cords[1]+width/2)
-                    screens_list.append([cords,class_id,conf,label,eye_screen_distance])
-
-                    # Put label near the top left corner of the rectangle
-                    font = cv2.FONT_HERSHEY_SIMPLEX
-                    font_scale = 5
-                    font_color = (255, 0,0)  
-                    font_thickness = 3
-                    cv2.putText(image, f'{label} {conf:.2f}', (int(cords[0]), int(cords[1]-10)), font, font_scale, font_color, font_thickness)
-                else:
-                    pass
-
-            if len(screens_list) > 0:
-                screens_list.sort(key=lambda x: x[4])
-                cords = screens_list[0][0]
-                class_id = screens_list[0][1]
-                conf = screens_list[0][2]
-                label = screens_list[0][3]
-                width=cords[3]-cords[1]
-                start_point = (int(cords[0]), int(cords[1]))
-                cv2.line(image, (l_eye_x, l_eye_y), (int(cords[0]), int(cords[1]+width/2)), red, 2)
-                eye_screen_distance = self.findDistance(l_eye_x, l_eye_y, cords[0], cords[1]+width/2)
-                print("torso length: ", torso_length)
-                torso_scale = torso_length/50 #50cm
-                eye_screen_distance = int(eye_screen_distance/torso_scale)
-                cv2.putText(image, f'eye to screen distance: {eye_screen_distance}', (w - 800, 300) ,font, 0.9, green, 2)
-            
-
-        except Exception as e:
-            print(e)
-
-        
-
-
-       
 
 
         return image
@@ -383,6 +500,36 @@ class Posture:
     
 
 post = Posture()
+
+def send_to_firebase(data):
+    ref.update(data)
+    pass
+
+
+def calculate_average(data_points):
+    averaged_data = {str(int(data_points['Timestamp'][-1].timestamp() *1000)) if data_points['Timestamp'] else None : {
+    # Handle numerical fields
+    'NeckInclination' : mean(data_points['NeckInclination']) if data_points['NeckInclination'] else None,
+    'TorsoInclination' : mean(data_points['TorseInclination']) if data_points['TorseInclination'] else None,
+    'KneeInclination' : mean(data_points['KneeInclination']) if data_points['KneeInclination'] else None,
+
+    # Handle categorical fields
+    'PostureQuality' : mode(data_points['PostureCategory']) if data_points['PostureCategory'] else None,
+    'PostureMode': mode(data_points['PositionCategory']) if data_points['PositionCategory'] else None,
+    }}
+    return averaged_data
+
+# Store data points here
+
+
+def average_and_send():
+    averaged_data = calculate_average(post.data_points)
+    send_to_firebase(averaged_data)
+    print(averaged_data)
+    post.data_points.clear()
+    # Reset the timer
+    Timer(10, average_and_send).start()
+Timer(10, average_and_send).start()
 
 while post.cap.isOpened():
     # Capture frames.
