@@ -20,6 +20,8 @@ firebase_admin.initialize_app(cred, {
                               'databaseURL' : "https://intellidesk-174c9-default-rtdb.asia-southeast1.firebasedatabase.app/"
                               })
 ref = db.reference('Posture/')
+ref_corr = db.reference('Correction/')
+ref_session = db.reference('Session/')
 
 # try:
 #     connection = mysql.connector.connect(host='localhost',
@@ -44,7 +46,8 @@ ref = db.reference('Posture/')
 
 class Posture:    
     def __init__(self,):
-        self.start_time = time.time()
+        self.start_time = datetime.now()
+        # ref_session.update(str(int(self.start_time.timestamp()*1000)))
         self.total_time = self.get_total_time()
         self.standing_frames = 0
         self.current_standing_frames =0
@@ -72,7 +75,7 @@ class Posture:
 
 
     def get_total_time(self):
-        return time.time() - self.start_time
+        return datetime.now() - self.start_time
 
     def findDistance(self,x1, y1, x2, y2):
         dist = m.sqrt((x2-x1)**2+(y2-y1)**2)
@@ -84,7 +87,7 @@ class Posture:
         return degree
 
     def sendWarning(self):
-        self.correction.append(time.time())
+        self.correction.append(datetime.now().time())
         return 'bad posture'
 
     def is_fist(hand_landmarks):
@@ -468,7 +471,14 @@ class Posture:
                 correction_type = self.sendWarning()
                 self.prolong_bad =0
                 try:
-                    query = "INSERT INTO CorrectionHistory (Timestamp, CorrectionType) VALUES (%s, %s)"
+                    self.data_points['CorrectionTimestamp'].append(timestamp)
+                    self.data_points['CorrectionType'].append(correction_type)
+                    data = {str(int(timestamp.timestamp() *1000)) : {
+                        # Handle numerical fields
+                        'CorrectionType' :correction_type }
+                    }
+                    send_to_firebase(ref_corr, data)
+                    # query = "INSERT INTO CorrectionHistory (Timestamp, CorrectionType) VALUES (%s, %s)"
                     # cursor.execute(query, (timestamp, correction_type))
                     # connection.commit()
                 except Exception as e:
@@ -498,7 +508,8 @@ class Posture:
 
 post = Posture()
 
-def send_to_firebase(data):
+def send_to_firebase(ref,data):
+    print(ref, data)
     ref.update(data)
     pass
 
@@ -521,12 +532,14 @@ def calculate_average(data_points):
 
 def average_and_send():
     averaged_data = calculate_average(post.data_points)
-    send_to_firebase(averaged_data)
+    send_to_firebase(ref,averaged_data)
     print(averaged_data)
     post.data_points.clear()
     # Reset the timer
-    Timer(10, average_and_send).start()
-Timer(10, average_and_send).start()
+    timer = Timer(10, average_and_send)
+    timer.start()
+timer = Timer(10, average_and_send)
+timer.start()
 
 while post.cap.isOpened():
     # Capture frames.
@@ -538,6 +551,8 @@ while post.cap.isOpened():
     # video_output.write(image)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
+        timer.cancel()
+        ref_session.update({str(int(post.start_time.timestamp()*1000)):str(int(datetime.now().timestamp()*1000))})
         # cursor.close()
         # connection.close()
         break
