@@ -1,1 +1,0 @@
-export { Posture } from "./Posture";
