@@ -1,0 +1,1 @@
+export { BarIcon } from "./BarIcon";

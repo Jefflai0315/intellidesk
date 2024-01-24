@@ -1,0 +1,42 @@
+.bar-icon {
+    height: 16px;
+    position: relative;
+    width: 17px;
+  }
+  
+  .bar-icon .rectangle {
+    background-color: #ffffff;
+    height: 13px;
+    left: 12px;
+    position: absolute;
+    top: 0;
+    width: 3px;
+  }
+  
+  .bar-icon .div {
+    background-color: #ffffff;
+    height: 2px;
+    left: 0;
+    position: absolute;
+    top: 14px;
+    width: 17px;
+  }
+  
+  .bar-icon .rectangle-2 {
+    background-color: #ffffff;
+    height: 9px;
+    left: 7px;
+    position: absolute;
+    top: 4px;
+    width: 3px;
+  }
+  
+  .bar-icon .rectangle-3 {
+    background-color: #ffffff;
+    height: 5px;
+    left: 2px;
+    position: absolute;
+    top: 8px;
+    width: 3px;
+  }
+  
