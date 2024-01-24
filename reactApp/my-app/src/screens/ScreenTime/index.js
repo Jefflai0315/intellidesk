@@ -1,1 +1,0 @@
-export { ScreenTime } from "./ScreenTime";
