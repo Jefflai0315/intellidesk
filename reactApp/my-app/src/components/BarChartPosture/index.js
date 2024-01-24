@@ -1,0 +1,1 @@
+export { BarChartPosture } from "./BarChartPosture";
