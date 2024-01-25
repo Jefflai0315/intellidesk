@@ -68,7 +68,7 @@ function Home() {
                 <div className="rectangle-7" />
                 <div className="rectangle-8" />
               </div>
-              <Link to="/ScreenTimeCopy">
+              <Link to="/DeskTime">
               <BarIcon className="bar-icon-instance" />
               <div className="bar-icon-2">
                 <div className="rectangle-9" />

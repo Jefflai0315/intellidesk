@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './screens/Home/Home';
 import Posture from './screens/Posture/Posture';
 import ScreenTime from './screens/ScreenTime/ScreenTime';
-import ScreenTimeCopy from './screens/ScreenTimeCopy/ScreenTimeCopy';
+import DeskTime from './screens/DeskTime/DeskTime';
 
 
 const App = () => {
@@ -26,8 +26,8 @@ const App = () => {
           />
         <Route
           exact
-          path="/ScreenTimeCopy"
-          element={<ScreenTimeCopy />}
+          path="/DeskTime"
+          element={<DeskTime />}
           />
       </Routes>
     </Router>

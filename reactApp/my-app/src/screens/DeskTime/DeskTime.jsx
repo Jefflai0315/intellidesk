@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { PostureAngle } from "../../components/PostureAngle";
 
 
-function ScreenTimeCopy() {
+function DeskTime() {
   return (
     <div className="desk-time">
       <div className="overlap-wrapper">
@@ -315,4 +315,4 @@ function ScreenTimeCopy() {
   );
 };
 
-export default ScreenTimeCopy;
+export default DeskTime;

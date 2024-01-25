@@ -64,7 +64,7 @@ function Posture() {
             <div className="overlap-3">
               <div className="group-8">
                 <div className="overlap-group-3">
-                  <div className="rectangle-4" />
+                  {/* <div className="rectangle-4" /> */}
                   <div className="group-9" />
                 </div>
               </div>
@@ -86,7 +86,6 @@ function Posture() {
                 <img className="line-7" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
                 <img className="line-8" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
               </div>
-              {/* <BarChartPosture className="bar-chart-posture" /> */}
               <div className="rectangle-wrapper">
                 <div className="rectangle-5" />
               </div>
@@ -172,10 +171,9 @@ function Posture() {
               <div className="group-32">
                 <div className="overlap-group-4">
                   <div className="text-wrapper-20">24</div>
+                  {/* <div className="overlap-group-5"/> */}
+                  <div className="text-wrapper-22">25</div>
                   <div className="text-wrapper-21">28</div>
-                  <div className="overlap-group-5">
-                    <div className="text-wrapper-22">25</div>
-                  </div>
                   <div className="text-wrapper-23">30</div>
                   <div className="text-wrapper-24">26</div>
                   <div className="text-wrapper-25">27</div>
@@ -197,6 +195,7 @@ function Posture() {
               </div>
               </Link>
               <div className="day-breakdown">
+                <BarChartPosture className="bar-chart-posture" />
                 <PostureAngle className="posture-angle-instance" angle={87}/>
                 {/* <div className="overlap-4">
                   <div className="calories-ring">
@@ -274,16 +273,16 @@ function Posture() {
                       <div className="text-wrapper-47">Avg Poor Posture</div>
                     </div>
                   </div>
-                  <div className="closest-4">
-                    <div className="overlap-10">
-                      <div className="text-wrapper-48">56mins</div>
-                      <div className="text-wrapper-49">Longest Perfect Streak</div>
-                    </div>
-                  </div>
                   <div className="closest-5">
                     <div className="overlap-10">
                       <div className="text-wrapper-50">2 hours</div>
                       <div className="text-wrapper-49">Avg Perfect Posture</div>
+                    </div>
+                  </div>
+                  <div className="closest-4">
+                    <div className="overlap-10">
+                      <div className="text-wrapper-48">56mins</div>
+                      <div className="text-wrapper-49">Longest Perfect Streak</div>
                     </div>
                   </div>
                 </div>
