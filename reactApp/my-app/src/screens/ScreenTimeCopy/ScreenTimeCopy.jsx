@@ -247,12 +247,16 @@ function ScreenTimeCopy() {
                 <img className="polygon" alt="Polygon" src="https://c.animaapp.com/QHWYwOlz/img/polygon-4.svg" />
               </div> */}
               <div className="group-36">
-                <div className="ellipse-11" />
-                <div className="ellipse-12" />
+                <div className="standing-legend">
+                  <div className="ellipse-11" />
+                  <div className="text-wrapper-36">Standing</div>
+                </div>
                 {/* <div className="ellipse-13" /> */}
                 {/* <div className="text-wrapper-35">Perfect</div> */}
-                <div className="text-wrapper-36">Standing</div>
-                <div className="text-wrapper-37">Sitting</div>
+                <div className="sitting-legend">
+                  <div className="ellipse-12" />
+                  <div className="text-wrapper-37">Sitting</div>
+                </div>
               </div>
               <div className="desk-time-summary">
                 <div className="average-DT">

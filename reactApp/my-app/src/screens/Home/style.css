@@ -14,18 +14,18 @@
 }
 
 .home .overlap {
-  height: 844px;
+  height: 100%;
   position: relative;
-  width: 392px;
+  width: 100%;
 }
 
 .home .background {
   background-color: #101010;
-  height: 844px;
+  height: 100%;
   left: 0;
   position: absolute;
   top: 0;
-  width: 390px;
+  width: 100%;
 }
 
 .home .title {
@@ -33,13 +33,13 @@
   left: 0;
   position: absolute;
   top: 20px;
-  width: 392px;
+  width: 100%;
 }
 
 .home .overlap-group {
   height: 56px;
   position: relative;
-  width: 390px;
+  width: 100%;
 }
 
 .home .text-wrapper {
@@ -60,23 +60,25 @@
   left: 0;
   position: absolute;
   top: 54px;
-  width: 390px;
+  width: 100%;
 }
 
 .home .home-pg {
   height: 681px;
-  left: 20px;
+  left: 0;
   overflow: hidden;
   overflow-y: scroll;
   position: absolute;
   top: 92px;
-  width: 350px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .home .overlap-2 {
   height: 1476px;
   position: relative;
-  width: 350px;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .home .rectangle-4 {
@@ -85,17 +87,17 @@
   left: 0;
   position: absolute;
   top: 1413px;
-  width: 350px;
+  width: 100%;
 }
 
 .home .rectangle-5 {
   background-color: #252525;
   border-radius: 25px;
-  height: 1442px;
+  height: 100%;
   left: 0;
   position: absolute;
   top: 0;
-  width: 350px;
+  width: 100%;
 }
 
 .home .text-wrapper-2 {

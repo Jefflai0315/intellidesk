@@ -14,18 +14,18 @@
   }
   
   .desk-time .overlap {
-    height: 844px;
+    height: 100%;
     position: relative;
-    width: 392px;
+    width: 100%;
   }
   
   .desk-time .background {
     background-color: #101010;
-    height: 844px;
+    height: 100%;
     left: 0;
     position: absolute;
     top: 0;
-    width: 390px;
+    width: 100%;
   }
   
   .desk-time .title {
@@ -33,7 +33,7 @@
     left: 0;
     position: absolute;
     top: 20px;
-    width: 392px;
+    width: 100%;
   }
   
   .desk-time .overlap-group {
@@ -68,7 +68,7 @@
     left: 0;
     position: absolute;
     top: 773px;
-    width: 390px;
+    width: 100%;
   }
   
   .desk-time .div {
@@ -315,19 +315,22 @@
   }
   
   .desk-time .frame {
-    height: 686px;
-    left: 20px;
+    height: 80%;
+    left: 0;
     overflow: hidden;
     overflow-y: scroll;
     position: absolute;
     top: 87px;
-    width: 350px;
+    width: 100%;
+    margin: 0 auto;
   }
   
   .desk-time .overlap-3 {
     height: 880px;
     position: relative;
-    width: 350px;
+    width: 90%;
+    left: 0;
+    margin: 0 auto;
   }
   
   .desk-time .group-8 {
@@ -336,6 +339,7 @@
     position: absolute;
     top: 0;
     width: 350px;
+    margin: 0 auto;
   }
   
   .desk-time .overlap-group-3 {
@@ -1051,6 +1055,7 @@
     height: 31px;
     position: relative;
     width: 296px;
+    left: 0;
   }
   
   .desk-time .text-wrapper-20 {
@@ -1409,10 +1414,17 @@
   
   .desk-time .group-36 {
     height: 13px;
-    left: 79px;
+    left: 0;
     position: absolute;
     top: 321px;
-    width: 213px;
+    width: 100%;
+  }
+
+  .desk-time .standing-legend {
+    height: 13px;
+    left: 30%;
+    position: absolute;
+    width: 10%;
   }
   
   .desk-time .ellipse-11 {
@@ -1424,12 +1436,33 @@
     top: 1px;
     width: 10px;
   }
+
+  .desk-time .text-wrapper-36 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 13px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 35px;
+  }
+
+  .desk-time .sitting-legend {
+    height: 13px;
+    left: 60%;
+    position: absolute;
+    width: 10%;
+  }
   
   .desk-time .ellipse-12 {
     background-color: #E72830;
     border-radius: 5.23px;
     height: 10px;
-    left: 85px;
+    left: 0;
     position: absolute;
     top: 1px;
     width: 10px;
@@ -1459,7 +1492,7 @@
     width: 45px;
   }
   
-  .desk-time .text-wrapper-36 {
+  .desk-time .text-wrapper-37 {
     color: #d3d3d3;
     font-family: "Open Sans", Helvetica;
     font-size: 8px;
@@ -1473,32 +1506,21 @@
     width: 35px;
   }
   
-  .desk-time .text-wrapper-37 {
-    color: #d3d3d3;
-    font-family: "Open Sans", Helvetica;
-    font-size: 8px;
-    font-weight: 400;
-    left: 98px;
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    text-align: center;
-    top: 0;
-    width: 35px;
-  }
-  
   .desk-time .desk-time-summary {
     height: 26px;
-    left: 93px;
-    position: absolute;
+    left: 0;
+    position: relative;
     top: 342px;
-    width: 178px;
+    width: 60%;
+    margin: 0 auto;
   }
   
   .desk-time .average-DT {
     height: 26px;
     position: relative;
-    width: 184px;
+    width: 100%;
+    top: 0;
+    left: 0;
   }
   
   .desk-time .text-wrapper-38 {
@@ -1510,8 +1532,9 @@
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
-    top: 4px;
-    width: 107px;
+    top: 0;
+    width: 50%;
+    text-align: center;
   }
   
   .desk-time .overlap-group-7 {
@@ -1533,6 +1556,7 @@
     position: absolute;
     top: 0;
     width: 26px;
+    text-align: center;
   }
   
   .desk-time .text-wrapper-40 {
@@ -1540,44 +1564,47 @@
     font-family: "Open Sans", Helvetica;
     font-size: 13px;
     font-weight: 400;
-    left: 24px;
+    left: 35px;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
     top: 7px;
     width: 30px;
+    text-align: center;
   }
   
   .desk-time .group-wrapper {
     background-color: #3b3b3b;
     border-radius: 7px;
     height: 161px;
-    left: 21px;
-    position: absolute;
+    left: 0;
+    position: relative;
     top: 384px;
-    width: 308px;
+    width: 90%;
+    margin: 0 auto;
   }
   
   .desk-time .group-37 {
     height: 146px;
-    left: 3px;
+    left: 0;
     position: relative;
     top: 7px;
-    width: 296px;
+    width: 90%;
+    margin: 0 auto;
   }
   
   .desk-time .average-SD-2 {
     height: 40px;
-    left: 172px;
+    left: 50%;
     position: absolute;
     top: 0;
-    width: 128px;
+    width: 50%;
   }
   
   .desk-time .overlap-group-8 {
     height: 40px;
     position: relative;
-    width: 124px;
+    width: 100%;
   }
   
   .desk-time .text-wrapper-41 {
@@ -1591,7 +1618,7 @@
     position: absolute;
     text-align: right;
     top: 0;
-    width: 124px;
+    width: 100%;
   }
   
   .desk-time .text-wrapper-42 {
@@ -1599,21 +1626,21 @@
     font-family: "Open Sans", Helvetica;
     font-size: 12px;
     font-weight: 400;
-    left: 38px;
+    left: 0;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
     text-align: right;
     top: 18px;
-    width: 86px;
+    width: 100%;
   }
   
   .desk-time .closest {
     height: 40px;
-    left: 172px;
+    left: 50%;
     position: absolute;
     top: 53px;
-    width: 128px;
+    width: 50%;
   }
   
   .desk-time .text-wrapper-43 {
@@ -1621,27 +1648,27 @@
     font-family: "Open Sans", Helvetica;
     font-size: 12px;
     font-weight: 400;
-    left: 17px;
+    left: 0;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
     text-align: right;
     top: 18px;
-    width: 107px;
+    width: 100%;
   }
   
   .desk-time .closest-2 {
     height: 40px;
-    left: 164px;
+    left: 50%;
     position: absolute;
     top: 106px;
-    width: 135px;
+    width: 50%;
   }
   
   .desk-time .overlap-8 {
     height: 40px;
     position: relative;
-    width: 131px;
+    width: 100%;
   }
   
   .desk-time .text-wrapper-44 {
@@ -1649,13 +1676,13 @@
     font-family: "Open Sans", Helvetica;
     font-size: 12px;
     font-weight: 400;
-    left: 44px;
+    left: 0;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
     text-align: right;
     top: 18px;
-    width: 87px;
+    width: 100%;
   }
   
   .desk-time .text-wrapper-45 {
@@ -1669,21 +1696,22 @@
     position: absolute;
     text-align: right;
     top: 0;
-    width: 131px;
+    width: 100%;
   }
   
   .desk-time .closest-3 {
     height: 40px;
-    left: 19px;
+    left: 0;
     position: absolute;
     top: 53px;
-    width: 139px;
+    width: 50%;
   }
   
   .desk-time .overlap-9 {
     height: 40px;
     position: relative;
-    width: 135px;
+    width: 100%;
+    left: 0;
   }
   
   .desk-time .text-wrapper-46 {
@@ -1691,13 +1719,13 @@
     font-family: "Open Sans", Helvetica;
     font-size: 12px;
     font-weight: 400;
-    left: 36px;
+    left: 0;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
     text-align: right;
     top: 18px;
-    width: 99px;
+    width: 100%;
   }
   
   .desk-time .text-wrapper-47 {
@@ -1711,7 +1739,7 @@
     position: absolute;
     text-align: right;
     top: 0;
-    width: 135px;
+    width: 100%;
   }
   
   .desk-time .closest-4 {
@@ -1719,13 +1747,14 @@
     left: 0;
     position: absolute;
     top: 106px;
-    width: 158px;
+    width: 50%;
   }
   
   .desk-time .overlap-10 {
     height: 40px;
     position: relative;
-    width: 154px;
+    width: 100%;
+    left: 0;
   }
   
   .desk-time .text-wrapper-48 {
@@ -1733,13 +1762,13 @@
     font-family: "Open Sans", Helvetica;
     font-size: 12px;
     font-weight: 400;
-    left: 68px;
+    left: 0;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
     text-align: right;
     top: 18px;
-    width: 86px;
+    width: 100%;
   }
   
   .desk-time .text-wrapper-49 {
@@ -1753,7 +1782,7 @@
     position: absolute;
     text-align: right;
     top: 0;
-    width: 154px;
+    width: 100%;
   }
   
   .desk-time .closest-5 {
@@ -1761,7 +1790,7 @@
     left: 0;
     position: absolute;
     top: 0;
-    width: 158px;
+    width: 50%;
   }
   
   .desk-time .text-wrapper-50 {
@@ -1769,12 +1798,12 @@
     font-family: "Open Sans", Helvetica;
     font-size: 12px;
     font-weight: 400;
-    left: 35px;
+    left: 0;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
     text-align: right;
     top: 18px;
-    width: 119px;
+    width: 100%;
   }
   

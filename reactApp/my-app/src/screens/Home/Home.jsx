@@ -19,7 +19,7 @@ function Home() {
           </div>
           <div className="home-pg">
             <div className="overlap-2">
-              <div className="rectangle-4" />
+              {/* <div className="rectangle-4" /> */}
               <div className="rectangle-5" />
               <div className="text-wrapper-2">My Day</div>
               <div className="text-wrapper-3">Screen Distance</div>
