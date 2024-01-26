@@ -64,7 +64,7 @@
 }
 
 .home .home-pg {
-  height: 681px;
+  height: 660px;
   left: 0;
   overflow: hidden;
   overflow-y: scroll;
@@ -78,6 +78,7 @@
   height: 1476px;
   position: relative;
   width: 90%;
+  left: 0;
   margin: 0 auto;
 }
 
@@ -109,7 +110,7 @@
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
-  top: 33px;
+  top: 35px;
   width: 175px;
 }
 
@@ -310,11 +311,11 @@
   font-family: "Open Sans", Helvetica;
   font-size: 14px;
   font-weight: 600;
-  left: 22px;
+  left: 27px;
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
-  top: 8px;
+  top: 10px;
   width: 122px;
 }
 
@@ -512,10 +513,11 @@
 
 .home .average-DT {
   height: 26px;
-  left: 54px;
-  position: absolute;
+  left: 0;
+  position: relative;
   top: 180px;
-  width: 191px;
+  width: 60%;
+  margin: 0 auto;
 }
 
 .home .text-wrapper-14 {
@@ -567,10 +569,11 @@
 
 .home .stats {
   height: 17px;
-  left: 93px;
-  position: absolute;
-  top: 154px;
-  width: 133px;
+  left: 0;
+  position: relative;
+  top: 135px;
+  width: 35%;
+  margin: 0 auto;
 }
 
 .home .overlap-5 {
@@ -647,10 +650,11 @@
 
 .home .legend {
   height: 13px;
-  left: 71px;
-  position: absolute;
-  top: 141px;
-  width: 152px;
+  left: 0;
+  position: relative;
+  top: 100px;
+  width: 45%;
+  margin: 0 auto;
 }
 
 .home .ellipse {
@@ -906,10 +910,11 @@
 
 .home .navbar-wrapper {
   height: 31px;
-  left: 27px;
-  position: absolute;
-  top: 105px;
-  width: 304px;
+    left: 0;
+    position: relative;
+    top: 105px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .home .navbar {
@@ -917,58 +922,59 @@
   border-radius: 6px;
   height: 31px;
   position: relative;
-  width: 296px;
+  width: 85%;
+  margin: 0 auto;
 }
 
 .home .text-wrapper-25 {
   color: #898989;
   font-family: "Open Sans", Helvetica;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  left: 23px;
+  left: 12.5%;
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
-  top: 8px;
-  width: 17px;
+  top: 25%;
+  width: 16px;
 }
 
 .home .text-wrapper-26 {
   color: #898989;
   font-family: "Open Sans", Helvetica;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  left: 180px;
+  left: 60.5%;
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
-  top: 8px;
-  width: 20px;
+  top: 25%;
+  width: 16px;
 }
 
 .home .text-wrapper-27 {
   color: #ffffff;
   font-family: "Open Sans", Helvetica;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  left: 102px;
+  left: 35.5%;
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
-  top: 8px;
-  width: 17px;
+  top: 25%;
+  width: 16px;
 }
 
 .home .text-wrapper-28 {
   color: #898989;
   font-family: "Open Sans", Helvetica;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  left: 261px;
+  left: 82.5%;
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
-  top: 8px;
+  top: 25%;
   width: 16px;
 }
 
@@ -1073,7 +1079,7 @@
 }
 
 .home .group-6 {
-  height: 100%;
+  height: fit-content;
   left: 0;
   position: absolute;
   top: 674px;
@@ -1156,10 +1162,11 @@
 
 .home .group-9 {
   height: 45px;
-  left: 67px;
-  position: absolute;
+  left: 0;
+  position: relative;
   top: 889px;
-  width: 219px;
+  width: 65%;
+  margin: 0 auto;
 }
 
 .home .upright-streak {
@@ -1219,10 +1226,11 @@
 
 .home .group-11 {
   height: 45px;
-  left: 67px;
-  position: absolute;
-  top: 828px;
-  width: 219px;
+  left: 0;
+  position: relative;
+  top: 800px;
+  width: 65%;
+  margin: 0 auto;
 }
 
 .home .text-wrapper-36 {
@@ -1400,7 +1408,7 @@
 }
 
 .home .frame {
-  height: 16px;
+  height: fit-content;
   left: 306px;
   position: absolute;
   top: 635px;

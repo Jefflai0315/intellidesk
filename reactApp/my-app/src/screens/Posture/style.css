@@ -236,6 +236,7 @@
 }
 
 .posture .group-5 {
+  background-color: 0;
   height: 44px;
   left: 13px;
   position: absolute;
@@ -369,10 +370,11 @@
 
 .posture .navbar {
   height: 9px;
-  left: 48px;
-  position: absolute;
+  left: 0;
+  position: relative;
   top: 294px;
-  width: 291px;
+  width: 72.5%;
+  margin: 0 auto
 }
 
 .posture .text-wrapper-7 {
@@ -1054,7 +1056,7 @@
 .posture .overlap-group-4 {
   background-color: #3b3b3b;
   border-radius: 6px;
-  height: 31px;
+  height: 100%;
   position: relative;
   margin: 0 auto;
   width: 100%;
@@ -1190,40 +1192,40 @@
 .posture .text-wrapper-27 {
   color: #898989;
   font-family: "Open Sans", Helvetica;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  left: 23px;
+  left: 12.5%;
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
-  top: 8px;
-  width: 17px;
+  top: 25%;
+  width: 16px;
 }
 
 .posture .text-wrapper-28 {
   color: #898989;
   font-family: "Open Sans", Helvetica;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  left: 180px;
+  left: 60.5%;
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
-  top: 8px;
-  width: 20px;
+  top: 25%;
+  width: 16px;
 }
 
 .posture .text-wrapper-29 {
   color: #ffffff;
   font-family: "Open Sans", Helvetica;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  left: 102px;
+  left: 35.5%;
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
-  top: 8px;
-  width: 17px;
+  top: 25%;
+  width: 16px;
 }
 
 .posture .text-wrapper-30 {
@@ -1236,7 +1238,8 @@
   line-height: normal;
   position: absolute;
   top: 34px;
-  width: 69px;
+  width: 100%;
+  text-align: right;
 }
 
 .posture .day-breakdown {
@@ -1418,17 +1421,50 @@
 
 .posture .group-36 {
   height: 13px;
-  left: 79px;
+  left: 0;
   position: absolute;
   top: 321px;
   width: 100%;
+}
+
+.posture .legend-wrapper {
+  height: 100%;
+  left: 0;
+  position: relative;
+  top: 0;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.posture .legend-perfect {
+  height: 100%;
+  left: 10%;
+  position: absolute;
+  top: 0;
+  width: 30%;
+}
+
+.posture .legend-good {
+  height: 100%;
+  left: 40%;
+  position: absolute;
+  top: 0;
+  width: 30%;
+}
+
+.posture .legend-poor {
+  height: 100%;
+  left: 70%;
+  position: absolute;
+  top: 0;
+  width: 30%;
 }
 
 .posture .ellipse-11 {
   background-color: #f4b54c;
   border-radius: 5.23px;
   height: 10px;
-  left: 85px;
+  left: 0;
   position: absolute;
   top: 1px;
   width: 10px;
@@ -1438,7 +1474,7 @@
   background-color: #ee5757;
   border-radius: 5.23px;
   height: 10px;
-  left: 159px;
+  left: 0;
   position: absolute;
   top: 1px;
   width: 10px;
@@ -1465,7 +1501,7 @@
   position: absolute;
   text-align: center;
   top: 0;
-  width: 45px;
+  width: 35px;
 }
 
 .posture .text-wrapper-36 {
@@ -1473,7 +1509,7 @@
   font-family: "Open Sans", Helvetica;
   font-size: 8px;
   font-weight: 400;
-  left: 98px;
+  left: 13px;
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
@@ -1487,7 +1523,7 @@
   font-family: "Open Sans", Helvetica;
   font-size: 8px;
   font-weight: 400;
-  left: 172px;
+  left: 13px;
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
@@ -1521,16 +1557,16 @@
   line-height: normal;
   position: absolute;
   top: 4px;
-  width: 110px;
+  width: 70%;
   text-align: left;
 }
 
 .posture .overlap-group-7 {
   height: 26px;
-  left: 124px;
+  left: 70%;
   position: absolute;
   top: 0;
-  width: 54px;
+  width: 40%;
 }
 
 .posture .text-wrapper-39 {
@@ -1543,7 +1579,8 @@
   line-height: normal;
   position: absolute;
   top: 0;
-  width: 26px;
+  width: 100%;
+  text-align: left;
 }
 
 .posture .text-wrapper-40 {
@@ -1556,7 +1593,8 @@
   line-height: normal;
   position: absolute;
   top: 7px;
-  width: 30px;
+  width: 100%;
+  text-align: left;
 }
 
 .posture .group-wrapper {

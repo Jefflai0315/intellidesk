@@ -961,7 +961,7 @@ width: 390px;
   
 .desk-time .overlap-8 {
     height: 30px;
-    left: 11px;
+    left: 0;
     position: absolute;
     top: 0;
     width: 139px;
@@ -1637,7 +1637,7 @@ width: 390px;
 }
 
 .desk-time .frame {
-    height: 32px;
+    height: fit-content;
     left: 47px;
     position: absolute;
     top: 117px;

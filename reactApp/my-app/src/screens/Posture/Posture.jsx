@@ -186,8 +186,8 @@ function Posture() {
                 <div className="group-33">
                   <div className="overlap-group-4">
                     <div className="text-wrapper-27">1d</div>
-                    <div className="text-wrapper-28">4w</div>
                     <div className="text-wrapper-29">7d</div>
+                    <div className="text-wrapper-28">1m</div>
                     <div className="text-wrapper-23">1y</div>
                   </div>
                 </div>
@@ -231,12 +231,20 @@ function Posture() {
                 <img className="polygon" alt="Polygon" src="https://c.animaapp.com/QHWYwOlz/img/polygon-4.svg" />
               </div> */}
               <div className="group-36">
-                <div className="ellipse-11" />
-                <div className="ellipse-12" />
-                <div className="ellipse-13" />
-                <div className="text-wrapper-35">Perfect</div>
-                <div className="text-wrapper-36">Good</div>
-                <div className="text-wrapper-37">Poor</div>
+                <div className="legend-wrapper" >
+                  <div className="legend-perfect" >
+                    <div className="ellipse-13" />
+                    <div className="text-wrapper-35">Perfect</div>
+                  </div>
+                  <div className="legend-good" >
+                    <div className="ellipse-11" />
+                    <div className="text-wrapper-36">Good</div>
+                  </div>
+                  <div className="legend-poor" >
+                    <div className="ellipse-12" />
+                    <div className="text-wrapper-37">Poor</div>
+                  </div>  
+                </div>  
               </div>
               <div className="desk-time-summary">
                 <div className="average-DT">

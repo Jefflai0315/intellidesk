@@ -138,7 +138,7 @@ function Home() {
               <div className="navbar-wrapper">
                 <div className="navbar">
                   <div className="text-wrapper-25">1d</div>
-                  <div className="text-wrapper-26">4w</div>
+                  <div className="text-wrapper-26">1m</div>
                   <div className="text-wrapper-27">7d</div>
                   <div className="text-wrapper-28">1y</div>
                 </div>
@@ -188,6 +188,7 @@ function Home() {
               <div className="hydration">
                 <div className="text-wrapper-39">Hydration</div>
                 <img className="group-12" alt="Group" src="https://c.animaapp.com/VczO8maf/img/group-31@2x.png" />
+                <div  className="text-wrapper-39" style={{height:'100px'}}> </div>
               </div>
               <div className="pomodoro">
                 <div className="text-wrapper-40">Pomodoro</div>

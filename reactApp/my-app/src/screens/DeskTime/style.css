@@ -315,7 +315,7 @@
   }
   
   .desk-time .frame {
-    height: 80%;
+    height: 660px;
     left: 0;
     overflow: hidden;
     overflow-y: scroll;
@@ -326,7 +326,7 @@
   }
   
   .desk-time .overlap-3 {
-    height: 880px;
+    height: 100%;
     position: relative;
     width: 90%;
     left: 0;
@@ -334,7 +334,7 @@
   }
   
   .desk-time .group-8 {
-    height: 880px;
+    height: 100%;
     left: 0;
     position: absolute;
     top: 0;
@@ -343,7 +343,7 @@
   }
   
   .desk-time .overlap-group-3 {
-    height: 880px;
+    height: 100%;
     position: relative;
   }
   
@@ -359,7 +359,7 @@
   .desk-time .group-9 {
     background-color: #252525;
     border-radius: 25px;
-    height: 72%;
+    height: 100%;
     left: 0;
     position: absolute;
     top: 0;
@@ -1054,7 +1054,7 @@
     border-radius: 6px;
     height: 31px;
     position: relative;
-    width: 296px;
+    width: 100%;
     left: 0;
   }
   
@@ -1110,13 +1110,13 @@
   .desk-time .text-wrapper-23 {
     color: #898989;
     font-family: "Open Sans", Helvetica;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
-    left: 261px;
+    left: 82.5%;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
-    top: 8px;
+    top: 25%;
     width: 16px;
   }
   
@@ -1169,10 +1169,11 @@
   
   .desk-time .time-interval-bar {
     height: 50px;
-    left: 29px;
-    position: absolute;
+    left: 0;
+    position: relative;
     top: 72px;
-    width: 298px;
+    width: 85%;
+    margin: 0 auto;
   }
   
   .desk-time .group-33 {
@@ -1180,46 +1181,46 @@
     left: 0;
     position: absolute;
     top: 0;
-    width: 304px;
+    width: 100%;
   }
   
   .desk-time .text-wrapper-27 {
     color: #898989;
     font-family: "Open Sans", Helvetica;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
-    left: 23px;
+    left: 12.5%;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
-    top: 8px;
-    width: 17px;
+    top: 25%;
+    width: 16px;
   }
   
   .desk-time .text-wrapper-28 {
     color: #898989;
     font-family: "Open Sans", Helvetica;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
-    left: 180px;
+    left: 60.5%;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
-    top: 8px;
-    width: 20px;
+    top: 25%;
+    width: 16px;
   }
   
   .desk-time .text-wrapper-29 {
     color: #ffffff;
     font-family: "Open Sans", Helvetica;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
-    left: 102px;
+    left: 35.5%;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
-    top: 8px;
-    width: 17px;
+    top: 25%;
+    width: 16px;
   }
   
   .desk-time .text-wrapper-30 {
@@ -1227,12 +1228,13 @@
     font-family: "Open Sans", Helvetica;
     font-size: 12px;
     font-weight: 700;
-    left: 213px;
+    left: 0;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
     top: 34px;
-    width: 69px;
+    width: 100%;
+    text-align: right;
   }
   
   .desk-time .day-breakdown {
@@ -1510,7 +1512,7 @@
     height: 26px;
     left: 0;
     position: relative;
-    top: 342px;
+    top: 310px;
     width: 60%;
     margin: 0 auto;
   }
@@ -1579,7 +1581,7 @@
     height: 161px;
     left: 0;
     position: relative;
-    top: 384px;
+    top: 330px;
     width: 90%;
     margin: 0 auto;
   }
@@ -1588,7 +1590,7 @@
     height: 146px;
     left: 0;
     position: relative;
-    top: 7px;
+    top: 10px;
     width: 90%;
     margin: 0 auto;
   }

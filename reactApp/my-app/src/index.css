@@ -245,7 +245,7 @@
 }
 
 .posture .group-4 {
-  background-color: #9c9c9c;
+  background-color: #000000;
   border-radius: 4px;
   height: 8px;
   left: 0;
@@ -255,7 +255,7 @@
 }
 
 .posture .frame {
-  height: 686px;
+  height: fit-content;
   left: 36px;
   overflow: hidden;
   overflow-y: scroll;
@@ -293,7 +293,7 @@
 }
 
 .posture .group-5 {
-  background-color: #252525;
+  background-color: #000000;
   border-radius: 25px;
   height: 842px;
   left: 0;

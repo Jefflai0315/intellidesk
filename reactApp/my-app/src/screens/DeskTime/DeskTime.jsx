@@ -64,7 +64,7 @@ function DeskTime() {
             <div className="overlap-3">
               <div className="group-8">
                 <div className="overlap-group-3">
-                  <div className="rectangle-4" />
+                  {/* <div className="rectangle-4" /> */}
                   <div className="group-9" />
                 </div>
               </div>
@@ -203,7 +203,7 @@ function DeskTime() {
                 <div className="group-33">
                   <div className="overlap-group-4">
                     <div className="text-wrapper-27">1d</div>
-                    <div className="text-wrapper-28">4w</div>
+                    <div className="text-wrapper-28">1m</div>
                     <div className="text-wrapper-29">7d</div>
                     <div className="text-wrapper-23">1y</div>
                   </div>
