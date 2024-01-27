@@ -22,6 +22,7 @@ firebase_admin.initialize_app(cred, {
 ref = db.reference('Posture/')
 ref_corr = db.reference('Correction/')
 ref_session = db.reference('Session/')
+ref_E2S = db.reference('EyeScreenDistance/')
 
 # try:
 #     connection = mysql.connector.connect(host='localhost',
@@ -47,7 +48,6 @@ ref_session = db.reference('Session/')
 class Posture:    
     def __init__(self,):
         self.start_time = datetime.now()
-        # ref_session.update(str(int(self.start_time.timestamp()*1000)))
         self.total_time = self.get_total_time()
         self.standing_frames = 0
         self.current_standing_frames =0
@@ -61,6 +61,7 @@ class Posture:
         self.average_neck_ang = 0
         self.average_torsol_ang = 0
         self.cap = cv2.VideoCapture(0)
+        self.screens_list=[]
 
         self.mp_pose = mp.solutions.pose
         self.pose = self.mp_pose.Pose()
@@ -72,6 +73,9 @@ class Posture:
         self.mp_drawing_styles = mp.solutions.drawing_styles
         self.model = YOLO("yolov8m.pt")
         self.data_points = defaultdict(list)
+
+        self.last_firebase_update_time = datetime.now()  # Initialize the last update time
+        self.update_interval = 5
 
 
     def get_total_time(self):
@@ -110,6 +114,7 @@ class Posture:
             return True
         else:
             return False
+
 
     
     def read(self):
@@ -153,7 +158,6 @@ class Posture:
         try: 
             results = self.model.predict(image)
             result = results[0]
-            screens_list=[]
             largest_person_area = 0
             largest_person_cords = None
             for box in result.boxes:
@@ -168,9 +172,8 @@ class Posture:
                     color = (255, 0, 0)  # Color of the rectangle (in BGR)
                     thickness = 2       # Thickness of the rectangle border
                     cv2.rectangle(image, start_point, end_point, color, thickness)
-                    width = cords[3]-cords[1]
-                    eye_screen_distance = self.findDistance(l_eye_x, l_eye_y, cords[0], cords[1]+width/2)
-                    screens_list.append([cords,class_id,conf,label,eye_screen_distance])
+                   
+                    self.screens_list.append([cords,class_id,conf,label])
 
                     # Put label near the top left corner of the rectangle
                     font = cv2.FONT_HERSHEY_SIMPLEX
@@ -229,25 +232,11 @@ class Posture:
                     lmPose = self.mp_pose.PoseLandmark
 
 
-            if len(screens_list) > 0:
-                screens_list.sort(key=lambda x: x[4])
-                cords = screens_list[0][0]
-                class_id = screens_list[0][1]
-                conf = screens_list[0][2]
-                label = screens_list[0][3]
-                width=cords[3]-cords[1]
-                start_point = (int(cords[0]), int(cords[1]))
-                cv2.line(image, (l_eye_x, l_eye_y), (int(cords[0]), int(cords[1]+width/2)), red, 2)
-                eye_screen_distance = self.findDistance(l_eye_x, l_eye_y, cords[0], cords[1]+width/2)
-                print("torso length: ", torso_length)
-                # torso_scale = torso_length/52 #50cm
-                scale = width/23
-                eye_screen_distance = int(eye_screen_distance/scale)
-                cv2.putText(image, f'eye to screen distance: {eye_screen_distance}', (w - 800, 300) ,font, 0.9, green, 2)
+        
             
 
         except Exception as e:
-            print(e)
+            print("error is that " + e)
 
       
        
@@ -291,7 +280,39 @@ class Posture:
             r_eye_x = int(lm.landmark[lmPose.RIGHT_EYE].x * w)
             r_eye_y = int(lm.landmark[lmPose.RIGHT_EYE].y * h)
 
-            torso_length = self.findDistance(l_shldr_x, l_shldr_y, l_hip_x, l_hip_y)
+            if len( self.screens_list) > 1:
+                for i in range(len(self.screens_list)): 
+                    cords = self.screens_list[i][0]
+                    height=cords[3]-cords[1]
+                    eye_screen_distance = self.findDistance(l_eye_x, l_eye_y, cords[0], cords[1]+height/2)
+                    self.screens_list[i].append(eye_screen_distance)
+                self.screens_list.sort(key=lambda x: x[4])
+            else:
+                cords = self.screens_list[0][0]
+                class_id = self.screens_list[0][1]
+                conf = self.screens_list[0][2]
+                label = self.screens_list[0][3]
+                height=cords[3]-cords[1]
+                start_point = (int(cords[0]), int(cords[1]))
+                
+                cv2.line(image, (l_eye_x, l_eye_y), (int(cords[0]), int(cords[1]+height/2)), red, 2)
+                eye_screen_distance = self.findDistance(l_eye_x, l_eye_y, cords[0], cords[1]+height/2)
+
+                scale = height/23 #assume 23cm actual height 
+                eye_screen_distance = int(eye_screen_distance/scale)
+                cv2.putText(image, f'eye to screen distance: {eye_screen_distance}', (w - 800, 300) ,font, 0.9, green, 2)
+
+                current_time = datetime.now()
+                if (current_time - self.last_firebase_update_time).total_seconds() >= self.update_interval:
+                    self.last_firebase_update_time = current_time
+                    send_to_firebase(ref_E2S,{str(int(timestamp.timestamp() *1000)) : {
+                            # Handle numerical fields
+                            'Distance' :eye_screen_distance }})
+                #clear screen list
+                self.screens_list.removeAll()
+
+
+           
             
         
             # Calculate distance between left shoulder and right shoulder points.
@@ -499,6 +520,7 @@ class Posture:
             # Write frames.
             
         except Exception as e:
+            print(e)
             pass
 
 
