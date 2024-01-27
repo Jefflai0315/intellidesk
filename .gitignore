@@ -14,3 +14,12 @@ myenv/
 output.mp4
 proto_builder.py
 test.py
+node_modules
+.DS_Store
+Users.npz
+Users/
+facenet_keras.h5
+intellidesk-174c9-firebase-adminsdk-garkf-abe9a9fb75.json
+package-lock.json
+package.json
+yolov8m.pt
