@@ -70,13 +70,13 @@ function Home() {
               </div>
               <Link to="/DeskTime">
               <BarIcon className="bar-icon-instance" />
+              </Link>
               <div className="bar-icon-2">
                 <div className="rectangle-9" />
                 <div className="rectangle-10" />
                 <div className="rectangle-11" />
                 <div className="rectangle-12" />
               </div>
-              </Link>
               <div className="bar-icon-3">
                 <div className="rectangle-9" />
                 <div className="rectangle-10" />

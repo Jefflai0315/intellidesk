@@ -890,7 +890,7 @@
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
-  top: 580px;
+  top: 585px;
   width: 235px;
 }
 
@@ -1243,7 +1243,7 @@
 }
 
 .posture .day-breakdown {
-  height: 100%;
+  height: fit-content;
   left: 0;
   position: absolute;
   top: 662px;
@@ -1364,9 +1364,9 @@
 
 .posture .edit {
   height: 20px;
-  left: 271px;
+  left: 260px;
   position: absolute;
-  top: 655px;
+  top: 670px;
   width: 37px;
 }
 

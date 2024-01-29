@@ -1,0 +1,15 @@
+/* In your CSS file (e.g., styles.css) */
+/* Target the bar chart canvas element */
+canvas.custom-rounded-bars {
+    /* Apply rounded corners to the bars */
+    border-radius: 10px;
+  }
+  
+.custom-rounded-bars-container .chartjs-render-monitor .chart-legend li span {
+  background-color: #007bff; /* Circle background color */
+  border-radius: 50%; /* Make it a circle */
+  display: inline-block;
+  width: 10px; /* Adjust the circle size */
+  height: 10px; /* Adjust the circle size */
+  margin-right: 5px; /* Add spacing between circles */
+}

@@ -196,7 +196,7 @@ function Posture() {
               </Link>
               <div className="day-breakdown">
                 <BarChartPosture className="bar-chart-posture" />
-                <PostureAngle className="posture-angle-instance" angle={87}/>
+                <PostureAngle className="posture-angle-instance" angle={110}/>
                 {/* <div className="overlap-4">
                   <div className="calories-ring">
                     <div className="overlap-5">
