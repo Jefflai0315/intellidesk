@@ -49,7 +49,7 @@ export const BarChartPosture = () => {
         scales: {
           xAxes: [
               {
-              },
+                },
           ],
           yAxes: [
               {
@@ -57,6 +57,9 @@ export const BarChartPosture = () => {
                       beginAtZero: true,
                       stepSize: 20, // Adjust the step size as needed
                   },
+                  gridLines: {
+                    color: '#3C3C3C', // Change x-axis grid lines color
+                  }
               },
           ],
       },

@@ -68,7 +68,7 @@ function Posture() {
                   <div className="group-9" />
                 </div>
               </div>
-              <div className="navbar">
+              {/* <div className="navbar">
                 <div className="text-wrapper-7">24/9</div>
                 <div className="text-wrapper-8">25/9</div>
                 <div className="text-wrapper-9">26/9</div>
@@ -76,8 +76,8 @@ function Posture() {
                 <div className="text-wrapper-11">28/9</div>
                 <div className="text-wrapper-12">29/9</div>
                 <div className="text-wrapper-13">30/9</div>
-              </div>
-              <div className="grid-lines">
+              </div> */}
+              {/* <div className="grid-lines">
                 <img className="line-2" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
                 <img className="line-3" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
                 <img className="line-4" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
@@ -85,8 +85,8 @@ function Posture() {
                 <img className="line-6" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
                 <img className="line-7" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
                 <img className="line-8" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
-              </div>
-              <div className="rectangle-wrapper">
+              </div> */}
+              {/* <div className="rectangle-wrapper">
                 <div className="rectangle-5" />
               </div>
               <div className="group-10">
@@ -148,10 +148,10 @@ function Posture() {
               </div>
               <div className="group-29">
                 <div className="rectangle-7" />
-              </div>
+              </div> */}
               <div className="text-wrapper-14">Posture</div>
               <div className="text-wrapper-15">Posture angle</div>
-              <div className="date-line">
+              {/* <div className="date-line">
                 <div className="group-30">
                   <div className="text-wrapper-16">0</div>
                   <div className="text-wrapper-17">50</div>
@@ -167,7 +167,7 @@ function Posture() {
                   <div className="ellipse-7" />
                   <div className="ellipse-8" />
                 </div>
-              </div>
+              </div> */}
               <div className="group-32">
                 <div className="overlap-group-4">
                   <div className="text-wrapper-20">24</div>
@@ -193,9 +193,12 @@ function Posture() {
                 </div>
                 <div className="text-wrapper-30">24/9 - 30/9</div>
               </div>
+              <div className="bar-chart-container">
+                <BarChartPosture className="bar-chart-posture" />
+              </div>
               </Link>
               <div className="day-breakdown">
-                <BarChartPosture className="bar-chart-posture" />
+                {/* <BarChartPosture className="bar-chart-posture" /> */}
                 <PostureAngle className="posture-angle-instance" angle={110}/>
                 {/* <div className="overlap-4">
                   <div className="calories-ring">
@@ -221,16 +224,16 @@ function Posture() {
                   </div>
                 </div> */}
               </div>
-              <div className="edit">
+              {/* <div className="edit">
                 <div className="overlap-7">
                   <div className="text-wrapper-34">Edit</div>
                 </div>
-              </div>
+              </div> */}
               {/* <div className="group-35">
                 <div className="rectangle-19" />
                 <img className="polygon" alt="Polygon" src="https://c.animaapp.com/QHWYwOlz/img/polygon-4.svg" />
               </div> */}
-              <div className="group-36">
+              {/* <div className="group-36">
                 <div className="legend-wrapper" >
                   <div className="legend-perfect" >
                     <div className="ellipse-13" />
@@ -245,7 +248,7 @@ function Posture() {
                     <div className="text-wrapper-37">Poor</div>
                   </div>  
                 </div>  
-              </div>
+              </div> */}
               <div className="desk-time-summary">
                 <div className="average-DT">
                   <div className="text-wrapper-38">Posture Score</div>
