@@ -57,7 +57,7 @@ class PostureAnalyzer:
         self.data_points = defaultdict(list)
 
         self.last_firebase_update_time = datetime.now().timestamp()*1000  # Initialize the last update time
-        self.update_interval = 5
+        self.update_interval = 3000
 
 
 
@@ -183,11 +183,14 @@ class PostureAnalyzer:
     def run(self):
         timer = Timer(10, self.average_and_send)
         timer.start()
-        while post.cap.isOpened():
-        # Capture frames.
-            image = self.read()
-        # Write frames.
-            cv2.imshow('Webcam', image)
+        while self.cap.isOpened():
+            cur_time = datetime.now().timestamp()*1000
+            if (cur_time - self.last_firebase_update_time) >= self.update_interval:
+                self.last_firebase_update_time = cur_time
+            # Capture frames.
+                image = self.read()
+            # Write frames.
+                cv2.imshow('Webcam', image)
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 self.firebase_refs['Session'].update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
@@ -306,10 +309,6 @@ class PostureAnalyzer:
 
         except Exception as e:
             print(e)
-   
-
-
-
 
         # Acquire the landmark coordinates.
         # Once aligned properly, left or right should not be a concern.      
@@ -357,7 +356,7 @@ class PostureAnalyzer:
             eye_offset = self.findDistance(l_eye_x, l_eye_y, r_eye_x, r_eye_y)
         
             # Assist to align the camera to point at the side view of the person.
-            if offset < 200:
+            if offset < 300:
                 cv2.putText(image, str(int(offset)) + ' Aligned', (w - 300, 30), font, 0.9, green, 2)
             else:
                 cv2.putText(image, str(int(offset)) + ' Not Aligned', (w - 300, 30), font, 0.9, red, 2)
@@ -401,7 +400,8 @@ class PostureAnalyzer:
                             # Handle numerical fields
                             'Distance' :eye_screen_distance }})
                 #clear screen list
-                self.screens_list.removeAll()
+                
+                    self.screens_list.removeAll()
 
 
             
@@ -592,7 +592,6 @@ class PostureAnalyzer:
               
             except Exception as e:
                 print(e)
-            # Write frames.
             
         except Exception as e:
             print(e)
