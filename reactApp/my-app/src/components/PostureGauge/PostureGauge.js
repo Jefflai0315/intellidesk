@@ -13,7 +13,7 @@ export const PostureGauge = ({ score }) => {
           minValue= "0"
           maxValue= "100"
           value= {score}
-          pointer={{type: "blob", animationDelay: 0 }}
+          pointer={{type: "blob", animationDelay: 0, color: "#FFFFFF" }}
           arc={{
             colorArray: ["#EE5757", "#F4B54C", "#78D06A"],
             padding: 0.02,

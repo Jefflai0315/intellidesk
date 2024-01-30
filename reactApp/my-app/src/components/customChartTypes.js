@@ -1,30 +1,35 @@
 import Chart from 'chart.js';
 
-// Define a custom controller for filleted bars
-Chart.controllers.roundedBar = Chart.controllers.bar.extend({
-    // This method is called to draw the bars with rounded corners
-    draw: function (ease) {
-        const { ctx } = this.chart;
-        const { chartArea } = this.chart;
-
-        // Loop through each bar
-        this.getMeta().data.forEach((bar, index) => {
-            const { x, y, base, width } = bar.getProps(['x', 'y', 'base', 'width']);
-
-            // Draw the rounded rectangle using the CanvasRenderingContext2D arcTo method
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-            ctx.lineTo(x, y + bar.height - 10); // Adjust the radius as needed
-            ctx.arcTo(x, y + bar.height, x + width, y + bar.height, 10); // Adjust the radius as needed
-            ctx.lineTo(x + width, y);
-            ctx.closePath();
-
-            // Fill the bar with the specified color
-            ctx.fillStyle = bar._model.backgroundColor;
-            ctx.fill();
-        });
-    },
-});
-
-// Register the custom chart type
-Chart.controllers.roundedBar._type = 'roundedBar';
+// Override the draw method of the Bar chart element
+Chart.elements.Rectangle.prototype.draw = function () {
+    const ctx = this._chart.ctx;
+    const vm = this._view;
+    const left = vm.x - vm.width / 2;
+    const right = vm.x + vm.width / 2;
+    const top = vm.y;
+    const bottom = vm.base;
+    const cornerRadius = 6; // Adjust as needed
+  
+    ctx.beginPath();
+    ctx.fillStyle = vm.backgroundColor;
+    ctx.strokeStyle = vm.borderColor;
+    ctx.lineWidth = vm.borderWidth;
+  
+    // Rounded top
+  ctx.moveTo(left + cornerRadius, top);
+  ctx.lineTo(right - cornerRadius, top);
+  ctx.quadraticCurveTo(right, top, right, top + cornerRadius);
+  ctx.lineTo(right, bottom - cornerRadius);
+  ctx.quadraticCurveTo(right, bottom, right - cornerRadius, bottom);
+  ctx.lineTo(left + cornerRadius, bottom);
+  ctx.quadraticCurveTo(left, bottom, left, bottom - cornerRadius);
+  ctx.lineTo(left, top + cornerRadius);
+  ctx.quadraticCurveTo(left, top, left + cornerRadius, top);
+  ctx.closePath();
+  
+    ctx.fill();
+    if (vm.borderWidth) {
+      ctx.stroke();
+    }
+  };
+  

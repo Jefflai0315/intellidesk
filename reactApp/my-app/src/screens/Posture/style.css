@@ -890,7 +890,7 @@
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
-  top: 500px;
+  top: 530px;
   width: 235px;
 }
 
@@ -1246,7 +1246,7 @@
   height: fit-content;
   left: 0;
   position: absolute;
-  top: 520px;
+  top: 540px;
   width: 100%;
 }
 
@@ -1536,7 +1536,7 @@
   height: 26px;
   left: 0;
   position: relative;
-  top: 40px;
+  top: 80px;
   width: 50%;
   margin: 0 auto;
 }
@@ -1604,7 +1604,7 @@
   left: 0;
   position: relative;
   margin: 0 auto;
-  top: 50px;
+  top: 90px;
   width: 85%;
 }
 

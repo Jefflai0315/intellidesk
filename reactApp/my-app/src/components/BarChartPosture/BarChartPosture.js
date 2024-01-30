@@ -1,6 +1,6 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import '../../components/customChartTypes.js';
+import '../customChartTypes.js';
 import './styles.css';
 
 export const BarChartPosture = () => {
@@ -68,8 +68,8 @@ export const BarChartPosture = () => {
     return (
       <Bar
           data={data}
-          width={null}
-          height={null}
+          width={550}
+          height={350}
           options={options}
       />
   )   

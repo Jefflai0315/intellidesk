@@ -2,7 +2,7 @@ import React from "react";
 import { BotBar_Home } from "../../components/BotBar_Home";
 import "./style.css";
 import { Link } from 'react-router-dom';
-import { PostureAngle } from "../../components/PostureAngle";
+import { BarChartDeskTime } from "../../components/BarChartDeskTime";
 
 
 function DeskTime() {
@@ -68,7 +68,7 @@ function DeskTime() {
                   <div className="group-9" />
                 </div>
               </div>
-              <div className="navbar">
+              {/* <div className="navbar">
                 <div className="text-wrapper-7">24/9</div>
                 <div className="text-wrapper-8">25/9</div>
                 <div className="text-wrapper-9">26/9</div>
@@ -85,8 +85,8 @@ function DeskTime() {
                 <img className="line-6" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
                 <img className="line-7" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
                 <img className="line-8" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
-              </div>
-              <div className="rectangle-wrapper">
+              </div> */}
+              {/* <div className="rectangle-wrapper">
                 <div className="rectangle-5" />
               </div>
               <div className="group-10">
@@ -148,9 +148,9 @@ function DeskTime() {
               </div>
               <div className="group-29">
                 <div className="rectangle-7" />
-              </div>
+              </div> */}
               <div className="text-wrapper-14">Desk Time</div>
-              <div className="date-line">
+              {/* <div className="date-line"> */}
                 {/* <div className="group-13">
                   <div className="text-wrapper-24">00:00</div>
                   <div className="text-wrapper-25">12:00</div>
@@ -165,7 +165,7 @@ function DeskTime() {
                   <div className="ellipse-9" />
                   <div className="ellipse-10" />
                 </div> */}
-              </div>
+              {/* </div> */}
               {/* <div className="text-wrapper-15">Posture angle</div>
               <div className="date-line">
                 <div className="group-30">
@@ -210,6 +210,9 @@ function DeskTime() {
                 </div>
                 <div className="text-wrapper-30">24/9 - 30/9</div>
               </div>
+              <div className="bar-chart-container">
+                <BarChartDeskTime className="bar-chart-desk-time" />
+              </div>
               </Link>
               {/* <div className="day-breakdown"> */}
                 {/* <PostureAngle className="posture-angle-instance" angle={87}/> */}
@@ -246,18 +249,18 @@ function DeskTime() {
                 <div className="rectangle-19" />
                 <img className="polygon" alt="Polygon" src="https://c.animaapp.com/QHWYwOlz/img/polygon-4.svg" />
               </div> */}
-              <div className="group-36">
+              {/* <div className="group-36">
                 <div className="standing-legend">
                   <div className="ellipse-11" />
                   <div className="text-wrapper-36">Standing</div>
-                </div>
+                </div> */}
                 {/* <div className="ellipse-13" /> */}
                 {/* <div className="text-wrapper-35">Perfect</div> */}
-                <div className="sitting-legend">
+                {/* <div className="sitting-legend">
                   <div className="ellipse-12" />
                   <div className="text-wrapper-37">Sitting</div>
                 </div>
-              </div>
+              </div> */}
               <div className="desk-time-summary">
                 <div className="average-DT">
                   <div className="text-wrapper-38">Average</div>

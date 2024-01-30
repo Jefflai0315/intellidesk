@@ -343,7 +343,7 @@
   }
   
   .desk-time .overlap-group-3 {
-    height: 100%;
+    height: 97%;
     position: relative;
   }
   
@@ -1512,7 +1512,7 @@
     height: 26px;
     left: 0;
     position: relative;
-    top: 310px;
+    top: 100px;
     width: 60%;
     margin: 0 auto;
   }
@@ -1581,7 +1581,7 @@
     height: 161px;
     left: 0;
     position: relative;
-    top: 330px;
+    top: 120px;
     width: 90%;
     margin: 0 auto;
   }
@@ -1809,3 +1809,11 @@
     width: 100%;
   }
   
+  .desk-time .bar-chart-container {
+    height: 25%;
+    left: 0;
+    position: relative;
+    top: 70px;
+    width: 90%;
+    margin: 0 auto
+  }
