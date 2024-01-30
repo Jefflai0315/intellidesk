@@ -24,26 +24,6 @@ ref_corr = db.reference('Correction/')
 ref_session = db.reference('Session/')
 ref_E2S = db.reference('EyeScreenDistance/')
 
-# try:
-#     connection = mysql.connector.connect(host='localhost',
-#                                          database='test',
-#                                          user='root',
-#                                          password='Murukku!')
-#     if connection.is_connected():
-#         db_Info = connection.get_server_info()
-#         print("Connected to MySQL Server version ", db_Info)
-#         cursor = connection.cursor()
-#         cursor.execute("select database();")
-#         record = cursor.fetchone()
-#         print("You're connected to database: ", record)
-
-# except Exception as e:
-#     print("Error while connecting to MySQL", e)
-# finally:
-#     if connection.is_connected():
-#         # cursor.close()
-#         # connection.close()
-#         print("MySQL connection is connected")
 
 class Posture:    
     def __init__(self,):
@@ -89,6 +69,47 @@ class Posture:
         theta = m.acos((y2 -y1)*(-y1) / (m.sqrt((x2 - x1)**2 + (y2 - y1)**2) * y1))
         degree = int(180/m.pi)*theta
         return degree
+
+    def calculate_angle_3p(self, x1, y1, x2, y2, x3, y3):
+    # Calculating the slopes of lines AB and BC
+        slope_AB = (y2 - y1) / (x2 - x1) if x2 != x1 else float('inf')
+        slope_BC = (y3 - y2) / (x3 - x2) if x3 != x2 else float('inf')
+
+        # Calculating the tangent of the angle between the lines
+        tan_theta = abs((slope_BC - slope_AB) / (1 + slope_AB * slope_BC))
+
+        # Calculating the angle in radians
+        angle_radians = m.atan(tan_theta)
+
+        # Converting the angle to degrees
+        angle_degrees = angle_radians * (180 / m.pi)
+
+        return angle_degrees
+
+    def calculate_angle_2p(self,x1, y1, x2, y2):
+    # Calculate the differences in the x and y coordinates
+        delta_x = x1-x2
+        delta_y = y2 - y1
+
+        # Avoid division by zero
+        if delta_y == 0:
+            return 90 if delta_x > 0 else 270 if delta_x < 0 else 0
+
+        # Calculate the angle in radians
+        angle_radians = m.atan(delta_x / delta_y)
+
+        # Convert the angle to degrees
+        angle_degrees = angle_radians * (180 / m.pi)
+
+        # Adjust the angle based on the quadrant
+        # if delta_x >= 0 and delta_y < 0:
+        #     angle_degrees = 180 - angle_degrees
+        # elif delta_x < 0 and delta_y < 0:
+        #     angle_degrees = 180 + angle_degrees
+        # elif delta_x < 0 and delta_y >= 0:
+        #     angle_degrees = 360 - angle_degrees
+
+        return angle_degrees
 
     def sendWarning(self):
         self.correction.append(datetime.now().time())
@@ -154,6 +175,7 @@ class Posture:
 
         # lm = keypoints.pose_landmarks
         # lmPose = self.mp_pose.PoseLandmark
+
 
         try: 
             results = self.model.predict(image)
@@ -236,10 +258,9 @@ class Posture:
             
 
         except Exception as e:
-            print("error is that " + e)
+            print(e)
 
-      
-       
+
 
 
         # Acquire the landmark coordinates.
@@ -279,40 +300,44 @@ class Posture:
             l_eye_y = int(lm.landmark[lmPose.LEFT_EYE].y * h)
             r_eye_x = int(lm.landmark[lmPose.RIGHT_EYE].x * w)
             r_eye_y = int(lm.landmark[lmPose.RIGHT_EYE].y * h)
-
-            if len( self.screens_list) > 1:
-                for i in range(len(self.screens_list)): 
-                    cords = self.screens_list[i][0]
+    
+        
+            try: 
+                if len( self.screens_list) > 1:
+                    for i in range(len(self.screens_list)): 
+                        cords = self.screens_list[i][0]
+                        height=cords[3]-cords[1]
+                        eye_screen_distance = self.findDistance(l_eye_x, l_eye_y, cords[0], cords[1]+height/2)
+                        self.screens_list[i].append(eye_screen_distance)
+                    self.screens_list.sort(key=lambda x: x[4])
+                else:
+                    cords = self.screens_list[0][0]
+                    class_id = self.screens_list[0][1]
+                    conf = self.screens_list[0][2]
+                    label = self.screens_list[0][3]
                     height=cords[3]-cords[1]
+                    start_point = (int(cords[0]), int(cords[1]))
+                    
+                    cv2.line(image, (l_eye_x, l_eye_y), (int(cords[0]), int(cords[1]+height/2)), red, 2)
                     eye_screen_distance = self.findDistance(l_eye_x, l_eye_y, cords[0], cords[1]+height/2)
-                    self.screens_list[i].append(eye_screen_distance)
-                self.screens_list.sort(key=lambda x: x[4])
-            else:
-                cords = self.screens_list[0][0]
-                class_id = self.screens_list[0][1]
-                conf = self.screens_list[0][2]
-                label = self.screens_list[0][3]
-                height=cords[3]-cords[1]
-                start_point = (int(cords[0]), int(cords[1]))
+
+                    scale = height/23 #assume 23cm actual height 
+                    eye_screen_distance = int(eye_screen_distance/scale)
+                    cv2.putText(image, f'eye to screen distance: {eye_screen_distance}', (w - 800, 300) ,font, 0.9, green, 2)
+
+                    current_time = datetime.now()
+                    if (current_time - self.last_firebase_update_time).total_seconds() >= self.update_interval:
+                        self.last_firebase_update_time = current_time
+                        send_to_firebase(ref_E2S,{str(int(timestamp.timestamp() *1000)) : {
+                                # Handle numerical fields
+                                'Distance' :eye_screen_distance }})
+                    #clear screen list
+                    self.screens_list.removeAll()
                 
-                cv2.line(image, (l_eye_x, l_eye_y), (int(cords[0]), int(cords[1]+height/2)), red, 2)
-                eye_screen_distance = self.findDistance(l_eye_x, l_eye_y, cords[0], cords[1]+height/2)
-
-                scale = height/23 #assume 23cm actual height 
-                eye_screen_distance = int(eye_screen_distance/scale)
-                cv2.putText(image, f'eye to screen distance: {eye_screen_distance}', (w - 800, 300) ,font, 0.9, green, 2)
-
-                current_time = datetime.now()
-                if (current_time - self.last_firebase_update_time).total_seconds() >= self.update_interval:
-                    self.last_firebase_update_time = current_time
-                    send_to_firebase(ref_E2S,{str(int(timestamp.timestamp() *1000)) : {
-                            # Handle numerical fields
-                            'Distance' :eye_screen_distance }})
-                #clear screen list
-                self.screens_list.removeAll()
+            except Exception as e:
+                print( e)
 
 
-           
             
         
             # Calculate distance between left shoulder and right shoulder points.
@@ -332,12 +357,23 @@ class Posture:
                 cv2.putText(image, str(int(offset)) + ' Eyes Not Aligned', (w - 300, 100), font, 0.9, red, 2)
         
             # Calculate angles.
-            neck_inclination = self.findAngle(l_shldr_x, l_shldr_y, l_ear_x, l_ear_y)
-            torso_inclination = self.findAngle(l_hip_x, l_hip_y, l_shldr_x, l_shldr_y)
-            knee_inclination = self.findAngle(l_hip_x, l_hip_y, l_knee_x, l_knee_y)
-           
-            # _inclination = findAngle(l_hip_x, l_hip_y, l_shldr_x, l_shldr_y)
-        
+            # neck_inclination = self.findAngle(l_shldr_x, l_shldr_y, l_ear_x, l_ear_y)
+            # torso_inclination = self.findAngle(l_hip_x, l_hip_y, l_shldr_x, l_shldr_y)
+            # knee_inclination = self.findAngle(l_hip_x, l_hip_y, l_knee_x, l_knee_y)
+
+            trunk_inclication = self.calculate_angle_2p( l_shldr_x, l_shldr_y,l_hip_x, l_hip_y)
+            hip_angle = self.calculate_angle_3p(l_shldr_x, l_shldr_y, l_hip_x, l_hip_y, l_knee_x, l_knee_y)
+            upper_arm_inclination = self.calculate_angle_2p(l_shldr_x, l_shldr_y, l_elbow_x, l_elbow_y)
+            elbow_angle = self.calculate_angle_3p(l_shldr_x, l_shldr_y, l_elbow_x, l_elbow_y, l_wrist_x, l_wrist_y)
+            neck_inclination = self.calculate_angle_2p(l_shldr_x, l_shldr_y, l_ear_x, l_ear_y)
+            ear_shoulder_distance = self.findDistance(l_shldr_x, l_shldr_y, l_ear_x, l_ear_y)
+            print('trunk inclination: ' , trunk_inclication)
+            print('hip angle: ' , hip_angle)
+            print('upper arm inclination: ' , upper_arm_inclination)
+            print('elbow angle: ' , elbow_angle)
+            print('neck inclination: ' , neck_inclination)
+            print('ear shoulder distance: ' , ear_shoulder_distance)
+
             # Draw landmarks.
             cv2.circle(image, (l_shldr_x, l_shldr_y), 7, yellow, -1)
             cv2.circle(image, (l_ear_x, l_ear_y), 7, yellow, -1)
@@ -365,12 +401,12 @@ class Posture:
             
             # Put text, Posture and angle inclination.
             # Text string for display.
-            angle_text_string = 'Neck : ' + str(int(neck_inclination)) + '  Torso : ' + str(int(torso_inclination))
-            stand_sit_string = 'Knee Angle ' + str(int(knee_inclination)) 
-
+            angle_text_string = 'Neck : ' + str(int(neck_inclination)) + '  Torso : ' + str(int(trunk_inclication))
+            # stand_sit_string = 'Knee Angle ' + str(int(knee_inclination)) 
+            stand_sit_string = 'Knee Angle ' + str(int(hip_angle)) 
 
             cv2.putText(image, stand_sit_string, (10, 100), font, 0.9, light_green, 2)
-            if knee_inclination > 150:
+            if hip_angle > 150:
                 position_category = 'standing'
                 self.standing_frames += 1
             else:
@@ -406,14 +442,14 @@ class Posture:
 
             # Determine whether good posture or bad posture.
             # The threshold angles have been set based on intuition.
-            if neck_inclination < 20 and torso_inclination < 5:
+            if neck_inclination < 5 and neck_inclination > -10 and trunk_inclication < 10 and trunk_inclication > 0:  #torso_inclination < 5:
                 posture_category = 'perfect'
                 self.perfect_pos_frames += 1
                 self.prolong_bad = 0
 
                 cv2.putText(image, angle_text_string, (10, 30), font, 0.7, blue, 2)
                 cv2.putText(image, str(int(neck_inclination)), (l_shldr_x + 10, l_shldr_y), font, 0.7, blue, 2)
-                cv2.putText(image, str(int(torso_inclination)), (l_hip_x + 10, l_hip_y), font, 0.7, blue, 2)
+                cv2.putText(image, str(int(trunk_inclication)), (l_hip_x + 10, l_hip_y), font, 0.7, blue, 2)
         
                 # Join landmarks.
                 cv2.line(image, (l_shldr_x, l_shldr_y), (l_ear_x, l_ear_y), blue, 4)
@@ -426,14 +462,14 @@ class Posture:
         
             
             
-            elif  neck_inclination < 40 and torso_inclination < 10:
+            elif  neck_inclination < 10 and neck_inclination > -20 and trunk_inclication < 30 and trunk_inclication > -5:
                 posture_category = 'good'
                 self.good_pos_frames += 1
                 self.prolong_bad = 0
         
                 cv2.putText(image, angle_text_string, (10, 30), font, 0.7, light_green, 2)
                 cv2.putText(image, str(int(neck_inclination)), (l_shldr_x + 10, l_shldr_y), font, 0.7, light_green, 2)
-                cv2.putText(image, str(int(torso_inclination)), (l_hip_x + 10, l_hip_y), font, 0.7, light_green, 2)
+                cv2.putText(image, str(int(trunk_inclication)), (l_hip_x + 10, l_hip_y), font, 0.7, light_green, 2)
         
                 # Join landmarks.
                 cv2.line(image, (l_shldr_x, l_shldr_y), (l_ear_x, l_ear_y), green, 4)
@@ -451,7 +487,7 @@ class Posture:
         
                 cv2.putText(image, angle_text_string, (10, 30), font, 0.9, red, 2)
                 cv2.putText(image, str(int(neck_inclination)), (l_shldr_x + 10, l_shldr_y), font, 0.9, red, 2)
-                cv2.putText(image, str(int(torso_inclination)), (l_hip_x + 10, l_hip_y), font, 0.9, red, 2)
+                cv2.putText(image, str(int(trunk_inclication)), (l_hip_x + 10, l_hip_y), font, 0.9, red, 2)
         
                 # Join landmarks.
                 cv2.line(image, (l_shldr_x, l_shldr_y), (l_ear_x, l_ear_y), red, 4)
@@ -461,6 +497,11 @@ class Posture:
                 cv2.line(image, (l_elbow_x, l_elbow_y), (l_shldr_x, l_shldr_y), red, 4)
                 cv2.line(image, (l_elbow_x, l_elbow_y), (l_wrist_x, l_wrist_y), red, 4)
                 cv2.line(image, (l_hip_x, l_hip_y), (l_knee_x, l_knee_y), red, 4)
+
+
+            if ear_shoulder_distance < 100: #shrug
+                posture_category = 'bad'
+                print('shrug')
         
         
             # Calculate the time of remaining in a particular posture.
@@ -510,8 +551,8 @@ class Posture:
                 self.data_points['PostureCategory'].append(posture_category)
                 self.data_points['PositionCategory'].append(position_category)
                 self.data_points['NeckInclination'].append(neck_inclination)
-                self.data_points['TorseInclination'].append(torso_inclination)
-                self.data_points['KneeInclination'].append(knee_inclination)
+                self.data_points['TorseInclination'].append(trunk_inclication)
+                self.data_points['KneeInclination'].append(trunk_inclication)
                 # query = "INSERT INTO PostureData (Timestamp, PostureCategory, PositionCategory, NeckInclination, TorseInclination, KneeInclination) VALUES (%s, %s, %s, %s, %s, %s)"
                 # cursor.execute(query, (timestamp, posture_category,position_category,neck_inclination,torso_inclination,knee_inclination))
                 # connection.commit()

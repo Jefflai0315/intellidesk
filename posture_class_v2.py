@@ -24,7 +24,8 @@ def initialize_firebase():
         'Posture': db.reference('Posture/'),
         'Correction': db.reference('Correction/'),
         'Session': db.reference('Session/'),
-        'EyeScreenDistance': db.reference('EyeScreenDistance/')
+        'EyeScreenDistance': db.reference('EyeScreenDistance/'),
+        'Controls': db.reference('Controls/')
     }
 
 
@@ -97,9 +98,16 @@ class PostureAnalyzer:
         angle_degrees = angle_radians * (180 / m.pi)
 
         return angle_degrees
+    
+    def reset_nudge(self):
+        self.send_to_firebase(self.firebase_refs['Controls'],{'PostureNudge': '0'})
+
 
     def sendWarning(self):
         self.correction.append(datetime.now().timestamp()*1000)
+        self.send_to_firebase(self.firebase_refs['Controls'],{'PostureNudge': '1'})
+        timer = Timer(10, self.reset_nudge)
+        timer.start()
         return 'bad posture'
 
     def is_fist(self, hand_landmarks):
@@ -414,6 +422,9 @@ class PostureAnalyzer:
             print('elbow angle: ' , elbow_angle)
             print('neck inclination: ' , neck_inclination)
             print('ear shoulder distance: ' , ear_shoulder_distance)
+            print('knee angle: ' , knee_angle)
+            print('trunk angle: ' , trunk_angle)
+            print('feet angle: ' , feet_angle)
 
             # Draw landmarks.
             cv2.circle(image, (l_shldr_x, l_shldr_y), 7, yellow, -1)
@@ -549,6 +560,7 @@ class PostureAnalyzer:
             # If you stay in bad posture for more than 3 minutes (180s) send an alert.
             if prolong_bad_time > 5 : # 5 seconds
                 correction_type = self.sendWarning()
+
                 self.prolong_bad =0
                 try:
                     self.data_points['CorrectionTimestamp'].append(timestamp)
