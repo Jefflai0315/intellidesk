@@ -1,6 +1,6 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-// import '../customChartTypes.js';
+import '../customChartTypes.js';
 import './styles.css';
 
 export const BarChartDeskTime = () => {
@@ -29,7 +29,7 @@ export const BarChartDeskTime = () => {
     const options={
         responsive: true,
         legend: {
-            display: true,
+            display: false,
             labels: {
               fontColor: 'white', // You can customize the legend label color
             },
@@ -55,7 +55,21 @@ export const BarChartDeskTime = () => {
       },
     };
 
+    const CustomLegend = ({ chartData }) => (
+      <div className="chartjs-legend">
+        <ul>
+          {chartData.datasets.map((dataset, index) => (
+            <li key={index}>
+              <span style={{ backgroundColor: dataset.backgroundColor }}></span>
+              {dataset.label}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+
     return (
+    <>
       <Bar
           data={data}
           width={550}
@@ -63,5 +77,7 @@ export const BarChartDeskTime = () => {
           options={options}
           type='roundedBar'
       />
+      <CustomLegend chartData={data} />
+    </>  
   )   
 }

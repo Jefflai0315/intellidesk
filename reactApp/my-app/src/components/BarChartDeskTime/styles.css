@@ -1,15 +1,33 @@
-/* In your CSS file (e.g., styles.css) */
-/* Target the bar chart canvas element */
-canvas.custom-rounded-bars {
-    /* Apply rounded corners to the bars */
-    border-radius: 10px;
-  }
-  
-.custom-rounded-bars-container .chartjs-render-monitor .chart-legend li span {
-  background-color: #007bff; /* Circle background color */
-  border-radius: 50%; /* Make it a circle */
+.chartjs-legend ul {
+  list-style: none;
+  display: flex; /* Aligns legend items in a row */
+  padding: 0; /* Removes default padding */
+  margin: 0; /* Removes default margin */
+  justify-content: center; /* Center the legend items horizontally */
+}
+
+.chartjs-legend li {
+  display: flex;
+  align-items: center;
+  margin-right: 10px; /* Adds some space between the legend items */
+  color: #d3d3d3;
+  font-family: "Open Sans", Helvetica;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.chartjs-legend li:last-child {
+  margin-right: 0; /* Removes margin from the last item */
+}
+
+.chartjs-legend li span {
   display: inline-block;
-  width: 10px; /* Adjust the circle size */
-  height: 10px; /* Adjust the circle size */
-  margin-right: 5px; /* Add spacing between circles */
+  width: 12px;
+  height: 12px;
+  border-radius: 50%; /* Makes the legend icons circular */
+  margin-right: 5px;
+  color: #d3d3d3;
+  font-family: "Open Sans", Helvetica;
+  font-size: 13px;
+  font-weight: 400;
 }
