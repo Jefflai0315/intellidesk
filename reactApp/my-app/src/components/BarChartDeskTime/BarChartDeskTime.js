@@ -13,7 +13,6 @@ export const BarChartDeskTime = () => {
             borderWidth: 1,
             hoverBackgroundColor: '#3199FF',
             data: [65, 59, 80, 81, 56, 55, 40],
-            borderRadius: 5,
           },
           {
             label: 'Sitting',
@@ -21,23 +20,78 @@ export const BarChartDeskTime = () => {
             borderWidth: 1,
             hoverBackgroundColor: '#FF7171',
             data: [45, 79, 10, 41, 16, 85, 20],
-            borderRadius: 5,
+          },
+          {
+            label: 'Standing Stack',
+            backgroundColor: '#1679DB',
+            borderWidth: 1,
+            hoverBackgroundColor: '#FF7171',
+            data: [15, 30, 20, 15, 24, 15, 50], 
+          },
+          {
+            label: 'Sitting Stack',
+            backgroundColor: '#EE5757',
+            borderWidth: 1,
+            hoverBackgroundColor: '#FF7171',
+            data: [15, 20, 20, 31, 14, 25, 20], 
           },
         ],
     }
+
+    // Function to get unique labels for legend
+    const getUniqueLabels = (datasets) => {
+      const uniqueLabels = new Set();
+      datasets.forEach(dataset => uniqueLabels.add(dataset.label));
+      return Array.from(uniqueLabels);
+    };
+
+    // Updated Custom Legend Component
+    const CustomLegend = ({ chartData }) => {
+        if (!data || !data.datasets) {
+          return null; // Ensures data is defined before rendering the legend
+        }
+
+        // Filtering out specific labels
+        const labelsToShow = ["Standing", "Sitting"]; // Add labels you want to show
+        const uniqueLabels = Array.from(new Set(data.datasets
+          .filter(dataset => labelsToShow.includes(dataset.label))
+          .map(dataset => dataset.label)));
+
+        return (
+            <div className="chartjs-legend">
+                <ul>
+                    {uniqueLabels.map((label, index) => {
+                        const dataset = chartData.datasets.find(d => d.label === label);
+                        return (
+                            <li key={index}>
+                                <span style={{ backgroundColor: dataset.backgroundColor }}></span>
+                                {label}
+                            </li>
+                        );
+                    })}
+                </ul>
+            </div>
+        );
+    };
 
     const options={
         responsive: true,
         legend: {
             display: false,
             labels: {
-              fontColor: 'white', // You can customize the legend label color
+              fontColor: 'white', 
+              filter: function (legendItem, chartData) {
+                const labelIndex = chartData.labels.indexOf(legendItem.text);
+                return chartData.datasets.findIndex(dataset => dataset.label === legendItem.text) === labelIndex;
+              }
             },
         },
         scales: {
           xAxes: [
               {
                 stacked: true,
+                barPercentage: 0.9, // Narrower bars within the category width
+                categoryPercentage: 0.6, // Width of the category slot, adjust for spacing between days
                 },
           ],
           yAxes: [
@@ -54,19 +108,6 @@ export const BarChartDeskTime = () => {
           ],
       },
     };
-
-    const CustomLegend = ({ chartData }) => (
-      <div className="chartjs-legend">
-        <ul>
-          {chartData.datasets.map((dataset, index) => (
-            <li key={index}>
-              <span style={{ backgroundColor: dataset.backgroundColor }}></span>
-              {dataset.label}
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
 
     return (
     <>

@@ -1,7 +1,7 @@
 import React from "react";
 import { BotBar_Home } from "../../components/BotBar_Home";
 import "./style.css";
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 function ScreenTime() {
   return (

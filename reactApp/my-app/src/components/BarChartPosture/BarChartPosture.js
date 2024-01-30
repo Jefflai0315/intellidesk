@@ -40,7 +40,7 @@ export const BarChartPosture = () => {
     const options={
         responsive: true,
         legend: {
-            display: true,
+            display: false,
             labels: {
               fontColor: 'white', // You can customize the legend label color
             },
@@ -49,28 +49,47 @@ export const BarChartPosture = () => {
         scales: {
           xAxes: [
               {
+                barPercentage: 0.95,
+                categoryPercentage: 0.7,
                 },
           ],
           yAxes: [
               {
-                  ticks: {
-                      beginAtZero: true,
-                      stepSize: 20, // Adjust the step size as needed
-                  },
-                  gridLines: {
-                    color: '#3C3C3C', // Change x-axis grid lines color
-                  }
+                ticks: {
+                    beginAtZero: true,
+                    stepSize: 20, // Adjust the step size as needed
+                },
+                gridLines: {
+                  color: '#3C3C3C', // Change x-axis grid lines color
+                }
               },
           ],
       },
     };
 
+    const CustomLegend = ({ chartData }) => (
+      <div className="chartjs-legend">
+        <ul>
+          {chartData.datasets.map((dataset, index) => (
+            <li key={index}>
+              <span style={{ backgroundColor: dataset.backgroundColor }}></span>
+              {dataset.label}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+
     return (
-      <Bar
+      <>
+        <Bar
           data={data}
           width={550}
           height={350}
           options={options}
+          type='roundedBar'
       />
+      <CustomLegend chartData={data} />
+    </>  
   )   
 }
