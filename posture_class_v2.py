@@ -244,6 +244,8 @@ class PostureAnalyzer:
         # isolate user/person 
         # detect if there is a screen
         try: 
+            #check duration 
+            time_now = datetime.now()
             results = self.model.predict(image) #yolo model
             result = results[0]
             largest_person_area = 0
@@ -303,6 +305,7 @@ class PostureAnalyzer:
 
                 lm = keypoints.pose_landmarks
                 lmPose = self.mp_pose.PoseLandmark
+                print('time for yolo: ' , datetime.now()-time_now)
             else: 
                 return image
 
@@ -314,6 +317,8 @@ class PostureAnalyzer:
         # Once aligned properly, left or right should not be a concern.      
         
         try:
+            #check duration 
+            time_now = datetime.now()
             # Left shoulder.
             l_shldr_x = int(lm.landmark[lmPose.LEFT_SHOULDER].x * w)
             l_shldr_y = int(lm.landmark[lmPose.LEFT_SHOULDER].y * h)
@@ -589,9 +594,10 @@ class PostureAnalyzer:
                 self.data_points['KneeAngle'].append(knee_angle)
                 self.data_points['FeetAngle'].append(feet_angle)
                 self.data_points['TrunkAngle'].append(trunk_angle)
-              
+            
             except Exception as e:
                 print(e)
+            print('time for lm : ' , datetime.now()-time_now)
             
         except Exception as e:
             print(e)
