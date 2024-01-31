@@ -493,7 +493,10 @@ class PostureAnalyzer:
 
             # Determine whether good posture or bad posture.
             # The threshold angles have been set based on intuition.
-            if neck_inclination < 5 and neck_inclination > -10 and trunk_inclication < 10 and trunk_inclication > 0: 
+            if (neck_inclination < 5 and neck_inclination > -10 
+            and trunk_inclication < 10 and trunk_inclication > 0
+            and upper_arm_inclination < 20 and upper_arm_inclination >0
+            and knee_angle >80 and knee_angle < 100): 
                 posture_category = 'perfect'
                 self.perfect_pos_frames += 1
                 self.prolong_bad = 0
@@ -502,7 +505,10 @@ class PostureAnalyzer:
         
             
             
-            elif  neck_inclination < 10 and neck_inclination > -20 and trunk_inclication < 30 and trunk_inclication > -5:
+            elif  (neck_inclination < 5 and neck_inclination > -25 
+                   and trunk_inclication < 30 and trunk_inclication > 0
+                   and upper_arm_inclination < 40 and upper_arm_inclination >0
+                   and  knee_angle > 70 and knee_angle < 110):
                 posture_category = 'good'
                 self.good_pos_frames += 1
                 self.prolong_bad = 0
@@ -535,7 +541,7 @@ class PostureAnalyzer:
 
 
 
-            if ear_shoulder_distance < 300: #shrug
+            if ear_shoulder_distance < 70: #shrug
                 posture_category = 'bad'
                 print('shrug')
         
