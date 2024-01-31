@@ -4,10 +4,13 @@ import { BotBar_Home } from "../../components/BotBar_Home";
 import { PostureGauge } from "../../components/PostureGauge";
 import "./style.css";
 import { Link } from 'react-router-dom';
-import logoImage from '../../imgs/intellidesk_logo.jpg';
+import logoImage from '../../imgs/logo@720x.png';
+import tableIcon from '../../imgs/Group 28table.png';
+import moreIcon from '../../imgs/Group 27more.png';
+import timerIcon from '../../imgs/Asset 2@720x.png';
+import goalsIcon from '../../imgs/Asset 14@720x.png';
 
 function Home() {
-  // const logoUrl = 'path-to-your-image-directory/intellidesk-logo.png'; // Replace with the actual path to the image
 
   return (
     <div className="home">
@@ -17,7 +20,6 @@ function Home() {
           <div className="title">
             <div className="overlap-group">
               <img src={logoImage} alt="Intellidesk Logo" className="logo-wrapper" />
-              <div className="text-wrapper">Intellidesk</div>
               <div className="line" style={{ height: '2px', backgroundColor: '#A9FF9B', width: '100%' }}></div> {/* Replace the img tag with this div */}
             </div>
           </div>
@@ -219,7 +221,36 @@ function Home() {
               </div>
             </div>
           </div>
-          <BotBar_Home className="bot-bar-home-instance" />
+          <BotBar_Home className="bot-bar-home-instance-node" />
+          <div className="bot-bar-home">
+            <div className="bot-bar-div">
+              <div className="more-group">
+                <div className="more-text-wrapper-2">More</div>
+                <img src={moreIcon} alt="More Icon" className="more-icon-wrapper" />
+              </div>
+              <div className="timer-text-wrapper-3">My Timers</div>
+              <img src={timerIcon} alt="Timer Icon" className="timer-icon-wrapper" />
+              <div className="bot-bar-overlap-group-wrapper">
+                <div className="bot-bar-overlap-2">
+                  <div className="day-text-wrapper-4">My Day</div>
+                  <div className="day-group-4">
+                    <div className="tick-overlap-group-2">
+                      <div className="tick-rectangle" />
+                      <div className="tick-rectangle-2" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="table-group-5">
+                <div className="table-text-wrapper-5">My Table</div>
+                <img src={tableIcon} alt="Table Icon" className="table-icon-wrapper" />
+              </div>
+              <div className="goal-group-7">
+                <div className="goal-text-wrapper-6">My Goals</div>
+              </div>
+              <img src={goalsIcon} alt="Goals Icon" className="goals-icon-wrapper" />
+            </div>
+          </div>
         </div>
       </div>
     </div>

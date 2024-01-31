@@ -1817,3 +1817,52 @@
     width: 90%;
     margin: 0 auto
   }
+
+  .desk-time .logo-wrapper {
+    height: auto;
+    left: 20px;
+    position: absolute;
+    top: 5px;
+    bottom: 0;
+    width: 200px;
+  }
+
+  .desk-time .timer-icon-wrapper {
+    height: auto;
+    left: 270px;
+    position: absolute;
+    object-fit: cover;
+    top: 13px;
+    bottom: 0;
+    width: 22px;
+  }
+
+  .desk-time .goals-icon-wrapper {
+    height: auto;
+    left: 117px;
+    position: absolute;
+    object-fit: cover;
+    top: 13px;
+    bottom: 0;
+    width: 22px;
+  }
+
+  .desk-time .table-icon-wrapper {
+    height: auto;
+    left: 21px;
+    position: absolute;
+    object-fit: cover;
+    top: 0;
+    bottom: 0;
+    width: 27px;
+  }
+
+  .desk-time .more-icon-wrapper {
+    height: auto;
+    left: 7px;
+    position: absolute;
+    object-fit: cover;
+    top: 0;
+    bottom: 0;
+    width: 32px;
+  }

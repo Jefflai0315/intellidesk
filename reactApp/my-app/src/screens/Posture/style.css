@@ -67,7 +67,7 @@
   height: 71px;
   left: 0;
   position: absolute;
-  top: 773px;
+  top: 760px;
   width: 100%;
 }
 
@@ -1837,4 +1837,53 @@
   top: 70px;
   width: 90%;
   margin: 0 auto
+}
+
+.posture .logo-wrapper {
+  height: auto;
+  left: 20px;
+  position: absolute;
+  top: 5px;
+  bottom: 0;
+  width: 200px;
+}
+
+.posture .timer-icon-wrapper {
+  height: auto;
+  left: 270px;
+  position: absolute;
+  object-fit: cover;
+  top: 13px;
+  bottom: 0;
+  width: 22px;
+}
+
+.posture .goals-icon-wrapper {
+  height: auto;
+  left: 117px;
+  position: absolute;
+  object-fit: cover;
+  top: 13px;
+  bottom: 0;
+  width: 22px;
+}
+
+.posture .table-icon-wrapper {
+  height: auto;
+  left: 0;
+  position: absolute;
+  object-fit: cover;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+}
+
+.posture .more-icon-wrapper {
+  height: auto;
+  left: 7px;
+  position: absolute;
+  object-fit: cover;
+  top: 0;
+  bottom: 0;
+  width: 32px;
 }

@@ -4,6 +4,11 @@ import "./style.css";
 import { Link } from 'react-router-dom';
 import { PostureAngle } from "../../components/PostureAngle";
 import { BarChartPosture } from "../../components/BarChartPosture";
+import logoImage from '../../imgs/logo@720x.png';
+import tableIcon from '../../imgs/Group 28table.png';
+import moreIcon from '../../imgs/Group 27more.png';
+import timerIcon from '../../imgs/Asset 2@720x.png';
+import goalsIcon from '../../imgs/Asset 14@720x.png';
 
 function Posture() {
   return (
@@ -13,7 +18,7 @@ function Posture() {
           <div className="background" />
           <div className="title">
             <div className="overlap-group">
-              <div className="text-wrapper">Intellidesk</div>
+              <img src={logoImage} alt="Intellidesk Logo" className="logo-wrapper" />
               <div className="line" style={{ height: '2px', backgroundColor: '#A9FF9B', width: '100%' }}></div> {/* Replace the img tag with this div */}
             </div>
           </div>
@@ -22,20 +27,10 @@ function Posture() {
             <div className="div">
               <div className="group">
                 <div className="text-wrapper-2">More</div>
-                <div className="group-2">
-                  <div className="ellipse-wrapper">
-                    <div className="ellipse" />
-                  </div>
-                  <div className="div-wrapper">
-                    <div className="ellipse" />
-                  </div>
-                  <div className="group-3">
-                    <div className="ellipse" />
-                  </div>
-                </div>
+                <img src={moreIcon} alt="More Icon" className="more-icon-wrapper" />
               </div>
               <div className="text-wrapper-3">My Timers</div>
-              <img className="asset" alt="Asset" src="https://c.animaapp.com/QHWYwOlz/img/asset-7-720x-1@2x.png" />
+              <img src={timerIcon} alt="Timer Icon" className="timer-icon-wrapper" />
               <div className="overlap-group-wrapper">
                 <div className="overlap-2">
                   <div className="text-wrapper-4">My Day</div>
@@ -50,14 +45,13 @@ function Posture() {
               <div className="group-5">
                 <div className="text-wrapper-5">My Table</div>
                 <div className="group-6">
-                  <div className="rectangle-3" />
-                  <img className="img" alt="Group" src="https://c.animaapp.com/QHWYwOlz/img/group-29-1@2x.png" />
+                  <img src={tableIcon} alt="Table Icon" className="table-icon-wrapper" />
                 </div>
               </div>
               <div className="group-7">
                 <div className="text-wrapper-6">My Goals</div>
               </div>
-              <img className="asset-x" alt="Asset" src="https://c.animaapp.com/QHWYwOlz/img/asset-15-720x-1@2x.png" />
+              <img src={goalsIcon} alt="Goal Icon" className="goals-icon-wrapper" />
             </div>
           </div>
           <div className="frame">
