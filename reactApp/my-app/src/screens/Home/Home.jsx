@@ -4,8 +4,11 @@ import { BotBar_Home } from "../../components/BotBar_Home";
 import { PostureGauge } from "../../components/PostureGauge";
 import "./style.css";
 import { Link } from 'react-router-dom';
+import logoImage from '../../imgs/intellidesk_logo.jpg';
 
 function Home() {
+  // const logoUrl = 'path-to-your-image-directory/intellidesk-logo.png'; // Replace with the actual path to the image
+
   return (
     <div className="home">
       <div className="overlap-wrapper">
@@ -13,6 +16,7 @@ function Home() {
           <div className="background" />
           <div className="title">
             <div className="overlap-group">
+              <img src={logoImage} alt="Intellidesk Logo" className="text-wrapper" />
               <div className="text-wrapper">Intellidesk</div>
               <div className="line" style={{ height: '2px', backgroundColor: '#A9FF9B', width: '100%' }}></div> {/* Replace the img tag with this div */}
             </div>

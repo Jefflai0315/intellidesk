@@ -43,20 +43,20 @@ export const PostureGauge = ({ score }) => {
           color: 'white',
           fontFamily: 'Helvetica',
         }}>
-          {score}<span style={{ fontSize: '17px' }}>/100</span> {/* /100 is smaller */}
+          {score}<span style={{ fontSize: '17px', color: '#D4D4D4' }}>/100</span> {/* /100 is smaller */}
       </div>
       {/* Display the text "Score" below the score */}
       <div style={{
         position: 'absolute',
-        bottom: '45px', // Adjust the position accordingly
-        left: '53%',
+        bottom: '48px', // Adjust the position accordingly
+        left: '54%',
         transform: 'translateX(-50%)',
-        fontSize: '18px', // Adjust the font size accordingly
+        fontSize: '17px', // Adjust the font size accordingly
         color: 'white',
         zIndex: 10,
         fontFamily: 'Helvetica',
       }}>
-        Score
+        score
       </div>
     </div>
   )

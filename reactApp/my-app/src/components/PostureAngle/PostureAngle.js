@@ -54,7 +54,7 @@ export const PostureAngle = ({ angle }) => {
         left: '50%',
         transform: 'translateX(-50%)',
         fontSize: '16px', // Adjust the font size accordingly
-        color: 'white',
+        color: '#D4D4D4',
         zIndex: 10,
         fontFamily: 'Helvetica',
       }}>
