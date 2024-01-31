@@ -320,7 +320,7 @@
     overflow: hidden;
     overflow-y: scroll;
     position: absolute;
-    top: 87px;
+    top: 92px;
     width: 100%;
     margin: 0 auto;
   }
@@ -338,7 +338,7 @@
     left: 0;
     position: absolute;
     top: 0;
-    width: 350px;
+    width: 100%;
     margin: 0 auto;
   }
   
@@ -363,7 +363,8 @@
     left: 0;
     position: absolute;
     top: 0;
-    width: 350px;
+    width: 100%;
+    margin: 0 auto;
   }
   
   .desk-time .navbar {
