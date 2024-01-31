@@ -8,7 +8,7 @@ Chart.elements.Rectangle.prototype.draw = function () {
     const right = vm.x + vm.width / 2;
     const top = vm.y;
     const bottom = vm.base;
-    const cornerRadius = 8; // Adjust as needed
+    const cornerRadius = vm.cornerRadius || 6;
   
     ctx.beginPath();
     ctx.fillStyle = vm.backgroundColor;

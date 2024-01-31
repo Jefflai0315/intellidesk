@@ -14,6 +14,7 @@ export const BarChartPosture = () => {
             borderWidth: 1,
             hoverBackgroundColor: 'rgba(255,99,132,0.4)',
             hoverBorderColor: 'rgba(255,99,132,1)',
+            cornerRadius: 4,
             data: [65, 59, 80, 81, 56, 55, 40]
           },
           {
@@ -23,6 +24,7 @@ export const BarChartPosture = () => {
             borderWidth: 1,
             hoverBackgroundColor: 'rgba(255,99,132,0.4)',
             hoverBorderColor: 'rgba(255,99,132,1)',
+            cornerRadius: 4,
             data: [45, 79, 10, 41, 16, 85, 20]
           },
           {
@@ -32,6 +34,7 @@ export const BarChartPosture = () => {
             borderWidth: 1,
             hoverBackgroundColor: 'rgba(255,99,132,0.4)',
             hoverBorderColor: 'rgba(255,99,132,1)',
+            cornerRadius: 4,
             data: [45, 79, 10, 41, 16, 85, 20]
           }
         ]
