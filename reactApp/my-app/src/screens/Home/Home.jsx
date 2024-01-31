@@ -16,7 +16,7 @@ function Home() {
           <div className="background" />
           <div className="title">
             <div className="overlap-group">
-              <img src={logoImage} alt="Intellidesk Logo" className="text-wrapper" />
+              <img src={logoImage} alt="Intellidesk Logo" className="logo-wrapper" />
               <div className="text-wrapper">Intellidesk</div>
               <div className="line" style={{ height: '2px', backgroundColor: '#A9FF9B', width: '100%' }}></div> {/* Replace the img tag with this div */}
             </div>

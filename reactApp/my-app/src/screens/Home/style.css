@@ -42,6 +42,15 @@
   width: 100%;
 }
 
+.home .logo-wrapper {
+  height: auto;
+  left: 35px;
+  position: absolute;
+  top: 0;
+  bottom: 30px;
+  width: 190px;
+}
+
 .home .text-wrapper {
   color: #ffffff;
   font-family: "Open Sans", Helvetica;
@@ -330,7 +339,7 @@
 
 .home .img {
   height: 1px;
-  left: 14px;
+  left: 0;
   position: absolute;
   top: 616px;
   width: 322px;
