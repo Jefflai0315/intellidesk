@@ -136,7 +136,7 @@
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
-  top: 968px;
+  top: 980px;
   width: 245px;
 }
 
@@ -307,7 +307,7 @@
 }
 
 .home .text-wrapper-13 {
-  color: #d3d3d3;
+  color: #ffffff;
   font-family: "Open Sans", Helvetica;
   font-size: 14px;
   font-weight: 600;
@@ -499,7 +499,7 @@
   height: 16px;
   left: 306px;
   position: absolute;
-  top: 974px;
+  top: 983px;
   width: 17px;
 }
 
@@ -1547,7 +1547,7 @@
 }
 
 .home .text-wrapper-43 {
-  color: #6cd9ff;
+  color: #A9FF9B;
   font-family: "Open Sans", Helvetica;
   font-size: 16px;
   font-weight: 600;
@@ -1574,7 +1574,7 @@
 }
 
 .home .rectangle-20 {
-  background-color: #4ec5ff;
+  background-color: #A9FF9B;
   height: 9px;
   left: 6px;
   position: absolute;
@@ -1584,7 +1584,7 @@
 }
 
 .home .rectangle-21 {
-  background-color: #4ec5ff;
+  background-color: #A9FF9B;
   border-radius: 1px 0px 1px 1px;
   height: 8px;
   left: 1px;

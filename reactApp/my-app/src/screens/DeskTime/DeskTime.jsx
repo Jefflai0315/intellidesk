@@ -14,7 +14,7 @@ function DeskTime() {
           <div className="title">
             <div className="overlap-group">
               <div className="text-wrapper">Intellidesk</div>
-              <img className="line" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-1.svg" />
+              <div className="line" style={{ height: '2px', backgroundColor: '#A9FF9B', width: '100%' }}></div> {/* Replace the img tag with this div */}
             </div>
           </div>
           <BotBar_Home className="bot-bar-home-instance-node" />

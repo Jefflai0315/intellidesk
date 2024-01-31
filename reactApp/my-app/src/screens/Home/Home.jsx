@@ -14,12 +14,11 @@ function Home() {
           <div className="title">
             <div className="overlap-group">
               <div className="text-wrapper">Intellidesk</div>
-              <img className="line" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-1.svg" />
+              <div className="line" style={{ height: '2px', backgroundColor: '#A9FF9B', width: '100%' }}></div> {/* Replace the img tag with this div */}
             </div>
           </div>
           <div className="home-pg">
             <div className="overlap-2">
-              {/* <div className="rectangle-4" /> */}
               <div className="rectangle-5" />
               <div className="text-wrapper-2">My Day</div>
               <div className="text-wrapper-3">Screen Distance</div>
@@ -51,10 +50,10 @@ function Home() {
               </div>
               <div className="text-wrapper-12">Desk Time</div>
               <div className="text-wrapper-13">Today</div>
-              <img className="divider" alt="Divider" src="https://c.animaapp.com/VczO8maf/img/divider-3.svg" />
-              <img className="img" alt="Divider" src="https://c.animaapp.com/VczO8maf/img/divider-3.svg" />
-              <img className="divider-2" alt="Divider" src="https://c.animaapp.com/VczO8maf/img/divider-1@2x.png" />
-              <img className="divider-3" alt="Divider" src="https://c.animaapp.com/VczO8maf/img/divider-1@2x.png" />
+              <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '374px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
+              <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '616px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
+              <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '967px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
+              <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '1210px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
               <div className="grid-lines">
                 <img className="line-2" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-2.svg" />
                 <img className="line-3" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-2.svg" />

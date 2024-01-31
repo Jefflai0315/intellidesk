@@ -188,7 +188,7 @@
   }
   
   .desk-time .text-wrapper-4 {
-    color: #6cd9ff;
+    color: #A9FF9B;
     font-family: "Open Sans", Helvetica;
     font-size: 16px;
     font-weight: 600;
@@ -215,7 +215,7 @@
   }
   
   .desk-time .rectangle {
-    background-color: #4ec5ff;
+    background-color: #A9FF9B;
     height: 9px;
     left: 6px;
     position: absolute;
@@ -225,7 +225,7 @@
   }
   
   .desk-time .rectangle-2 {
-    background-color: #4ec5ff;
+    background-color: #A9FF9B;
     border-radius: 1px 0px 1px 1px;
     height: 8px;
     left: 1px;
