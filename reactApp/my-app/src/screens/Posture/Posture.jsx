@@ -64,114 +64,14 @@ function Posture() {
             <div className="overlap-3">
               <div className="group-8">
                 <div className="overlap-group-3">
-                  {/* <div className="rectangle-4" /> */}
                   <div className="group-9" />
                 </div>
               </div>
-              {/* <div className="navbar">
-                <div className="text-wrapper-7">24/9</div>
-                <div className="text-wrapper-8">25/9</div>
-                <div className="text-wrapper-9">26/9</div>
-                <div className="text-wrapper-10">27/9</div>
-                <div className="text-wrapper-11">28/9</div>
-                <div className="text-wrapper-12">29/9</div>
-                <div className="text-wrapper-13">30/9</div>
-              </div> */}
-              {/* <div className="grid-lines">
-                <img className="line-2" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
-                <img className="line-3" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
-                <img className="line-4" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
-                <img className="line-5" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
-                <img className="line-6" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
-                <img className="line-7" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
-                <img className="line-8" alt="Line" src="https://c.animaapp.com/QHWYwOlz/img/line-2.svg" />
-              </div> */}
-              {/* <div className="rectangle-wrapper">
-                <div className="rectangle-5" />
-              </div>
-              <div className="group-10">
-                <div className="rectangle-6" />
-              </div>
-              <div className="group-11">
-                <div className="rectangle-7" />
-              </div>
-              <div className="group-12">
-                <div className="rectangle-8" />
-              </div>
-              <div className="group-13">
-                <div className="rectangle-9" />
-              </div>
-              <div className="group-14">
-                <div className="rectangle-10" />
-              </div>
-              <div className="group-15">
-                <div className="rectangle-11" />
-              </div>
-              <div className="group-16">
-                <div className="rectangle-12" />
-              </div>
-              <div className="group-17">
-                <div className="rectangle-13" />
-              </div>
-              <div className="group-18">
-                <div className="rectangle-8" />
-              </div>
-              <div className="group-19">
-                <div className="rectangle-14" />
-              </div>
-              <div className="group-20">
-                <div className="rectangle-7" />
-              </div>
-              <div className="group-21">
-                <div className="rectangle-15" />
-              </div>
-              <div className="group-22">
-                <div className="rectangle-16" />
-              </div>
-              <div className="group-23">
-                <div className="rectangle-17" />
-              </div>
-              <div className="group-24">
-                <div className="rectangle-18" />
-              </div>
-              <div className="group-25">
-                <div className="rectangle-16" />
-              </div>
-              <div className="group-26">
-                <div className="rectangle-17" />
-              </div>
-              <div className="group-27">
-                <div className="rectangle-8" />
-              </div>
-              <div className="group-28">
-                <div className="rectangle-14" />
-              </div>
-              <div className="group-29">
-                <div className="rectangle-7" />
-              </div> */}
               <div className="text-wrapper-14">Posture</div>
               <div className="text-wrapper-15">Posture angle</div>
-              {/* <div className="date-line">
-                <div className="group-30">
-                  <div className="text-wrapper-16">0</div>
-                  <div className="text-wrapper-17">50</div>
-                  <div className="text-wrapper-18">100</div>
-                  <div className="text-wrapper-19">150</div>
-                </div>
-                <div className="group-31">
-                  <div className="ellipse-2" />
-                  <div className="ellipse-3" />
-                  <div className="ellipse-4" />
-                  <div className="ellipse-5" />
-                  <div className="ellipse-6" />
-                  <div className="ellipse-7" />
-                  <div className="ellipse-8" />
-                </div>
-              </div> */}
               <div className="group-32">
                 <div className="overlap-group-4">
                   <div className="text-wrapper-20">24</div>
-                  {/* <div className="overlap-group-5"/> */}
                   <div className="text-wrapper-22">25</div>
                   <div className="text-wrapper-21">28</div>
                   <div className="text-wrapper-23">30</div>
@@ -193,62 +93,13 @@ function Posture() {
                 </div>
                 <div className="text-wrapper-30">24/9 - 30/9</div>
               </div>
+              </Link>
               <div className="bar-chart-container">
                 <BarChartPosture className="bar-chart-posture" />
               </div>
-              </Link>
               <div className="day-breakdown">
-                {/* <BarChartPosture className="bar-chart-posture" /> */}
                 <PostureAngle className="posture-angle-instance" angle={110}/>
-                {/* <div className="overlap-4">
-                  <div className="calories-ring">
-                    <div className="overlap-5">
-                      <img
-                        className="ellipse-9"
-                        alt="Ellipse"
-                        src="https://c.animaapp.com/QHWYwOlz/img/ellipse-16@2x.png"
-                      />
-                      <div className="ellipse-10" />
-                      <div className="group-34">
-                        <div className="overlap-group-6">
-                          <div className="text-wrapper-31">87</div>
-                          <div className="text-wrapper-32">degrees</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="average-SD">
-                    <div className="overlap-6">
-                      <div className="text-wrapper-33">Calibrate</div>
-                    </div>
-                  </div>
-                </div> */}
               </div>
-              {/* <div className="edit">
-                <div className="overlap-7">
-                  <div className="text-wrapper-34">Edit</div>
-                </div>
-              </div> */}
-              {/* <div className="group-35">
-                <div className="rectangle-19" />
-                <img className="polygon" alt="Polygon" src="https://c.animaapp.com/QHWYwOlz/img/polygon-4.svg" />
-              </div> */}
-              {/* <div className="group-36">
-                <div className="legend-wrapper" >
-                  <div className="legend-perfect" >
-                    <div className="ellipse-13" />
-                    <div className="text-wrapper-35">Perfect</div>
-                  </div>
-                  <div className="legend-good" >
-                    <div className="ellipse-11" />
-                    <div className="text-wrapper-36">Good</div>
-                  </div>
-                  <div className="legend-poor" >
-                    <div className="ellipse-12" />
-                    <div className="text-wrapper-37">Poor</div>
-                  </div>  
-                </div>  
-              </div> */}
               <div className="desk-time-summary">
                 <div className="average-DT">
                   <div className="text-wrapper-38">Posture Score</div>
@@ -300,7 +151,6 @@ function Posture() {
               </div>
             </div>
           </div>
-          {/* <BotBar_Home className="bot-bar-home-instance" /> */}
         </div>
       </div>
     </div>
