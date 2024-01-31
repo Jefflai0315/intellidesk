@@ -3,6 +3,7 @@ import cv2
 import mediapipe as mp
 from datetime import datetime
 from ultralytics import YOLO
+# from yolov5 import YOLOv5
 import cv2
 import firebase_admin
 from firebase_admin import credentials
@@ -53,11 +54,12 @@ class PostureAnalyzer:
         self.pose = self.mp_pose.Pose()
         self.mp_hands = mp.solutions.hands
         self.hands = self.mp_hands.Hands()
-        self.model = YOLO("yolov8m.pt")
+        self.model = YOLO("yolov3-tiny.pt")
+        # self.model = YOLOv5('yolov3-tiny.pt')
         self.data_points = defaultdict(list)
 
         self.last_firebase_update_time = datetime.now().timestamp()*1000  # Initialize the last update time
-        self.update_interval = 3000
+        self.update_interval = 4000
 
 
 
@@ -177,11 +179,11 @@ class PostureAnalyzer:
         print(averaged_data)
         self.data_points.clear()
         # Reset the timer
-        timer = Timer(10, self.average_and_send)
+        timer = Timer(12, self.average_and_send)
         timer.start()
 
     def run(self):
-        timer = Timer(10, self.average_and_send)
+        timer = Timer(12, self.average_and_send)
         timer.start()
         while self.cap.isOpened():
             cur_time = datetime.now().timestamp()*1000
@@ -255,7 +257,7 @@ class PostureAnalyzer:
                 class_id = box.cls[0].item()
                 conf = box.conf[0].item()
                 label = result.names[class_id]
-                if conf > 0.7 and (label == "laptop" or label == "monitor"):
+                if conf > 0.5 and (label == "laptop" or label == "monitor"):
                     # Draw rectangle (bounding box)
                     start_point = (int(cords[0]), int(cords[1]))  # Top left corner
                     end_point = (int(cords[2]), int(cords[3]))    # Bottom right corner
