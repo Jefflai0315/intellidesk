@@ -51,31 +51,12 @@ function Home() {
                   <div className="text-wrapper-10">Calories burnt</div>
                 </div>
               </div>
-              {/* <div className="text-wrapper-11">Too Close</div>
-              <div className="too-far">
-                Too
-                <br />
-                Far
-              </div> */}
               <div className="text-wrapper-12">Desk Time</div>
               <div className="text-wrapper-13">Today</div>
               <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '374px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
               <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '616px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
               <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '967px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
               <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '1210px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
-              {/* <div className="grid-lines">
-                <img className="line-2" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-2.svg" />
-                <img className="line-3" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-2.svg" />
-                <img className="line-4" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-2.svg" />
-                <img className="line-5" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-2.svg" />
-                <img className="line-6" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-2.svg" />
-                <img className="line-7" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-2.svg" />
-              </div>
-              <div className="bar-chart">
-                <div className="rectangle-6" />
-                <div className="rectangle-7" />
-                <div className="rectangle-8" />
-              </div> */}
               <Link to="/DeskTime">
               <BarIcon className="bar-icon-instance" />
               </Link>
@@ -92,22 +73,23 @@ function Home() {
                 <div className="rectangle-12" />
               </div>
               <div className="desk-time-summary">
+                <div className="navbar-wrapper">
+                  <div className="navbar">
+                    <div className="text-wrapper-25">1d</div>
+                    <div className="text-wrapper-26">1m</div>
+                    <div className="text-wrapper-27">7d</div>
+                    <div className="text-wrapper-28">1y</div>
+                  </div>
+                </div>
+                <LineChart_DeskTime className="line-chart-desk-time-instance-node" />
                 <div className="average-DT">
-                  <div className="text-wrapper-14">Average</div>
+                  <div className="text-wrapper-14">Average Standing</div>
                   <div className="overlap-group-3">
                     <div className="text-wrapper-15">7.8</div>
                     <div className="text-wrapper-16">hrs/day</div>
                   </div>
                 </div>
-                <LineChart_DeskTime className="line-chart-desk-time-instance-node" />
-              </div>
-              <div className="navbar-wrapper">
-                <div className="navbar">
-                  <div className="text-wrapper-25">1d</div>
-                  <div className="text-wrapper-26">1m</div>
-                  <div className="text-wrapper-27">7d</div>
-                  <div className="text-wrapper-28">1y</div>
-                </div>
+                {/* <LineChart_DeskTime className="line-chart-desk-time-instance-node" /> */}
               </div>
               <div className="group-4">
                 <div className="overlap-8">

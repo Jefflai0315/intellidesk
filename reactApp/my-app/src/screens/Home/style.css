@@ -518,18 +518,19 @@
 
 .home .desk-time-summary {
   height: 206px;
-  left: 29px;
-  position: absolute;
-  top: 148px;
+  left: 0;
+  position: relative;
+  top: 120px;
   width: 291px;
+  margin: 0 auto;
 }
 
 .home .average-DT {
   height: 26px;
   left: 0;
   position: relative;
-  top: 190px;
-  width: 60%;
+  top: 5px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -538,20 +539,20 @@
   font-family: "Open Sans", Helvetica;
   font-size: 16px;
   font-weight: 600;
-  left: 0;
+  left: 10%;
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
   top: 4px;
-  width: 70px;
+  width: 50%;
 }
 
 .home .overlap-group-3 {
   height: 26px;
-  left: 96px;
+  left: 60%;
   position: absolute;
   top: 0;
-  width: 89px;
+  width: 50%;
 }
 
 .home .text-wrapper-15 {
@@ -925,7 +926,7 @@
   height: 31px;
     left: 0;
     position: relative;
-    top: 105px;
+    bottom: 10px;
     width: 100%;
     margin: 0 auto;
 }
@@ -935,7 +936,7 @@
   border-radius: 6px;
   height: 31px;
   position: relative;
-  width: 85%;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -1177,7 +1178,7 @@
   height: 45px;
   left: 0;
   position: relative;
-  top: 870px;
+  top: 680px;
   width: 65%;
   margin: 0 auto;
 }
@@ -1241,7 +1242,7 @@
   height: 45px;
   left: 0;
   position: relative;
-  top: 780px;
+  top: 590px;
   width: 65%;
   margin: 0 auto;
 }

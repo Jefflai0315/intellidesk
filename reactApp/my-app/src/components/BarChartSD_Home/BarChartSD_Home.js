@@ -19,7 +19,7 @@ export const BarChartSD_Home = () => {
     }
 
     const options={
-        responsive: false,
+        responsive: true,
         maintainAspectRatio: false,
         legend: {
             display: false,
@@ -32,7 +32,7 @@ export const BarChartSD_Home = () => {
           xAxes: [
               {
                 barPercentage: 0.5,
-                categoryPercentage: 1,
+                categoryPercentage: 0.8,
                 gridLines: {
                     color: '#252525'
                   }
@@ -52,13 +52,9 @@ export const BarChartSD_Home = () => {
       },
     };
 
-    return (
-    <div className="chart-container">
-        <Bar
-          data={data}
-          options={options}
-          type='roundedBar'
-      />
-    </div>  
+    return (  
+        <div style={{ position: 'absolute', top: '430px', width: '70%', height: '170px', left: '20px' }}> {/* Adjust the height as needed */}
+            <Bar data={data} options={options} />
+        </div> 
   )   
 }
