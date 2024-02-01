@@ -1014,7 +1014,7 @@
   font-family: "Open Sans", Helvetica;
   font-size: 13px;
   font-weight: 700;
-  left: 60.5%;
+  left: 35.5%;
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
@@ -1023,11 +1023,11 @@
 }
 
 .home .text-wrapper-27 {
-  color: #ffffff;
+  color: #898989;
   font-family: "Open Sans", Helvetica;
   font-size: 13px;
   font-weight: 700;
-  left: 35.5%;
+  left: 60.5%;
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
@@ -1046,6 +1046,19 @@
   position: absolute;
   top: 25%;
   width: 16px;
+}
+
+.home .text-wrapper-25.active {
+  color: white; /* Active state */
+}
+.home .text-wrapper-26.active {
+  color: white; /* Active state */
+}
+.home .text-wrapper-27.active {
+  color: white; /* Active state */
+}
+.home .text-wrapper-28.active {
+  color: white; /* Active state */
 }
 
 .home .group-4 {
