@@ -10,6 +10,7 @@ import moreIcon from '../../imgs/Group 27more.png';
 import timerIcon from '../../imgs/Asset 2@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
 import { LineChart_DeskTime } from "../../components/LineChartDeskTime";
+import { BarChartSD_Home } from "../../components/BarChartSD_Home";
 
 function Home() {
 
@@ -31,6 +32,7 @@ function Home() {
               <div className="text-wrapper-3">Screen Distance</div>
               <div className="text-wrapper-4">Daily Activity</div>
               <div className="text-wrapper-5">Posture</div>
+              <BarChartSD_Home className="bar-chart-sd-home-instance-node" />
               <div className="average-SD">
                 <div className="overlap-group-2">
                   <div className="text-wrapper-6">Average</div>
@@ -49,19 +51,19 @@ function Home() {
                   <div className="text-wrapper-10">Calories burnt</div>
                 </div>
               </div>
-              <div className="text-wrapper-11">Too Close</div>
+              {/* <div className="text-wrapper-11">Too Close</div>
               <div className="too-far">
                 Too
                 <br />
                 Far
-              </div>
+              </div> */}
               <div className="text-wrapper-12">Desk Time</div>
               <div className="text-wrapper-13">Today</div>
               <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '374px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
               <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '616px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
               <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '967px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
               <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '1210px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
-              <div className="grid-lines">
+              {/* <div className="grid-lines">
                 <img className="line-2" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-2.svg" />
                 <img className="line-3" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-2.svg" />
                 <img className="line-4" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-2.svg" />
@@ -73,7 +75,7 @@ function Home() {
                 <div className="rectangle-6" />
                 <div className="rectangle-7" />
                 <div className="rectangle-8" />
-              </div>
+              </div> */}
               <Link to="/DeskTime">
               <BarIcon className="bar-icon-instance" />
               </Link>

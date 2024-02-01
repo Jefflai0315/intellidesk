@@ -1,7 +1,7 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import '../customChartTypes.js';
-import './styles.css';
+import './style.css';
 
 export const BarChartPosture = () => {
     const data = {

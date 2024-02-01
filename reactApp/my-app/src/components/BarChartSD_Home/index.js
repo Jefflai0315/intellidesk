@@ -1,0 +1,1 @@
+export { BarChartSD_Home } from "./BarChartSD_Home";
