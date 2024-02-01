@@ -53,7 +53,7 @@ function Home() {
               </div>
               <div className="text-wrapper-12">Desk Time</div>
               <div className="text-wrapper-13">Today</div>
-              <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '374px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
+              <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '380px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
               <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '616px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
               <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '967px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
               <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '1210px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
@@ -89,7 +89,13 @@ function Home() {
                     <div className="text-wrapper-16">hrs/day</div>
                   </div>
                 </div>
-                {/* <LineChart_DeskTime className="line-chart-desk-time-instance-node" /> */}
+                <div className="average-DT-2">
+                  <div className="text-wrapper-14-2">Average Sitting</div>
+                  <div className="overlap-group-3-2">
+                    <div className="text-wrapper-15-2">7.8</div>
+                    <div className="text-wrapper-16-2">hrs/day</div>
+                  </div>
+                </div>
               </div>
               <div className="group-4">
                 <div className="overlap-8">

@@ -132,7 +132,7 @@
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
-  top: 387px;
+  top: 390px;
   width: 245px;
 }
 
@@ -468,7 +468,7 @@
   height: 16px;
   left: 306px;
   position: absolute;
-  top: 393px;
+  top: 395px;
   width: 17px;
 }
 
@@ -535,10 +535,10 @@
 }
 
 .home .text-wrapper-14 {
-  color: #d3d3d3;
+  color: #ffffff;
   font-family: "Open Sans", Helvetica;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 550;
   left: 10%;
   letter-spacing: 0;
   line-height: normal;
@@ -569,6 +569,62 @@
 }
 
 .home .text-wrapper-16 {
+  color: #d3d3d3;
+  font-family: "Open Sans", Helvetica;
+  font-size: 13px;
+  font-weight: 400;
+  left: 34px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 7px;
+  width: 56px;
+}
+
+.home .average-DT-2 {
+  height: 26px;
+  left: 0;
+  position: relative;
+  top: 5px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.home .text-wrapper-14-2 {
+  color: #ffffff;
+  font-family: "Open Sans", Helvetica;
+  font-size: 15px;
+  font-weight: 550;
+  left: 10%;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 4px;
+  width: 50%;
+}
+
+.home .overlap-group-3-2 {
+  height: 26px;
+  left: 60%;
+  position: absolute;
+  top: 0;
+  width: 50%;
+}
+
+.home .text-wrapper-15-2 {
+  color: #ffffff;
+  font-family: "Open Sans", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 0;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 0;
+  width: 35px;
+}
+
+.home .text-wrapper-16-2 {
   color: #d3d3d3;
   font-family: "Open Sans", Helvetica;
   font-size: 13px;

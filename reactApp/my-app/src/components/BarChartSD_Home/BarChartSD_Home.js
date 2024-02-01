@@ -24,7 +24,7 @@ export const BarChartSD_Home = () => {
         legend: {
             display: false,
             labels: {
-              fontColor: 'white', // You can customize the legend label color
+              fontColor: 'white', 
             },
         },
         type:'roundedBar',
@@ -42,7 +42,7 @@ export const BarChartSD_Home = () => {
               {
                 ticks: {
                     beginAtZero: true,
-                    stepSize: 20, // Adjust the step size as needed
+                    stepSize: 20, 
                 },
                 gridLines: {
                   color: '#252525'

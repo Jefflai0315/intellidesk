@@ -10,7 +10,6 @@ export const BarChartPosture = () => {
           {
             label: 'Perfect',
             backgroundColor: '#78D06A',
-            // borderColor: 'rgba(255,99,132,1)',
             borderWidth: 1,
             hoverBackgroundColor: '#A9FF9B',
             hoverBorderColor: '#A9FF9B',
@@ -20,7 +19,6 @@ export const BarChartPosture = () => {
           {
             label: 'Good',
             backgroundColor: '#F4B54C',
-            // borderColor: 'rgba(255,99,132,1)',
             borderWidth: 1,
             hoverBackgroundColor: '#FFC769',
             hoverBorderColor: '#FFC769',
@@ -30,7 +28,6 @@ export const BarChartPosture = () => {
           {
             label: 'Poor',
             backgroundColor: '#EE5757',
-            // borderColor: 'rgba(255,99,132,1)',
             borderWidth: 1,
             hoverBackgroundColor: '#FF7474',
             hoverBorderColor: '#FF7474',
@@ -45,7 +42,7 @@ export const BarChartPosture = () => {
         legend: {
             display: false,
             labels: {
-              fontColor: 'white', // You can customize the legend label color
+              fontColor: 'white', 
             },
         },
         type:'roundedBar',
@@ -60,10 +57,10 @@ export const BarChartPosture = () => {
               {
                 ticks: {
                     beginAtZero: true,
-                    stepSize: 20, // Adjust the step size as needed
+                    stepSize: 20, 
                 },
                 gridLines: {
-                  color: '#3C3C3C', // Change x-axis grid lines color
+                  color: '#3C3C3C', 
                 }
               },
           ],

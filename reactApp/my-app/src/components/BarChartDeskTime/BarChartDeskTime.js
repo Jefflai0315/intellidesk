@@ -52,11 +52,11 @@ export const BarChartDeskTime = () => {
     // Updated Custom Legend Component
     const CustomLegend = ({ chartData }) => {
         if (!data || !data.datasets) {
-          return null; // Ensures data is defined before rendering the legend
+          return null; 
         }
 
         // Filtering out specific labels
-        const labelsToShow = ["Standing", "Sitting"]; // Add labels you want to show
+        const labelsToShow = ["Standing", "Sitting"]; 
         const uniqueLabels = Array.from(new Set(data.datasets
           .filter(dataset => labelsToShow.includes(dataset.label))
           .map(dataset => dataset.label)));
@@ -94,19 +94,19 @@ export const BarChartDeskTime = () => {
           xAxes: [
               {
                 stacked: true,
-                barPercentage: 0.9, // Narrower bars within the category width
-                categoryPercentage: 0.6, // Width of the category slot, adjust for spacing between days
-                },
+                barPercentage: 0.9, 
+                categoryPercentage: 0.6, 
+              },
           ],
           yAxes: [
               {
                 stacked: true,
                 ticks: {
                     beginAtZero: true,
-                    stepSize: 20, // Adjust the step size as needed
+                    stepSize: 20, 
                 },
                 gridLines: {
-                  color: '#3C3C3C', // Change x-axis grid lines color
+                  color: '#3C3C3C',
                 }
               },
           ],
