@@ -9,6 +9,7 @@ import tableIcon from '../../imgs/Group 28table.png';
 import moreIcon from '../../imgs/Group 27more.png';
 import timerIcon from '../../imgs/Asset 2@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
+import { LineChart_DeskTime } from "../../components/LineChartDeskTime";
 
 function Home() {
 
@@ -96,49 +97,7 @@ function Home() {
                     <div className="text-wrapper-16">hrs/day</div>
                   </div>
                 </div>
-                <div className="stats">
-                  <div className="overlap-5">
-                    <div className="text-wrapper-17">hrs</div>
-                    <div className="text-wrapper-18">20</div>
-                  </div>
-                  <div className="overlap-6">
-                    <div className="text-wrapper-19">hrs</div>
-                    <div className="text-wrapper-20">35</div>
-                  </div>
-                </div>
-                <div className="legend">
-                  <div className="ellipse" />
-                  <div className="ellipse-2" />
-                  <div className="text-wrapper-21">Standing</div>
-                  <div className="text-wrapper-22">Sitting</div>
-                </div>
-                <div className="divider-4">
-                  <img className="line-8" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-12.svg" />
-                  <img className="line-9" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-13.svg" />
-                </div>
-                <div className="date-line">
-                  <div className="text-wrapper-23">24/9</div>
-                  <div className="text-wrapper-24">30/9</div>
-                  <div className="group">
-                    <div className="ellipse-3" />
-                    <div className="ellipse-4" />
-                    <div className="ellipse-5" />
-                    <div className="ellipse-6" />
-                    <div className="ellipse-7" />
-                    <div className="ellipse-8" />
-                    <div className="ellipse-9" />
-                  </div>
-                </div>
-                <div className="line-chart">
-                  <img className="line-10" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-8.svg" />
-                  <div className="overlap-7">
-                    <img className="line-11" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-9.svg" />
-                    <img className="line-12" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-10.svg" />
-                    <img className="group-2" alt="Group" src="https://c.animaapp.com/VczO8maf/img/group-1@2x.png" />
-                    <img className="group-3" alt="Group" src="https://c.animaapp.com/VczO8maf/img/group-2@2x.png" />
-                  </div>
-                  <img className="line-13" alt="Line" src="https://c.animaapp.com/VczO8maf/img/line-11.svg" />
-                </div>
+                <LineChart_DeskTime className="line-chart-desk-time-instance-node" />
               </div>
               <div className="navbar-wrapper">
                 <div className="navbar">

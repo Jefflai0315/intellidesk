@@ -1,0 +1,33 @@
+.chartjs-legend ul {
+    list-style: none;
+    display: flex; /* Aligns legend items in a row */
+    padding: 0; /* Removes default padding */
+    margin: 0; /* Removes default margin */
+    justify-content: center; /* Center the legend items horizontally */
+  }
+  
+  .chartjs-legend li {
+    display: flex;
+    align-items: center;
+    margin-right: 10px; /* Adds some space between the legend items */
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  
+  .chartjs-legend li:last-child {
+    margin-right: 0; /* Removes margin from the last item */
+  }
+  
+  .chartjs-legend li span {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%; /* Makes the legend icons circular */
+    margin-right: 5px;
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 400;
+  }
