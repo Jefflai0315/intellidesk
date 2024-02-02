@@ -12,6 +12,7 @@ from collections import defaultdict
 from threading import Timer
 from statistics import mean, mode
 import numpy as np
+from detection import ObjectDetection
 
 
 
@@ -54,7 +55,8 @@ class PostureAnalyzer:
         self.pose = self.mp_pose.Pose()
         self.mp_hands = mp.solutions.hands
         self.hands = self.mp_hands.Hands()
-        self.model = YOLO("yolov3-tiny.pt")
+        # self.model = YOLO("yolov3-tiny.pt")
+        self.model = ObjectDetection()
         # self.model = YOLOv5('yolov3-tiny.pt')
         self.data_points = defaultdict(list)
 
@@ -234,6 +236,9 @@ class PostureAnalyzer:
         # Get height and width.
         h, w = image.shape[:2]
 
+        # save image to path = 'intellidesk/static/images'
+        cv2.imwrite('static/images/frame.jpg', image)
+
         # # Convert the BGR image to RGB.
         # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         # keypoints = self.pose.process(image)
@@ -248,68 +253,94 @@ class PostureAnalyzer:
         try: 
             #check duration 
             time_now = datetime.now()
-            results = self.model.predict(image) #yolo model
-            result = results[0]
-            largest_person_area = 0
-            largest_person_cords = None
-            for box in result.boxes:
-                cords = box.xyxy[0].tolist()  # [xmin, ymin, xmax, ymax]
-                class_id = box.cls[0].item()
-                conf = box.conf[0].item()
-                label = result.names[class_id]
-                if conf > 0.5 and (label == "laptop" or label == "monitor"):
-                    # Draw rectangle (bounding box)
-                    start_point = (int(cords[0]), int(cords[1]))  # Top left corner
-                    end_point = (int(cords[2]), int(cords[3]))    # Bottom right corner
-                    color = (255, 0, 0)  # Color of the rectangle (in BGR)
-                    thickness = 2       # Thickness of the rectangle border
-                    cv2.rectangle(image, start_point, end_point, color, thickness)
-                    # Put label near the top left corner of the rectangle
-                    font = cv2.FONT_HERSHEY_SIMPLEX
-                    font_scale = 5
-                    font_color = (255, 0,0)  
-                    font_thickness = 3
-                    cv2.putText(image, f'{label} {conf:.2f}', (int(cords[0]), int(cords[1]-10)), font, font_scale, font_color, font_thickness)
-                    
-                    # store screen
-                    self.screens_list.append([cords,class_id,conf,label])
+            # results = self.model.predict(image) #yolo model
+            results, lm , lmPose, largest_person_cords= self.model.detect('static/images/frame.jpg', 0)
 
-                elif conf > 0.7 and (label =='person'):
-                    start_point = (int(cords[0]), int(cords[1]))  # Top left corner
-                    end_point = (int(cords[2]), int(cords[3]))    # Bottom right corner
-                    color = (0, 255, 0)  # Color of the rectangle (in BGR)
-                    thickness = 2       # Thickness of the rectangle border
+            for i in range(len(results)):
+                cords = results[i][0]
+                class_id = results[i][1]
+                conf = results[i][2]
+                label = results[i][3]
+                # Draw rectangle (bounding box)
+                start_point = (int(cords[0]), int(cords[1]))
+                end_point = (int(cords[2]), int(cords[3]))
+                color = (255, 0, 0)  # Color of the rectangle (in BGR)
+                thickness = 2       # Thickness of the rectangle border
+                cv2.rectangle(image, start_point, end_point, color, thickness)
+                # Put label near the top left corner of the rectangle
+                font = cv2.FONT_HERSHEY_SIMPLEX
+                font_scale = 3
+                font_color = (255, 0,0)
+                font_thickness = 3
+                cv2.putText(image, f'{label} {conf:.2f}', (int(cords[0]), int(cords[1]-10)), font, font_scale, font_color, font_thickness)
+            self.screens_list = results
+            # result = results[0]
+            # largest_person_area = 0
+            # largest_person_cords = None
+            # for box in result.boxes:
+            #     cords = box.xyxy[0].tolist()  # [xmin, ymin, xmax, ymax]
+            #     class_id = box.cls[0].item()
+            #     conf = box.conf[0].item()
+            #     label = result.names[class_id]
+            #     if conf > 0.5 and (label == "laptop" or label == "monitor"):
+            #         # Draw rectangle (bounding box)
+            #         start_point = (int(cords[0]), int(cords[1]))  # Top left corner
+            #         end_point = (int(cords[2]), int(cords[3]))    # Bottom right corner
+            #         color = (255, 0, 0)  # Color of the rectangle (in BGR)
+            #         thickness = 2       # Thickness of the rectangle border
+            #         cv2.rectangle(image, start_point, end_point, color, thickness)
+            #         # Put label near the top left corner of the rectangle
+            #         font = cv2.FONT_HERSHEY_SIMPLEX
+            #         font_scale = 5
+            #         font_color = (255, 0,0)  
+            #         font_thickness = 3
+            #         cv2.putText(image, f'{label} {conf:.2f}', (int(cords[0]), int(cords[1]-10)), font, font_scale, font_color, font_thickness)
                     
-                    # area of the rectangle
-                    area = (cords[2] - cords[0]) * (cords[3] - cords[1])
-                    if area > largest_person_area:
-                        largest_person_area = area
-                        largest_person_cords = cords
-                        cv2.rectangle(image, start_point, end_point, color, thickness)
+            #         # store screen
+            #         self.screens_list.append([cords,class_id,conf,label])
+
+            #     elif conf > 0.7 and (label =='person'):
+            #         start_point = (int(cords[0]), int(cords[1]))  # Top left corner
+            #         end_point = (int(cords[2]), int(cords[3]))    # Bottom right corner
+            #         color = (0, 255, 0)  # Color of the rectangle (in BGR)
+            #         thickness = 2       # Thickness of the rectangle border
+                    
+            #         # area of the rectangle
+            #         area = (cords[2] - cords[0]) * (cords[3] - cords[1])
+            #         if area > largest_person_area:
+            #             largest_person_area = area
+            #             largest_person_cords = cords
+            #             cv2.rectangle(image, start_point, end_point, color, thickness)
+            if largest_person_cords:
+                # Ensure the coordinates are within the image boundaries
+                x_min, y_min, x_max, y_max = [max(0, int(coord)) for coord in largest_person_cords]
+                # draw box on the image 
+                cv2.rectangle(image, (x_min, y_min), (x_max, y_max), (0, 255, 0), 2)
+               
 
     
 
-            if largest_person_cords:
-                    # # Ensure the coordinates are within the image boundaries
-                    # x_min, y_min, x_max, y_max = [max(0, int(coord)) for coord in largest_person_cords]
-                    # x_max = min(x_max, image.shape[1])
-                    # y_max = min(y_max, image.shape[0])
+            # if largest_person_cords:
+            #         # # Ensure the coordinates are within the image boundaries
+            #         # x_min, y_min, x_max, y_max = [max(0, int(coord)) for coord in largest_person_cords]
+            #         # x_max = min(x_max, image.shape[1])
+            #         # y_max = min(y_max, image.shape[0])
 
-                    # Crop the image to the largest person's bounding box
-                    # cropped_image = image[y_min:y_max, x_min:x_max]
-                    # Crop and pad the image
-                isolated_img = self.isolate_object(image, largest_person_cords)
-                isolated_img = cv2.cvtColor(isolated_img, cv2.COLOR_BGR2RGB)
-                keypoints = self.pose.process(isolated_img)
+            #         # Crop the image to the largest person's bounding box
+            #         # cropped_image = image[y_min:y_max, x_min:x_max]
+            #         # Crop and pad the image
+            #     isolated_img = self.isolate_object(image, largest_person_cords)
+            #     isolated_img = cv2.cvtColor(isolated_img, cv2.COLOR_BGR2RGB)
+            #     keypoints = self.pose.process(isolated_img)
 
-                    # Convert the image back to BGR.
-                    # padded_img = cv2.cvtColor(isolated_img, cv2.COLOR_RGB2BGR)
+            #         # Convert the image back to BGR.
+            #         # padded_img = cv2.cvtColor(isolated_img, cv2.COLOR_RGB2BGR)
 
-                lm = keypoints.pose_landmarks
-                lmPose = self.mp_pose.PoseLandmark
-                print('time for yolo: ' , datetime.now()-time_now)
-            else: 
-                return image
+            #     lm = keypoints.pose_landmarks
+            #     lmPose = self.mp_pose.PoseLandmark
+            #     print('time for yolo: ' , datetime.now()-time_now)
+            # else: 
+            #     return image
 
 
         except Exception as e:

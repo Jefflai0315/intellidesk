@@ -23,3 +23,4 @@ intellidesk-174c9-firebase-adminsdk-garkf-abe9a9fb75.json
 package-lock.json
 package.json
 yolov8m.pt
+*__pycache__*
