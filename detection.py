@@ -193,12 +193,12 @@ class ObjectDetection:
 
                 for *xyxy, conf, cls in reversed(det):
                     label = names[int(cls)]
-                    if conf > 0.5 and label in ["laptop", "monitor"]:
+                    if label in ["laptop", "monitor"]:
                         #[xyxy,int(cls),conf,det.names[int(cls)]
                         detection_results.append([xyxy,int(cls),conf,names[int(cls)]])
                         # Add your logic here to draw rectangles and labels on the image
                         pass
-                    elif conf > 0.7 and label == 'person':
+                    elif conf > 0.5 and label == 'person':
                         # Calculate the area of the bounding box
                         x1, y1, x2, y2 = xyxy
                         area = (x2 - x1) * (y2 - y1)
