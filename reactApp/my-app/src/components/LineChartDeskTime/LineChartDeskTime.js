@@ -5,28 +5,7 @@ import database from '../../firebase'; // Adjust the path as needed
 import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
 
 export const LineChart_DeskTime = () => {
-  // const data = {
-    
-  //   labels: ['24/9', '25/9', '26/9', '27/9', '28/9', '29/9', '30/9'],
-  //   datasets: [
-  //     {
-  //       label: 'Standing',
-  //       data: [12, 19, 3, 5, 2, 3, 20],
-  //       fill: false,
-  //       backgroundColor: '#1679DB',
-  //       borderColor: '#1679DB',
-  //       hoverBackgroundColor: '#3199FF',
-  //     },
-  //     {
-  //       label: 'Sitting',
-  //       data: [1, 2, 1, 1, 2, 2, 14],
-  //       fill: false,
-  //       backgroundColor: '#EE5757',
-  //       borderColor: '#EE5757',
-  //       hoverBackgroundColor: '#FF7171',
-  //     },
-  //   ],
-  // };
+ 
   const [selectedTimeframe, setSelectedTimeframe] = useState('7d'); // Default to 1 day
   const [sittingAvg, setSittingAvg] = useState(0)
   const [standingAvg, setStandingAvg] = useState(0)
@@ -56,7 +35,7 @@ export const LineChart_DeskTime = () => {
     const now = new Date();
 
     // Calculate the start date based on the selected timeframe
-    let startDate;
+    let startDate = new Date(now);
     switch (selectedTimeframe) {
       case '1d':
         startDate = new Date(now.setDate(now.getDate() - 1));
@@ -73,48 +52,83 @@ export const LineChart_DeskTime = () => {
       default:
         startDate = now; // Default to current day as start date
     }
-
+    console.log(selectedTimeframe)
     //convert startDate to UnixTimestamp
     startDate = startDate.getTime()
-    now.setDate(now.getDate());
-    console.log(startDate.toString())
-
+  
     const postureRef = query(ref(database, 'Posture'), orderByKey(), 
     startAt(startDate.toString()));
     onValue(postureRef, (snapshot) => {
       const data = snapshot.val();
-      if (data) {
-        processSitStandData(data);
-      }
+
+      // if (data) {
+      processSitStandData(data, startDate);
+      // }
     });
+    
   }, [selectedTimeframe]);
 
-  const processSitStandData = (data) => {
-    let countsByDay = {};
-    let totalSitting = 0;
-    let totalStanding = 0;
+  const processSitStandData = (data,sdate) => {
+    let counts = {};
+  let totalSitting = 0;
+  let totalStanding = 0;
+  let labels = [];
 
-    Object.entries(data).forEach(([unixtimestamp, { PostureMode }]) => {
-      const date = new Date(parseInt(unixtimestamp) ).toLocaleDateString();
-      if (!countsByDay[date]) {
-        countsByDay[date] = { sitting: 0, standing: 0 };
-      }
-      console.log(PostureMode)
-      countsByDay[date][PostureMode] += 1;
-      if (PostureMode === "sitting") {
-      totalSitting += 1
-      }else{
-      totalStanding += 1
-      }
+  if (selectedTimeframe === '1d') {
+    // Initialize counts for each hour of the day
+    for (let i = 0; i < 24; i++) {
+        let hour = i.toString().padStart(2, '0') + ':00'; // Format: "HH:00"
+        counts[hour] = { sitting: 0, standing: 0 };
+        labels.push(hour);
+    }
+    if (data != null) {
+    Object.entries(data).forEach(([timestamp, { PostureMode }]) => {
+        const date = new Date(parseInt(timestamp));
+        const hourKey = date.getHours().toString().padStart(2, '0') + ':00';
+
+        
+
+        if (counts[hourKey]) {
+            counts[hourKey][PostureMode] += 1;
+        }
     });
-    console.log(countsByDay)
-    const labels = Object.keys(countsByDay);
-    const standingData = labels.map(label => countsByDay[label].standing || 0);
-    const sittingData = labels.map(label => countsByDay[label].sitting || 0);
+  }
+} else {
+  const now = new Date();
+  const startDate = new Date(sdate); // selectedStartDate should be the Unix Timestamp of your start date
+  // const endDate = new Date(Math.max(...Object.keys(data).map(ts => parseInt(ts ))));
+  const endDate = new Date(now.setDate(now.getDate() ))
 
+  for (let d = new Date(startDate); d <= endDate ; d.setDate(d.getDate() + 1)) {
+    const dateKey = d.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
+    counts[dateKey] = { sitting: 0, standing: 0 };
+  }
+
+  // Process the actual data
+  Object.entries(data).forEach(([timestamp, { PostureMode }]) => {
+    const date = new Date(parseInt(timestamp)).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
+    if (counts[date]) { // This check is technically redundant now but left for clarity
+      counts[date][PostureMode] += 1;
+
+      if (PostureMode === "sitting") {
+        totalSitting += 1;
+      } else {
+        totalStanding += 1;
+      }
+    }
+  });
+  labels = Object.keys(counts).sort((a, b) => new Date(a.split('/').reverse().join('/')) - new Date(b.split('/').reverse().join('/'))); 
+}
+
+  // Prepare data for chart or output
+  const standingData = labels.map(label => counts[label].standing);
+  const sittingData = labels.map(label => counts[label].sitting);
+
+  
+  
    
-    setSittingAvg(totalSitting/sittingData.length);
-    setStandingAvg(totalStanding/standingData.length);
+    setSittingAvg((totalSitting/sittingData.length).toFixed(1));
+    setStandingAvg((totalStanding/standingData.length).toFixed(1));
 
 
     setChartData({

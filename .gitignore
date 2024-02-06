@@ -16,3 +16,6 @@ proto_builder.py
 test.py
 intellidesk-174c9-firebase-adminsdk-garkf-abe9a9fb75.json
 reactApp/my-app/package-lock.json
+
+*/__pycache__/*
+__pycache__/detection.cpython-310.pyc
