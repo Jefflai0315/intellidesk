@@ -61,70 +61,9 @@ function DeskTime() {
               <div className="text-wrapper-14">Desk Time</div>
               <Link to="/">
               <img className="frame-2" alt="Frame" src="https://c.animaapp.com/QHWYwOlz/img/frame-3.svg" />
-              <div className="time-interval-bar">
-                <div className="group-33">
-                  <div className="overlap-group-4">
-                    <div className="text-wrapper-27">1d</div>
-                    <div className="text-wrapper-28">1m</div>
-                    <div className="text-wrapper-29">7d</div>
-                    <div className="text-wrapper-23">1y</div>
-                  </div>
-                </div>
-                <div className="text-wrapper-30">24/9 - 30/9</div>
-              </div>
               </Link>
-              <div className="bar-chart-container">
                 <BarChartDeskTime className="bar-chart-desk-time" />
-              </div>
-              <div className="desk-time-summary">
-                <div className="average-DT">
-                  <div className="text-wrapper-38">Average</div>
-                  <div className="overlap-group-7">
-                    <div className="text-wrapper-39">7.8</div>
-                    <div className="text-wrapper-40">hrs/day</div>
-                  </div>
-                </div>
-              </div>
-              <div className="group-wrapper">
-                <div className="group-37">
-                  <div className="average-SD-2">
-                    <div className="overlap-group-8">
-                      <div className="text-wrapper-41">Longest Standing</div>
-                      <div className="text-wrapper-42">2 hours</div>
-                    </div>
-                  </div>
-                  <div className="closest">
-                    <div className="overlap-group-8">
-                      <div className="text-wrapper-43">3hrs 13mins</div>
-                      <div className="text-wrapper-41">Longest Sitting</div>
-                    </div>
-                  </div>
-                  <div className="closest-2">
-                    <div className="overlap-8">
-                      <div className="text-wrapper-44">59mins</div>
-                      <div className="text-wrapper-45">Longest Break</div>
-                    </div>
-                  </div>
-                  <div className="closest-3">
-                    <div className="overlap-9">
-                      <div className="text-wrapper-46">4hrs 10mins</div>
-                      <div className="text-wrapper-47">Total Sitting</div>
-                    </div>
-                  </div>
-                  <div className="closest-4">
-                    <div className="overlap-10">
-                      <div className="text-wrapper-48">1hrs 40mins</div>
-                      <div className="text-wrapper-49">Total Break</div>
-                    </div>
-                  </div>
-                  <div className="closest-5">
-                    <div className="overlap-10">
-                      <div className="text-wrapper-50">3 hours</div>
-                      <div className="text-wrapper-49">Total Standing</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+             
             </div>
           </div>
         </div>
