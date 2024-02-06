@@ -8,18 +8,21 @@ export const PostureAngle = ({ angle }) => {
       <div style={{ position: 'relative', width: 'fit-content', margin: '0 auto' }}>
         <GaugeComponent
           type="semicircle"
-          minValue= "0"
-          maxValue= "180"
+          minValue= "-30"
+          maxValue= "50"
           labels={{
           }}
           arc={{
-            colorArray: ["#EE5757", "#78D06A", "#F4B54C"],
+            colorArray: ["#EE5757", "#F4B54C","#78D06A", "#F4B54C", "#EE5757"],
             padding: 0.02,
             subArcs:
               [
-                { limit: 90 },
-                { limit: 120 },
-                { limit: 180 },
+                { limit: -10 },
+                { limit: 0 },
+                { limit: 20 },
+                { limit: 30 },
+                { limit: 50 },
+                
               ],
           }}
           pointer={{type: "blob", animationDelay: 0 }}

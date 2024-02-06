@@ -137,9 +137,9 @@ export const BarChartDeskTime = () => {
   longestStandDuration = Math.max(...standingData);
   longestSitDuration = Math.max(...sittingData);
 
-  setTotalStanding(formatTime(totalStandTime));
-  setTotalSitting(formatTime(totalSitTime));
-  setTotalBreak(formatTime(totalBreakTime));
+  setTotalStanding(formatTime(totalStandTime/counts.length));
+  setTotalSitting(formatTime(totalSitTime/counts.length));
+  setTotalBreak(formatTime(totalBreakTime/counts.length));
   setLongestStanding(formatTime(longestStandDuration));
   setLongestSitting(formatTime(longestSitDuration));
   setLongestBreak(formatTime(longestBreakDuration));

@@ -2,7 +2,7 @@ import React from "react";
 import { BotBar_Home } from "../../components/BotBar_Home";
 import "./style.css";
 import { Link } from 'react-router-dom';
-import { PostureAngle } from "../../components/PostureAngle";
+// import { PostureAngle } from "../../components/PostureAngle";
 import { BarChartPosture } from "../../components/BarChartPosture";
 import logoImage from '../../imgs/logo@720x.png';
 import tableIcon from '../../imgs/Group 28table.png';
@@ -64,19 +64,20 @@ function Posture() {
               <div className="text-wrapper-14">Posture</div>
               <div className="text-wrapper-15">Posture angle</div>
               <div className="group-32">
-                <div className="overlap-group-4">
-                  <div className="text-wrapper-20">24</div>
+                {/* <div className="overlap-group-4"> */}
+                  {/* <div className="text-wrapper-20">24</div>
                   <div className="text-wrapper-22">25</div>
                   <div className="text-wrapper-21">28</div>
                   <div className="text-wrapper-23">30</div>
                   <div className="text-wrapper-24">26</div>
                   <div className="text-wrapper-25">27</div>
-                  <div className="text-wrapper-26">29</div>
-                </div>
+                  <div className="text-wrapper-26">29</div> */}
+                {/* </div> */}
               </div>
               <Link to="/">
               <img className="frame-2" alt="Frame" src="https://c.animaapp.com/QHWYwOlz/img/frame-3.svg" />
-              <div className="time-interval-bar">
+              </Link>
+              {/* <div className="time-interval-bar">
                 <div className="group-33">
                   <div className="overlap-group-4">
                     <div className="text-wrapper-27">1d</div>
@@ -86,15 +87,15 @@ function Posture() {
                   </div>
                 </div>
                 <div className="text-wrapper-30">24/9 - 30/9</div>
-              </div>
-              </Link>
-              <div className="bar-chart-container">
+              </div> */}
+            
+              {/* <div className="bar-chart-container"> */}
                 <BarChartPosture className="bar-chart-posture" />
-              </div>
-              <div className="day-breakdown">
+              {/* </div> */}
+              {/* <div className="day-breakdown">
                 <PostureAngle className="posture-angle-instance" angle={110}/>
-              </div>
-              <div className="desk-time-summary">
+              </div> */}
+              {/* <div className="desk-time-summary">
                 <div className="average-DT">
                   <div className="text-wrapper-38">Posture Score</div>
                   <div className="overlap-group-7">
@@ -102,8 +103,8 @@ function Posture() {
                     <div className="text-wrapper-40">/100</div>
                   </div>
                 </div>
-              </div>
-              <div className="group-wrapper">
+              </div> */}
+              {/* <div className="group-wrapper">
                 <div className="group-37">
                   <div className="average-SD-2">
                     <div className="overlap-group-8">
@@ -142,7 +143,7 @@ function Posture() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
