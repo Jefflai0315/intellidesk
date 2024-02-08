@@ -22,13 +22,14 @@ def initialize_firebase():
     firebase_admin.initialize_app(cred, {
         'databaseURL' : "https://intellidesk-174c9-default-rtdb.asia-southeast1.firebasedatabase.app/"
                               })
-    return {
-        'Posture': db.reference('Posture/'),
-        'Correction': db.reference('Correction/'),
-        'Session': db.reference('Session/'),
-        'EyeScreenDistance': db.reference('EyeScreenDistance/'),
-        'Controls': db.reference('Controls/')
-    }
+    return db.reference()
+    # return {
+    #     'Posture': db.reference('Posture/'),
+    #     'Correction': db.reference('Correction/'),
+    #     'Session': db.reference('Session/'),
+    #     'EyeScreenDistance': db.reference('EyeScreenDistance/'),
+    #     'Controls': db.reference('Controls/')
+    # }
 
 
 
@@ -36,8 +37,12 @@ def initialize_firebase():
 class PostureAnalyzer:    
     def __init__(self, firebase_refs):
         self.firebase_refs = firebase_refs
+        # print('firebase_refs', self.firebase_refs)
+        self.user = firebase_refs.child('Controls/User/').get()
         self.start_time = datetime.now().timestamp()*1000
-        self.firebase_refs['Session'].update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
+        self.firebase_refs.child(f'{self.user}/Session/').update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
+        # self.firebase_refs['Session'].update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
+        # assert(1==2)
         self.standing_frames = 0
         self.current_standing_frames =0
         self.sitting_frames = 0 
@@ -104,12 +109,12 @@ class PostureAnalyzer:
         return angle_degrees
     
     def reset_nudge(self):
-        self.send_to_firebase(self.firebase_refs['Controls'],{'PostureNudge': '0'})
+        self.send_to_firebase('Controls',{'PostureNudge': '0'})
 
 
     def sendWarning(self):
         self.correction.append(datetime.now().timestamp()*1000)
-        self.send_to_firebase(self.firebase_refs['Controls'],{'PostureNudge': '1'})
+        self.send_to_firebase('Controls',{'PostureNudge': '1'})
         timer = Timer(10, self.reset_nudge)
         timer.start()
         return 'bad posture'
@@ -149,7 +154,13 @@ class PostureAnalyzer:
         return padded_img
     
     def send_to_firebase(self, ref,data):
-        ref.update(data)
+        if ref == 'Controls':
+            self.firebase_refs.child('{ref}/').update(data)
+            print('nudge value', self.firebase_refs.child('{ref}/PostureNudge/').get())
+            
+        else:
+            self.firebase_refs.child(f'{self.user}/{ref}/').update(data)
+        # ref.update(data)
         pass
 
 
@@ -177,10 +188,11 @@ class PostureAnalyzer:
 
     def average_and_send(self):
         averaged_data = self.calculate_average(self.data_points)
-        self.send_to_firebase(self.firebase_refs['Posture'],averaged_data)
+        self.send_to_firebase('Posture',averaged_data)
         print(averaged_data)
         self.data_points.clear()
         # Reset the timer
+        print('send_to_firebase')
         timer = Timer(12, self.average_and_send)
         timer.start()
 
@@ -197,7 +209,8 @@ class PostureAnalyzer:
                 cv2.imshow('Webcam', image)
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
-                self.firebase_refs['Session'].update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
+                self.firebase_refs.child(f'{self.user}/Session/').update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
+                # self.firebase_refs['Session'].update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
              
                 break
         print('Finished.')
@@ -432,14 +445,20 @@ class PostureAnalyzer:
                 cv2.putText(image, f'eye to screen distance: {eye_screen_distance}', (w - 800, 300) ,font, 0.9, green, 2)
 
                 current_time = datetime.now().timestamp()*1000
-                if (current_time - self.last_firebase_update_time) >= self.update_interval:
-                    self.last_firebase_update_time = current_time
-                    self.send_to_firebase(self.firebase_refs['EyeScreenDistance'],{str(int(timestamp)) : {
+                # print(current_time - self.last_firebase_update_time,' and ', self.update_interval)
+                # if (current_time - self.last_firebase_update_time) >= self.update_interval:
+                #     self.last_firebase_update_time = current_time
+                
+
+                eye_screen_angle = 90-abs(self.calculate_angle_2p(l_eye_x, l_eye_y, cords[0], cords[1]+height/2))
+                print(eye_screen_angle)
+                self.send_to_firebase('EyeScreenDistance',{str(int(timestamp)) : {
                             # Handle numerical fields
-                            'Distance' :eye_screen_distance }})
+                            'Distance' :eye_screen_distance, 
+                            'Angle' :eye_screen_angle}})
                 #clear screen list
                 
-                    self.screens_list.removeAll()
+                self.screens_list.removeAll()
 
 
             
@@ -524,10 +543,11 @@ class PostureAnalyzer:
 
             # Determine whether good posture or bad posture.
             # The threshold angles have been set based on intuition.
-            if (neck_inclination < 5 and neck_inclination > -10 
+            if (neck_inclination < 5 and neck_inclination > -20
             and trunk_inclication < 10 and trunk_inclication > 0
-            and upper_arm_inclination < 20 and upper_arm_inclination >0
-            and knee_angle >80 and knee_angle < 100): 
+            and upper_arm_inclination < 20 and upper_arm_inclination >-10
+            # and knee_angle >80 and knee_angle < 100
+            ): 
                 posture_category = 'perfect'
                 self.perfect_pos_frames += 1
                 self.prolong_bad = 0
@@ -536,10 +556,11 @@ class PostureAnalyzer:
         
             
             
-            elif  (neck_inclination < 5 and neck_inclination > -25 
-                   and trunk_inclication < 30 and trunk_inclication > 0
-                   and upper_arm_inclination < 40 and upper_arm_inclination >0
-                   and  knee_angle > 70 and knee_angle < 110):
+            elif  (neck_inclination < 5 and neck_inclination > -35 
+                   and trunk_inclication < 30 and trunk_inclication > -5
+                   and upper_arm_inclination < 40 and upper_arm_inclination >-10
+                #    and  knee_angle > 70 and knee_angle < 110
+                   ):
                 posture_category = 'good'
                 self.good_pos_frames += 1
                 self.prolong_bad = 0
@@ -602,22 +623,26 @@ class PostureAnalyzer:
             cv2.putText(image, time_string_bad, (int(2*w/3), h - 20), font, 0.9, red, 2)
 
             # If you stay in bad posture for more than 3 minutes (180s) send an alert.
-            if prolong_bad_time > 5 : # 5 seconds
+            print(prolong_bad_time)
+            if prolong_bad_time > 0.16: # 5 seconds
                 correction_type = self.sendWarning()
 
                 self.prolong_bad =0
                 try:
+                    print('updating corection')
                     self.data_points['CorrectionTimestamp'].append(timestamp)
                     self.data_points['CorrectionType'].append(correction_type)
                     data = {str(int(timestamp)) : {
                         # Handle numerical fields
                         'CorrectionType' :correction_type }
                     }
-                    self.send_to_firebases(self.firebase_refs['Correction'], data)
+                    self.send_to_firebase('Correction', data)
+                    print('updated corection')
                     # query = "INSERT INTO CorrectionHistory (Timestamp, CorrectionType) VALUES (%s, %s)"
                     # cursor.execute(query, (timestamp, correction_type))
                     # connection.commit()
                 except Exception as e:
+                    print('errorr')
                     print(e)
             
             try:
