@@ -3,6 +3,7 @@ import GaugeComponent from 'react-gauge-component'
 
 export const PostureAngle = ({ angle }) => {
     const formattedAngle = `${angle}°`;
+   
 
     return(
       <div style={{ position: 'relative', width: 'fit-content', margin: '0 auto' }}>

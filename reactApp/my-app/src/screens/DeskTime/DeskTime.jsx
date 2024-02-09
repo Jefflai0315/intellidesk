@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import { BotBar_Home } from "../../components/BotBar_Home";
 import "./style.css";
 import { Link } from 'react-router-dom';
@@ -8,8 +8,18 @@ import tableIcon from '../../imgs/Group 28table.png';
 import moreIcon from '../../imgs/Group 27more.png';
 import timerIcon from '../../imgs/Asset 2@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
+import database from '../../firebase'; // Adjust the path as needed
+import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
 
 function DeskTime() {
+  const [user, setUser] = useState('My')
+
+  useEffect(() => {
+    const ESRef = query(ref(database, 'Controls/User'));
+  onValue(ESRef, (snapshot) => {
+    const data = snapshot.val();
+    setUser(data );
+  });});
   return (
     <div className="desk-time">
       <div className="overlap-wrapper">
@@ -62,7 +72,7 @@ function DeskTime() {
               <Link to="/">
               <img className="frame-2" alt="Frame" src="https://c.animaapp.com/QHWYwOlz/img/frame-3.svg" />
               </Link>
-                <BarChartDeskTime className="bar-chart-desk-time" />
+                <BarChartDeskTime className="bar-chart-desk-time" user = {user}/>
              
             </div>
           </div>

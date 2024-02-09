@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import { BarIcon } from "../../components/BarIcon";
 import { BotBar_Home } from "../../components/BotBar_Home";
 import { PostureGauge } from "../../components/PostureGauge";
@@ -11,8 +11,36 @@ import timerIcon from '../../imgs/Asset 2@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
 import { LineChart_DeskTime } from "../../components/LineChartDeskTime";
 import { BarChartSD_Home } from "../../components/BarChartSD_Home";
+import database from '../../firebase'; // Adjust the path as needed
+import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
 
 function Home() {
+  const [user, setUser] = useState('My')
+  const [caloriesBurned, setCaloriesBurned] = useState('0')
+  const [caloriesBurnedGoal, setCaloriesBurnedGoal] = useState('1000')
+
+  
+
+  useEffect(() => {
+    const ESRef = query(ref(database, 'Controls/User'));
+  onValue(ESRef, (snapshot) => {
+    const data = snapshot.val();
+    setUser(data + '`s');
+
+  });
+  const CBRef = query(ref(database, user.slice(0,-2)+'/Params'));
+  onValue(CBRef, (snapshot) => {
+    const CBdata = snapshot.val()['CaloriesBurned'];
+    const CBGdata = snapshot.val()['CaloriesBurnedGoal'];
+
+    // if (data) {
+    
+    setCaloriesBurned(CBdata);
+    setCaloriesBurnedGoal(CBGdata);
+    console.log('CaloriesBurned' + ' ' + caloriesBurned)
+    console.log('CaloriesBurnedGoal' + ' ' + caloriesBurnedGoal)
+    // }
+  });});
 
   return (
     <div className="home">
@@ -28,14 +56,14 @@ function Home() {
           <div className="home-pg">
             <div className="overlap-2">
               <div className="rectangle-5" />
-              <div className="text-wrapper-2">My Day</div>
+              <div className="text-wrapper-2">{user} Day </div>
               <div className="text-wrapper-3">Screen Distance</div>
               <div className="text-wrapper-4">Daily Activity</div>
               <div className="text-wrapper-5">Posture</div>
-              <BarChartSD_Home className="bar-chart-sd-home-instance-node" />
+              <BarChartSD_Home className="bar-chart-sd-home-instance-node" user = {user} />
               <div className="overlap-group-wrapper">
                 <div className="overlap-4">
-                  <div className="text-wrapper-9">200 cal</div>
+                  <div className="text-wrapper-9">{caloriesBurned} cal</div>
                   <div className="text-wrapper-10">Calories burnt</div>
                 </div>
               </div>
@@ -46,7 +74,7 @@ function Home() {
               <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '967px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
               <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '1210px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
               <Link to="/DeskTime">
-              <BarIcon className="bar-icon-instance" />
+              <BarIcon className="bar-icon-instance" user = {user}/>
               </Link>
               <div className="bar-icon-2">
                 <div className="rectangle-9" />
@@ -61,7 +89,7 @@ function Home() {
                 <div className="rectangle-12" />
               </div>
               <div className="desk-time-summary">
-                <LineChart_DeskTime className="line-chart-desk-time-instance-node" />
+                <LineChart_DeskTime className="line-chart-desk-time-instance-node" user = {user}/>
               </div>
               <div className="group-4">
                 <div className="overlap-8">
@@ -72,7 +100,7 @@ function Home() {
                   </div>
                   <div className="group-wrapper">
                     <div className="group-5">
-                      <div className="text-wrapper-29">60</div>
+                      <div className="text-wrapper-29">{(caloriesBurned/caloriesBurnedGoal* 100).toFixed(0) }</div>
                       <div className="text-wrapper-30">/100</div>
                     </div>
                   </div>
@@ -82,7 +110,7 @@ function Home() {
               <div className="group-6">
                 <div className="overlap-9">
                   <div className="group-7">
-                    <PostureGauge className="posture-gauge-instance" score={93}/>
+                    <PostureGauge className="posture-gauge-instance" user={user}/>
                   </div>
                 </div>
               </div>

@@ -1,16 +1,56 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import GaugeComponent from 'react-gauge-component'
+import database from '../../firebase'; // Adjust the path as needed
+import { query, ref, onValue} from 'firebase/database'
 
 
-export const PostureGauge = ({ score }) => {
+export const PostureGauge = ({ score , user}) => {
+  if (user === "My"){
+    user = ''
+  }
+  else {
+    //remove last 2 characters (`s)
+    user = user.slice(0, -2) +'/';
+  }
+  const [postureScore, setPostureScore] = useState('My')
 
+  useEffect(() => {
+    const ESRef = query(ref(database, user+'Params/PostureScore'));
+  onValue(ESRef, (snapshot) => {
+    const data = snapshot.val();
+    setPostureScore(data);
+  });});
+  function calculateContinuousPostureScore(trunkInclination) {
+    const idealRangeStart = -5;
+    const idealRangeEnd = 20;
+  
+    // Calculate the distance from the ideal range
+    const distanceToIdeal = Math.min(
+      Math.abs(trunkInclination - idealRangeStart),
+      Math.abs(trunkInclination - idealRangeEnd)
+    );
+  
+    // Calculate a continuous score based on the distance to the ideal range
+    const maxScore = 100;
+    const minScore = 50;
+    const maxDistance = Math.max(idealRangeEnd - idealRangeStart, 0);
+  
+    const score = Math.max(
+      maxScore - (distanceToIdeal / maxDistance) * (maxScore - minScore),
+      minScore
+    );
+  
+    return score;
+  }
+  
       return(
         <div style={{ position: 'relative', width: 'fit-content', margin: '0 auto' }}>
           <GaugeComponent
             type="semicircle"
             minValue= "0"
             maxValue= "100"
-            value= {score}
+            value= {postureScore}
+            
             pointer={{type: "blob", animationDelay: 0}}
             arc={{
               colorArray: ["#EE5757", "#F4B54C", "#78D06A"],
@@ -43,7 +83,7 @@ export const PostureGauge = ({ score }) => {
           color: 'white',
           fontFamily: 'Helvetica',
         }}>
-          {score}<span style={{ fontSize: '17px', color: '#D4D4D4' }}>/100</span> {/* /100 is smaller */}
+          {score}<span style={{ fontSize: '17px', color: '#D4D4D4' }}>{postureScore}/100</span> {/* /100 is smaller */}
       </div>
       {/* Display the text "Score" below the score */}
       <div style={{

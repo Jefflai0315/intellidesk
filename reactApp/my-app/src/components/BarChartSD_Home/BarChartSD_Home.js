@@ -5,7 +5,14 @@ import './style.css';
 import database from '../../firebase'; // Adjust the path as needed
 import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
 
-export const BarChartSD_Home = () => {
+export const BarChartSD_Home = ({user}) => {
+  if (user === "My"){
+    user = ''
+  }
+  else {
+    //remove last 2 characters (`s)
+    user = user.slice(0, -2) +'/';
+  }
   const [avg, setAvg] = useState(0)
   const [closest, setClosest] = useState(0)
     const [chartData, setChartData] = useState({
@@ -25,8 +32,7 @@ export const BarChartSD_Home = () => {
     useEffect(() => {
       const now = new Date();
       let startDate = new Date(now.setDate(now.getDate() -7))
-      console.log(startDate)
-      const ESRef = query(ref(database, 'EyeScreenDistance'), orderByKey(), 
+      const ESRef = query(ref(database, user+'EyeScreenDistance'), orderByKey(), 
     startAt(startDate.getTime().toString())); // 7 days
     onValue(ESRef, (snapshot) => {
       const data = snapshot.val();
@@ -40,9 +46,9 @@ export const BarChartSD_Home = () => {
   const processESData = (data,sdate) => {
     let counts = [0,0,0];
     let avg = 0;
-    let min = 1000;
-
-  Object.entries(data).forEach(([timestamp, {Distance}]) => {
+    let min = 1000; // set largest value
+  if (data)
+{  Object.entries(data).forEach(([timestamp, {Distance}]) => {
     avg += Distance;
     if (min > Distance ){
       min = Distance;
@@ -57,7 +63,10 @@ export const BarChartSD_Home = () => {
     }
   } 
   )
-  console.log(counts);
+}else {
+  // console.log("No data")
+}
+  // console.log(counts);
   setAvg((avg/counts.reduce((a, b) => a + b, 0)).toFixed(1));
   setClosest(min);
   setChartData({

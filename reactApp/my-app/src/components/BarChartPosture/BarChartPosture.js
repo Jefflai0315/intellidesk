@@ -5,10 +5,18 @@ import './style.css';
 import { PostureAngle } from "../../components/PostureAngle";
 
 import database from '../../firebase'; // Adjust the path as needed
-import { get,query, ref, onValue, orderByKey , startAt} from 'firebase/database'
+import { get,query, set, ref, onValue, orderByKey , startAt} from 'firebase/database'
+// import { ref, set , query, limitToLast, onValue, startAt, endAt, orderByKey} from 'firebase/database';
 
 
-export const BarChartPosture = () => {
+export const BarChartPosture = ({user}) => {
+  if (user === "My"){
+    user = ''
+  }
+  else {
+    //remove last 2 characters (`s)
+    user = user+'/';
+  }
   const [selectedTimeframeB, setselectedTimeframeB] = useState('7d'); // Default to 1 day
   const [avgPerfect, setAvgPerfect] = useState('0 minutes'); 
   const [avgGood, setAvgGood] = useState('0 minutes'); // Default to
@@ -75,7 +83,7 @@ export const BarChartPosture = () => {
       //convert startDate to UnixTimestamp
       startDate = startDate.getTime()
 
-      const correctionRef = query(ref(database, 'Correction'),startAt(startDate.toString()));
+      const correctionRef = query(ref(database, user+'Correction'),startAt(startDate.toString()));
       //count number of data in correctionRef
 
       get(correctionRef).then((snapshot) => {
@@ -87,7 +95,7 @@ export const BarChartPosture = () => {
         });
 
       
-      const postureRef = query(ref(database, 'Posture'), orderByKey(), 
+      const postureRef = query(ref(database, user+'Posture'), orderByKey(), 
       startAt(startDate.toString()));
       onValue(postureRef, (snapshot) => {
         const data = snapshot.val();
@@ -134,6 +142,13 @@ export const BarChartPosture = () => {
             counts[hourKey][PostureQuality] += 1;
             angles.push(TrunkInclination);
         }
+        if (PostureQuality === "bad") {
+          totalBadTime += 1;
+        } else if (PostureQuality === "good"){
+          totalGoodTime += 1;
+        } else {
+          totalPerfectTime += 1;
+        }
     });
     console.log(counts)
   }
@@ -149,11 +164,13 @@ export const BarChartPosture = () => {
     const dateKey = d.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
     counts[dateKey] = { bad: 0, good: 0, perfect: 0 };
   }
+  labels = Object.keys(counts).sort((a, b) => new Date(a.split('/').reverse().join('/')) - new Date(b.split('/').reverse().join('/'))); 
+
 
   // Process the actual data
   Object.entries(data).forEach(([timestamp, { PostureQuality, TrunkInclination }]) => {
     const date = new Date(parseInt(timestamp)).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
-    console.log(counts)
+    // console.log(counts)
     if (counts[date]) { // This check is technically redundant now but left for clarity
       counts[date][PostureQuality] += 1;
       angles.push(TrunkInclination);
@@ -168,23 +185,35 @@ export const BarChartPosture = () => {
     }
   });
   
-  labels = Object.keys(counts).sort((a, b) => new Date(a.split('/').reverse().join('/')) - new Date(b.split('/').reverse().join('/'))); 
-}
+ }
 
 const badPostureData = labels.map(label => counts[label].bad);
 const goodPostureData = labels.map(label => counts[label].good);
 const perfectPostureData = labels.map(label => counts[label].perfect);
 longestPerfect = Math.max(...perfectPostureData)
 
+const updatePostureScoreInFirebase = (data) => {
+  const postureScoreRef = ref(database, user+'Params/PostureScore');
+  set(postureScoreRef, data).catch((error) => {
+    console.error("Error updating height in Firebase", error);});
+};
 
 // sum angles array divide by the array length
 console.log(totalPerfectTime)
 if (angles.length > 0){
 setAvgAngle((angles.reduce((accumulator, currentAngle) => accumulator + currentAngle, 0)/angles.length).toFixed(1));
+updatePostureScoreInFirebase(calculateContinuousPostureScore(avgAngle).toFixed(0))
+
 } else {setAvgAngle(0)}
-setAvgPerfect(formatTime((totalPerfectTime/labels.length).toFixed(1)));
-setAvgBad(formatTime((totalBadTime/labels.length).toFixed(1)))
-setAvgGood(formatTime((totalGoodTime/labels.length).toFixed(1)))
+let denom = 1;
+if (selectedTimeframeB === '1d') {
+  denom = 1;
+}else{
+  denom = labels.length;
+}
+setAvgPerfect(formatTime((totalPerfectTime/denom).toFixed(1)));
+setAvgBad(formatTime((totalBadTime/denom).toFixed(1)))
+setAvgGood(formatTime((totalGoodTime/denom).toFixed(1)))
 setLongestPerfectStreak(formatTime(longestPerfect));
 
 setData({
@@ -244,6 +273,28 @@ setDateRange(`${labels[0]} - ${labels[labels.length - 1]}`);
         </ul>
       </div>
     );
+    function calculateContinuousPostureScore(trunkInclination) {
+      const idealRangeStart = -5;
+      const idealRangeEnd = 20;
+    
+      // Calculate the distance from the ideal range
+      const distanceToIdeal = Math.min(
+        Math.abs(trunkInclination - idealRangeStart),
+        Math.abs(trunkInclination - idealRangeEnd)
+      );
+    
+      // Calculate a continuous score based on the distance to the ideal range
+      const maxScore = 100;
+      const minScore = 50;
+      const maxDistance = Math.max(idealRangeEnd - idealRangeStart, 0);
+    
+      const score = Math.max(
+        maxScore - (distanceToIdeal / maxDistance) * (maxScore - minScore),
+        minScore
+      );
+    
+      return score;
+    }
 
     return (
       <>
@@ -269,13 +320,13 @@ setDateRange(`${labels[0]} - ${labels[labels.length - 1]}`);
       <CustomLegend chartData={chartData} />
     </div>
     <div className="day-breakdown">
-                <PostureAngle className="posture-angle-instance" angle={avgAngle}/>
+                <PostureAngle className="posture-angle-instance" angle={avgAngle} user={user}/>
               </div>
       <div className="desk-time-summary">
                 <div className="average-DT">
                   <div className="text-wrapper-38">Posture Score</div>
                   <div className="overlap-group-7">
-                    <div className="text-wrapper-39">93</div>
+                    <div className="text-wrapper-39">{calculateContinuousPostureScore(avgAngle).toFixed(0)}</div>
                     <div className="text-wrapper-40">/100</div>
                   </div>
                 </div>

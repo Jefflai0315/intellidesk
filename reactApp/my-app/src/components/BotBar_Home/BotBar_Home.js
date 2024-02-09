@@ -2,6 +2,7 @@ import React from "react";
 import "./style.css";
 
 export const BotBar_Home = ({ className }) => {
+
   return (
     <div className={`bot-bar-home ${className}`}>
             <div className="overlap-10">

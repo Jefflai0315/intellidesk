@@ -3,10 +3,17 @@ import { Bar } from 'react-chartjs-2';
 import '../customChartTypes.js';
 import './styles.css';
 import database from '../../firebase'; // Adjust the path as needed
-import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
+import { query, ref,set,  onValue, orderByKey , startAt} from 'firebase/database'
 import { Link } from 'react-router-dom';
 
-export const BarChartDeskTime = () => {
+export const BarChartDeskTime = ({user}) => {
+  if (user === "My"){
+    user = ''
+  }
+  else {
+    //remove last 2 characters (`s)
+    user = user +'/';
+  }
   const [selectedTimeframeB, setselectedTimeframeB] = useState('7d'); // Default to 1 day
   const [avgHour, setAvgHour] = useState('0 hours');
   const [totalStanding, setTotalStanding] = useState('0 hours');
@@ -16,6 +23,7 @@ export const BarChartDeskTime = () => {
   const [longestSitting, setLongestSitting] = useState('0 hours');
   const [longestBreak, setLongestBreak] = useState('0 minutes');
   const [dateRange, setDateRange] = useState('24/9 - 30/9');
+  const [caloriesBurned, setCaloriesBurned] = useState(0);
   const [chartData, setChartData] = useState({
         labels: [],
         datasets: [
@@ -62,7 +70,7 @@ export const BarChartDeskTime = () => {
       //convert startDate to UnixTimestamp
       startDate = startDate.getTime()
     
-      const postureRef = query(ref(database, 'Posture'), orderByKey(), 
+      const postureRef = query(ref(database, user+'Posture'), orderByKey(), 
       startAt(startDate.toString()));
       onValue(postureRef, (snapshot) => {
         const data = snapshot.val();
@@ -75,6 +83,11 @@ export const BarChartDeskTime = () => {
     }, [selectedTimeframeB]);
     // Function to get unique labels for legend
 
+    const updateAvgCaloriesBurned= (data) => {
+      const caloriesBurnedRef = ref(database, user+'Params/CaloriesBurned');
+      set(caloriesBurnedRef, data).catch((error) => {
+        console.error("Error updating height in Firebase", error);});
+    };
 
     const processSitStandData = (data,sdate) => {
       let counts = {};
@@ -96,11 +109,13 @@ export const BarChartDeskTime = () => {
     Object.entries(data).forEach(([timestamp, { PostureMode }]) => {
         const date = new Date(parseInt(timestamp));
         const hourKey = date.getHours().toString().padStart(2, '0') + ':00';
-
-        
-
         if (counts[hourKey]) {
             counts[hourKey][PostureMode] += 1;
+        }
+        if (PostureMode === "sitting") {
+          totalSitTime += 1;
+        } else {
+          totalStandTime += 1;
         }
     });
   }
@@ -137,14 +152,27 @@ export const BarChartDeskTime = () => {
   longestStandDuration = Math.max(...standingData);
   longestSitDuration = Math.max(...sittingData);
 
-  setTotalStanding(formatTime(totalStandTime/counts.length));
-  setTotalSitting(formatTime(totalSitTime/counts.length));
-  setTotalBreak(formatTime(totalBreakTime/counts.length));
+  let denom = 1;
+if (selectedTimeframeB === '1d') {
+  denom = 1;
+}else{
+  denom = labels.length;
+}
+
+  setTotalStanding(formatTime(totalStandTime/denom));
+  setTotalSitting(formatTime(totalSitTime/denom));
+  setTotalBreak(formatTime(totalBreakTime/denom));
   setLongestStanding(formatTime(longestStandDuration));
   setLongestSitting(formatTime(longestSitDuration));
   setLongestBreak(formatTime(longestBreakDuration));
-  setAvgHour(((totalStandTime + totalSitTime) / labels.length).toFixed(1));
+  const min = (((totalStandTime + totalSitTime) / denom))
+  setAvgHour((Math.floor(min/60)+ ((min % 60)/60)).toFixed(1));
   setDateRange(`${labels[0]} - ${labels[labels.length - 1]}`);
+
+  let sitCaloriesBurned = 80
+  let standCaloriesBurned = 88
+  setCaloriesBurned(((totalStandTime /60) * standCaloriesBurned + (totalSitTime/60)* sitCaloriesBurned).toFixed(0))
+  updateAvgCaloriesBurned(caloriesBurned); 
 
 
   setChartData({

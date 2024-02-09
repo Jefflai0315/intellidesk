@@ -4,8 +4,14 @@ import React, { useEffect, useState } from 'react';
 import database from '../../firebase'; // Adjust the path as needed
 import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
 
-export const LineChart_DeskTime = () => {
- 
+export const LineChart_DeskTime = ({user}) => {
+  if (user === "My"){
+    user = ''
+  }
+  else {
+    //remove last 2 characters (`s)
+    user = user.slice(0, -2) +'/';
+  }
   const [selectedTimeframe, setSelectedTimeframe] = useState('7d'); // Default to 1 day
   const [sittingAvg, setSittingAvg] = useState(0)
   const [standingAvg, setStandingAvg] = useState(0)
@@ -56,7 +62,7 @@ export const LineChart_DeskTime = () => {
     //convert startDate to UnixTimestamp
     startDate = startDate.getTime()
   
-    const postureRef = query(ref(database, 'Posture'), orderByKey(), 
+    const postureRef = query(ref(database, user+'Posture'), orderByKey(), 
     startAt(startDate.toString()));
     onValue(postureRef, (snapshot) => {
       const data = snapshot.val();

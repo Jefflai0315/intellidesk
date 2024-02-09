@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import { BotBar_Home } from "../../components/BotBar_Home";
 import "./style.css";
 import { Link } from 'react-router-dom';
@@ -9,9 +9,20 @@ import tableIcon from '../../imgs/Group 28table.png';
 import moreIcon from '../../imgs/Group 27more.png';
 import timerIcon from '../../imgs/Asset 2@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
+import database from '../../firebase'; // Adjust the path as needed
+import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
 
 function Posture() {
+  const [user, setUser] = useState('My')
+
+  useEffect(() => {
+    const ESRef = query(ref(database, 'Controls/User'));
+  onValue(ESRef, (snapshot) => {
+    const data = snapshot.val();
+    setUser(data);
+  });});
   return (
+    
     <div className="posture">
       <div className="overlap-wrapper">
         <div className="overlap">
@@ -22,7 +33,7 @@ function Posture() {
               <div className="line" style={{ height: '2px', backgroundColor: '#A9FF9B', width: '100%' }}></div> {/* Replace the img tag with this div */}
             </div>
           </div>
-          <BotBar_Home className="bot-bar-home-instance-node" />
+          <BotBar_Home className="bot-bar-home-instance-node" user = {user} />
           <div className="bot-bar-home">
             <div className="div">
               <div className="group">
@@ -90,7 +101,7 @@ function Posture() {
               </div> */}
             
               {/* <div className="bar-chart-container"> */}
-                <BarChartPosture className="bar-chart-posture" />
+                <BarChartPosture className="bar-chart-posture" user = {user}/>
               {/* </div> */}
               {/* <div className="day-breakdown">
                 <PostureAngle className="posture-angle-instance" angle={110}/>
