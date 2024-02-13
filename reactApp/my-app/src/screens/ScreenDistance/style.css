@@ -1056,7 +1056,17 @@
     height: 31px;
     position: relative;
     width: 100%;
-    left: 0;
+    margin: 0 auto;
+  }
+
+  .screen-distance .overlap-group-9 {
+    background-color: #3b3b3b;
+    border-radius: 6px;
+    height: 31px;
+    position: relative;
+    width: 85%;
+    margin: 0 auto;
+    top: 140px;
   }
   
   .screen-distance .text-wrapper-20 {
@@ -1180,9 +1190,10 @@
   .screen-distance .group-33 {
     height: 31px;
     left: 0;
-    position: absolute;
+    position: relative;
     top: 0;
     width: 100%;
+    margin: 0 auto;
   }
   
   .screen-distance .text-wrapper-27 {
@@ -1871,4 +1882,95 @@
     top: 0;
     bottom: 0;
     width: 32px;
+  }
+
+  .screen-distance .text-wrapper-51 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 10%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }
+  
+  .screen-distance .text-wrapper-52 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 22.5%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }
+  
+  .screen-distance .text-wrapper-53 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 35%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }
+  
+  .screen-distance .text-wrapper-54 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 47.5%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }
+  
+  .screen-distance .text-wrapper-55 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 60%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }
+  
+  .screen-distance .text-wrapper-56 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 72.5%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }
+  
+  .screen-distance .text-wrapper-57 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 85%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
   }

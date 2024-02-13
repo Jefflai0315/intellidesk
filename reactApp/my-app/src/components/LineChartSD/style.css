@@ -1,0 +1,85 @@
+.chartjs-legend ul {
+    list-style: none;
+    display: flex; /* Aligns legend items in a row */
+    padding: 0; /* Removes default padding */
+    margin: 0; /* Removes default margin */
+    justify-content: center; /* Center the legend items horizontally */
+  }
+  
+  .chartjs-legend li {
+    display: flex;
+    align-items: center;
+    margin-right: 10px; /* Adds some space between the legend items */
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  
+  .chartjs-legend li:last-child {
+    margin-right: 0; /* Removes margin from the last item */
+  }
+  
+  .chartjs-legend li span {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%; /* Makes the legend icons circular */
+    margin-right: 5px;
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  .navbar-wrapper .text-wrapper-25 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 12.5%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }
+  
+  .navbar-wrapper .text-wrapper-26 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 60.5%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }
+  
+  .navbar-wrapper .text-wrapper-27 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 35.5%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }
+  
+  .text-wrapper-28 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 82.5%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }

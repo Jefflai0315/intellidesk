@@ -6,7 +6,7 @@ import database from '../../firebase.js'; // Adjust the path as needed
 import { query, ref,set,  onValue, orderByKey , startAt} from 'firebase/database'
 import { Link } from 'react-router-dom';
 
-export const BarChartSD = ({user}) => {
+export const BarChartDailyActivity = ({user}) => {
   if (user === "My"){
     user = ''
   }
@@ -28,18 +28,18 @@ export const BarChartSD = ({user}) => {
         labels: [],
         datasets: [
           {
-            label: 'Standing',
-            backgroundColor: '#1679DB',
+            label: 'In Progress',
+            backgroundColor: '#69CBD9',
             borderWidth: 1,
-            hoverBackgroundColor: '#3199FF',
+            hoverBackgroundColor: '#69CBD9',
             cornerRadius: 8,
             data: [],
           },
           {
-            label: 'Sitting',
-            backgroundColor: '#EE5757',
+            label: 'Success',
+            backgroundColor: '#78D06A',
             borderWidth: 1,
-            hoverBackgroundColor: '#FF7171',
+            hoverBackgroundColor: '#78D06A',
             cornerRadius: 8,
             data: [],
           },
@@ -205,7 +205,7 @@ const formatTime = (minutes) => {
         }
 
         // Filtering out specific labels
-        const labelsToShow = ["Standing", "Sitting"]; 
+        const labelsToShow = ["In Progress", "Success"]; 
         const uniqueLabels = Array.from(new Set(chartData.datasets
           .filter(dataset => labelsToShow.includes(dataset.label))
           .map(dataset => dataset.label)));
@@ -288,12 +288,12 @@ const formatTime = (minutes) => {
       />
       <CustomLegend chartData={chartData} />
     </div>
-    <div className="screen-distance-summary">
-        <div className="average-SD">
-          <div className="text-wrapper-38">Average Screen Distance</div>
+    <div className="daily-activity-summary">
+        <div className="average-DA">
+          <div className="text-wrapper-38">Average</div>
           <div className="overlap-group-7">
             <div className="text-wrapper-39">{avgHour}</div>
-            <div className="text-wrapper-40">cm/day</div>
+            <div className="text-wrapper-40">cal/day</div>
           </div>
         </div>
       </div>

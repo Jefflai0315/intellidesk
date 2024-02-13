@@ -3,6 +3,7 @@ import { BotBar_Home } from "../../components/BotBar_Home";
 import "./style.css";
 import { Link } from 'react-router-dom';
 import { BarChartSD } from "../../components/BarChartSD";
+import { LineChart_SD } from "../../components/LineChartSD";
 import logoImage from '../../imgs/logo@720x.png';
 import tableIcon from '../../imgs/Group 28table.png';
 import moreIcon from '../../imgs/Group 27more.png';
@@ -72,8 +73,8 @@ function ScreenDistance() {
               <Link to="/">
               <img className="frame-2" alt="Frame" src="https://c.animaapp.com/QHWYwOlz/img/frame-3.svg" />
               </Link>
-                <BarChartSD className="bar-chart-screen-distance" user = {user}/>
-             
+              <BarChartSD className="bar-chart-screen-distance" user = {user}/>
+              <LineChart_SD className="line-chart-screen-distance" user = {user}/>
             </div>
           </div>
         </div>
