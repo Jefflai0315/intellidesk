@@ -1,0 +1,1874 @@
+.screen-distance {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .screen-distance .overlap-wrapper {
+    background-color: #ffffff;
+    height: 844px;
+    overflow: hidden;
+    width: 390px;
+  }
+  
+  .screen-distance .overlap {
+    height: 100%;
+    position: relative;
+    width: 100%;
+  }
+  
+  .screen-distance .background {
+    background-color: #101010;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+  
+  .screen-distance .title {
+    height: 56px;
+    left: 0;
+    position: absolute;
+    top: 20px;
+    width: 100%;
+  }
+  
+  .screen-distance .overlap-group {
+    height: 56px;
+    position: relative;
+    width: 390px;
+  }
+  
+  .screen-distance .text-wrapper {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 40px;
+    font-weight: 700;
+    left: 36px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 0;
+    width: 262px;
+  }
+  
+  .screen-distance .line {
+    height: 2px;
+    left: 0;
+    position: absolute;
+    top: 54px;
+    width: 390px;
+  }
+  
+  .screen-distance .bot-bar-home {
+    height: 71px;
+    left: 0;
+    position: absolute;
+    top: 773px;
+    width: 100%;
+  }
+  
+  .screen-distance .div {
+    background-image: url(https://c.animaapp.com/VczO8maf/img/rectangle-16-1.svg);
+    background-size: 100% 100%;
+    height: 71px;
+    left: 1px;
+    position: relative;
+    width: 389px;
+  }
+  
+  .screen-distance .group {
+    height: 36px;
+    left: 329px;
+    position: absolute;
+    top: 22px;
+    width: 47px;
+  }
+  
+  .screen-distance .text-wrapper-2 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 16px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 15px;
+    width: 45px;
+  }
+  
+  .screen-distance .group-2 {
+    height: 8px;
+    left: 7px;
+    position: absolute;
+    top: 0;
+    width: 32px;
+  }
+  
+  .screen-distance .ellipse-wrapper {
+    background-color: #9c9c9c;
+    border-radius: 4px;
+    height: 8px;
+    left: 24px;
+    position: absolute;
+    top: 0;
+    width: 8px;
+  }
+  
+  .screen-distance .ellipse {
+    background-color: #000000;
+    border-radius: 3.11px;
+    height: 6px;
+    left: 1px;
+    position: relative;
+    top: 1px;
+    width: 6px;
+  }
+  
+  .screen-distance .div-wrapper {
+    background-color: #9c9c9c;
+    border-radius: 4px;
+    height: 8px;
+    left: 12px;
+    position: absolute;
+    top: 0;
+    width: 8px;
+  }
+  
+  .screen-distance .group-3 {
+    background-color: #9c9c9c;
+    border-radius: 4px;
+    height: 8px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 8px;
+  }
+  
+  .screen-distance .text-wrapper-3 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 16px;
+    font-weight: 600;
+    left: 240px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 36px;
+    width: 81px;
+  }
+  
+  .screen-distance .asset {
+    height: 22px;
+    left: 268px;
+    object-fit: cover;
+    position: absolute;
+    top: 14px;
+    width: 22px;
+  }
+  
+  .screen-distance .overlap-group-wrapper {
+    height: 45px;
+    left: 172px;
+    position: absolute;
+    top: 13px;
+    width: 62px;
+  }
+  
+  .screen-distance .overlap-2 {
+    height: 45px;
+    position: relative;
+    width: 60px;
+  }
+  
+  .screen-distance .text-wrapper-4 {
+    color: #A9FF9B;
+    font-family: "Open Sans", Helvetica;
+    font-size: 16px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 24px;
+    width: 60px;
+  }
+  
+  .screen-distance .group-4 {
+    height: 24px;
+    left: 14px;
+    position: absolute;
+    top: 0;
+    width: 31px;
+  }
+  
+  .screen-distance .overlap-group-2 {
+    height: 24px;
+    position: relative;
+  }
+  
+  .screen-distance .rectangle {
+    background-color: #A9FF9B;
+    height: 9px;
+    left: 6px;
+    position: absolute;
+    top: 8px;
+    transform: rotate(-41.74deg);
+    width: 26px;
+  }
+  
+  .screen-distance .rectangle-2 {
+    background-color: #A9FF9B;
+    border-radius: 1px 0px 1px 1px;
+    height: 8px;
+    left: 1px;
+    position: absolute;
+    top: 11px;
+    transform: rotate(45.21deg);
+    width: 16px;
+  }
+  
+  .screen-distance .group-5 {
+    height: 44px;
+    left: 13px;
+    position: absolute;
+    top: 14px;
+    width: 72px;
+  }
+  
+  .screen-distance .text-wrapper-5 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 16px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 23px;
+    width: 70px;
+  }
+  
+  .screen-distance .group-6 {
+    height: 20px;
+    left: 21px;
+    position: absolute;
+    top: 0;
+    width: 27px;
+  }
+  
+  .screen-distance .rectangle-3 {
+    border: 0.5px solid;
+    border-color: #898989;
+    border-radius: 1px;
+    height: 4px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 27px;
+  }
+  
+  .screen-distance .img {
+    height: 14px;
+    left: 5px;
+    position: absolute;
+    top: 6px;
+    width: 18px;
+  }
+  
+  .screen-distance .group-7 {
+    height: 21px;
+    left: 91px;
+    position: absolute;
+    top: 37px;
+    width: 75px;
+  }
+  
+  .screen-distance .text-wrapper-6 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 16px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 73px;
+  }
+  
+  .screen-distance .asset-x {
+    height: 21px;
+    left: 117px;
+    position: absolute;
+    top: 14px;
+    width: 22px;
+  }
+  
+  .screen-distance .frame {
+    height: 660px;
+    left: 0;
+    overflow: hidden;
+    overflow-y: scroll;
+    position: absolute;
+    top: 92px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .screen-distance .overlap-3 {
+    height: 100%;
+    position: relative;
+    width: 90%;
+    left: 0;
+    margin: 0 auto;
+  }
+  
+  .screen-distance .group-8 {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .screen-distance .overlap-group-3 {
+    height: 97%;
+    position: relative;
+  }
+  
+  .screen-distance .rectangle-4 {
+    background-color: #101010;
+    height: 70px;
+    left: 0;
+    position: absolute;
+    top: 810px;
+    width: 350px;
+  }
+  
+  .screen-distance .group-9 {
+    background-color: #252525;
+    border-radius: 25px;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .screen-distance .navbar {
+    height: 9px;
+    left: 48px;
+    position: absolute;
+    top: 294px;
+    width: 291px;
+  }
+  
+  .screen-distance .text-wrapper-7 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    white-space: nowrap;
+    width: 19px;
+  }
+  
+  .screen-distance .text-wrapper-8 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 44px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    white-space: nowrap;
+    width: 19px;
+  }
+  
+  .screen-distance .text-wrapper-9 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 86px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    white-space: nowrap;
+    width: 19px;
+  }
+  
+  .screen-distance .text-wrapper-10 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 129px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    white-space: nowrap;
+    width: 19px;
+  }
+  
+  .screen-distance .text-wrapper-11 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 173px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    white-space: nowrap;
+    width: 19px;
+  }
+  
+  .screen-distance .text-wrapper-12 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 215px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    white-space: nowrap;
+    width: 19px;
+  }
+  
+  .screen-distance .text-wrapper-13 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 257px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    white-space: nowrap;
+    width: 19px;
+  }
+  
+  .screen-distance .grid-lines {
+    height: 123px;
+    left: 51px;
+    position: absolute;
+    top: 144px;
+    width: 270px;
+  }
+  
+  .screen-distance .line-2 {
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 81px;
+    width: 270px;
+  }
+  
+  .screen-distance .line-3 {
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 61px;
+    width: 270px;
+  }
+  
+  .screen-distance .line-4 {
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 123px;
+    width: 270px;
+  }
+  
+  .screen-distance .line-5 {
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 103px;
+    width: 270px;
+  }
+  
+  .screen-distance .line-6 {
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 41px;
+    width: 270px;
+  }
+  
+  .screen-distance .line-7 {
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 20px;
+    width: 270px;
+  }
+  
+  .screen-distance .line-8 {
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 270px;
+  }
+  
+  .screen-distance .rectangle-wrapper {
+    height: 75px;
+    left: 136px;
+    position: absolute;
+    top: 192px;
+    width: 6px;
+  }
+  
+  .screen-distance .rectangle-5 {
+    background-color: #78d069;
+    border-radius: 5px;
+    height: 6px;
+    left: -35px;
+    position: relative;
+    top: 35px;
+    transform: rotate(-90deg);
+    width: 75px;
+  }
+  
+  .screen-distance .group-10 {
+    height: 107px;
+    left: 141px;
+    position: absolute;
+    top: 160px;
+    width: 6px;
+  }
+  
+  .screen-distance .rectangle-6 {
+    background-color: #f4b54c;
+    border-radius: 5px;
+    height: 6px;
+    left: -51px;
+    position: relative;
+    top: 51px;
+    transform: rotate(-90deg);
+    width: 107px;
+  }
+  
+  .screen-distance .group-11 {
+    height: 31px;
+    left: 147px;
+    position: absolute;
+    top: 236px;
+    width: 6px;
+  }
+  
+  .screen-distance .rectangle-7 {
+    background-color: #ee5757;
+    border-radius: 5px;
+    height: 6px;
+    left: -13px;
+    position: relative;
+    top: 13px;
+    transform: rotate(-90deg);
+    width: 31px;
+  }
+  
+  .screen-distance .group-12 {
+    height: 68px;
+    left: 264px;
+    position: absolute;
+    top: 199px;
+    width: 6px;
+  }
+  
+  .screen-distance .rectangle-8 {
+    background-color: #78d069;
+    border-radius: 5px;
+    height: 6px;
+    left: -31px;
+    position: relative;
+    top: 31px;
+    transform: rotate(-90deg);
+    width: 68px;
+  }
+  
+  .screen-distance .group-13 {
+    height: 90px;
+    left: 270px;
+    position: absolute;
+    top: 177px;
+    width: 6px;
+  }
+  
+  .screen-distance .rectangle-9 {
+    background-color: #f4b54c;
+    border-radius: 5px;
+    height: 6px;
+    left: -42px;
+    position: relative;
+    top: 42px;
+    transform: rotate(-90deg);
+    width: 90px;
+  }
+  
+  .screen-distance .group-14 {
+    height: 28px;
+    left: 275px;
+    position: absolute;
+    top: 239px;
+    width: 6px;
+  }
+  
+  .screen-distance .rectangle-10 {
+    background-color: #ee5757;
+    border-radius: 5px;
+    height: 6px;
+    left: -11px;
+    position: relative;
+    top: 11px;
+    transform: rotate(-90deg);
+    width: 28px;
+  }
+  
+  .screen-distance .group-15 {
+    height: 46px;
+    left: 307px;
+    position: absolute;
+    top: 221px;
+    width: 6px;
+  }
+  
+  .screen-distance .rectangle-11 {
+    background-color: #78d069;
+    border-radius: 5px;
+    height: 6px;
+    left: -20px;
+    position: relative;
+    top: 20px;
+    transform: rotate(-90deg);
+    width: 46px;
+  }
+  
+  .screen-distance .group-16 {
+    height: 76px;
+    left: 312px;
+    position: absolute;
+    top: 192px;
+    width: 6px;
+  }
+  
+  .screen-distance .rectangle-12 {
+    background-color: #f4b54c;
+    border-radius: 5px;
+    height: 6px;
+    left: -35px;
+    position: relative;
+    top: 35px;
+    transform: rotate(-90deg);
+    width: 76px;
+  }
+  
+  .screen-distance .group-17 {
+    height: 24px;
+    left: 318px;
+    position: absolute;
+    top: 243px;
+    width: 6px;
+  }
+  
+  .screen-distance .rectangle-13 {
+    background-color: #ee5757;
+    border-radius: 5px;
+    height: 6px;
+    left: -9px;
+    position: relative;
+    top: 9px;
+    transform: rotate(-90deg);
+    width: 24px;
+  }
+  
+  .screen-distance .group-18 {
+    height: 68px;
+    left: 93px;
+    position: absolute;
+    top: 199px;
+    width: 6px;
+  }
+  
+  .screen-distance .group-19 {
+    height: 99px;
+    left: 99px;
+    position: absolute;
+    top: 168px;
+    width: 6px;
+  }
+  
+  .screen-distance .rectangle-14 {
+    background-color: #f4b54c;
+    border-radius: 5px;
+    height: 6px;
+    left: -47px;
+    position: relative;
+    top: 47px;
+    transform: rotate(-90deg);
+    width: 99px;
+  }
+  
+  .screen-distance .group-20 {
+    height: 31px;
+    left: 104px;
+    position: absolute;
+    top: 236px;
+    width: 6px;
+  }
+  
+  .screen-distance .group-21 {
+    height: 45px;
+    left: 222px;
+    position: absolute;
+    top: 222px;
+    width: 6px;
+  }
+  
+  .screen-distance .rectangle-15 {
+    background-color: #78d069;
+    border-radius: 5px;
+    height: 6px;
+    left: -20px;
+    position: relative;
+    top: 20px;
+    transform: rotate(-90deg);
+    width: 45px;
+  }
+  
+  .screen-distance .group-22 {
+    height: 74px;
+    left: 227px;
+    position: absolute;
+    top: 193px;
+    width: 6px;
+  }
+  
+  .screen-distance .rectangle-16 {
+    background-color: #f4b54c;
+    border-radius: 5px;
+    height: 6px;
+    left: -34px;
+    position: relative;
+    top: 34px;
+    transform: rotate(-90deg);
+    width: 74px;
+  }
+  
+  .screen-distance .group-23 {
+    height: 23px;
+    left: 233px;
+    position: absolute;
+    top: 244px;
+    width: 6px;
+  }
+  
+  .screen-distance .rectangle-17 {
+    background-color: #ee5757;
+    border-radius: 5px;
+    height: 6px;
+    left: -9px;
+    position: relative;
+    top: 9px;
+    transform: rotate(-90deg);
+    width: 23px;
+  }
+  
+  .screen-distance .group-24 {
+    height: 56px;
+    left: 51px;
+    position: absolute;
+    top: 211px;
+    width: 6px;
+  }
+  
+  .screen-distance .rectangle-18 {
+    background-color: #78d069;
+    border-radius: 5px;
+    height: 6px;
+    left: -25px;
+    position: relative;
+    top: 25px;
+    transform: rotate(-90deg);
+    width: 56px;
+  }
+  
+  .screen-distance .group-25 {
+    height: 74px;
+    left: 56px;
+    position: absolute;
+    top: 193px;
+    width: 6px;
+  }
+  
+  .screen-distance .group-26 {
+    height: 23px;
+    left: 62px;
+    position: absolute;
+    top: 244px;
+    width: 6px;
+  }
+  
+  .screen-distance .group-27 {
+    height: 68px;
+    left: 179px;
+    position: absolute;
+    top: 199px;
+    width: 6px;
+  }
+  
+  .screen-distance .group-28 {
+    height: 99px;
+    left: 185px;
+    position: absolute;
+    top: 168px;
+    width: 6px;
+  }
+  
+  .screen-distance .group-29 {
+    height: 31px;
+    left: 190px;
+    position: absolute;
+    top: 236px;
+    width: 6px;
+  }
+  
+  .screen-distance .text-wrapper-14 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 24px;
+    font-weight: 700;
+    left: 59px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 29px;
+    width: 235px;
+  }
+  
+  .screen-distance .text-wrapper-15 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 21px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 560px;
+    width: 235px;
+  }
+  
+  .screen-distance .date-line {
+    height: 155px;
+    left: 25px;
+    position: absolute;
+    top: 138px;
+    width: 292px;
+  }
+  
+  .screen-distance .group-30 {
+    height: 131px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 33px;
+  }
+  
+  .screen-distance .text-wrapper-16 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 121px;
+    width: 25px;
+  }
+  
+  .screen-distance .text-wrapper-17 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 81px;
+    width: 25px;
+  }
+  
+  .screen-distance .text-wrapper-18 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 40px;
+    width: 25px;
+  }
+  
+  .screen-distance .text-wrapper-19 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 2px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 20px;
+  }
+  
+  .screen-distance .group-31 {
+    height: 3px;
+    left: 32px;
+    position: absolute;
+    top: 152px;
+    width: 260px;
+  }
+  
+  .screen-distance .ellipse-2 {
+    background-color: #d9d9d9;
+    border-radius: 1.9px/1.7px;
+    height: 3px;
+    left: 256px;
+    position: absolute;
+    top: 0;
+    width: 4px;
+  }
+  
+  .screen-distance .ellipse-3 {
+    background-color: #d9d9d9;
+    border-radius: 1.27px/1.13px;
+    height: 2px;
+    left: 214px;
+    position: absolute;
+    top: 1px;
+    width: 3px;
+  }
+  
+  .screen-distance .ellipse-4 {
+    background-color: #d9d9d9;
+    border-radius: 1.27px/1.13px;
+    height: 2px;
+    left: 128px;
+    position: absolute;
+    top: 1px;
+    width: 3px;
+  }
+  
+  .screen-distance .ellipse-5 {
+    background-color: #d9d9d9;
+    border-radius: 1.27px/1.13px;
+    height: 2px;
+    left: 43px;
+    position: absolute;
+    top: 1px;
+    width: 3px;
+  }
+  
+  .screen-distance .ellipse-6 {
+    background-color: #d9d9d9;
+    border-radius: 1.27px/1.13px;
+    height: 2px;
+    left: 172px;
+    position: absolute;
+    top: 1px;
+    width: 3px;
+  }
+  
+  .screen-distance .ellipse-7 {
+    background-color: #d9d9d9;
+    border-radius: 1.27px/1.13px;
+    height: 2px;
+    left: 86px;
+    position: absolute;
+    top: 1px;
+    width: 3px;
+  }
+  
+  .screen-distance .ellipse-8 {
+    background-color: #d9d9d9;
+    border-radius: 1.9px/1.7px;
+    height: 3px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 4px;
+  }
+  
+  .screen-distance .group-32 {
+    height: 31px;
+    left: 29px;
+    position: absolute;
+    top: 603px;
+    width: 310px;
+  }
+  
+  .screen-distance .overlap-group-4 {
+    background-color: #3b3b3b;
+    border-radius: 6px;
+    height: 31px;
+    position: relative;
+    width: 100%;
+    left: 0;
+  }
+  
+  .screen-distance .text-wrapper-20 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 700;
+    left: 23px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 8px;
+    width: 16px;
+  }
+  
+  .screen-distance .text-wrapper-21 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 700;
+    left: 180px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 8px;
+    width: 16px;
+  }
+  
+  .screen-distance .overlap-group-5 {
+    background-color: #7b7b7b;
+    border-radius: 11.17px/10px;
+    height: 20px;
+    left: 59px;
+    position: absolute;
+    top: 6px;
+    width: 22px;
+  }
+  
+  .screen-distance .text-wrapper-22 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 700;
+    left: 3px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 1px;
+    width: 16px;
+  }
+  
+  .screen-distance .text-wrapper-23 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 82.5%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }
+  
+  .screen-distance .text-wrapper-24 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 700;
+    left: 102px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 8px;
+    width: 16px;
+  }
+  
+  .screen-distance .text-wrapper-25 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 700;
+    left: 140px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 8px;
+    width: 16px;
+  }
+  
+  .screen-distance .text-wrapper-26 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 700;
+    left: 221px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 8px;
+    width: 16px;
+  }
+  
+  .screen-distance .frame-2 {
+    height: 30px;
+    left: 23px;
+    position: absolute;
+    top: 28px;
+    width: 31px;
+  }
+  
+  .screen-distance .time-interval-bar {
+    height: 50px;
+    left: 0;
+    position: relative;
+    top: 72px;
+    width: 85%;
+    margin: 0 auto;
+  }
+  
+  .screen-distance .group-33 {
+    height: 31px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+  
+  .screen-distance .text-wrapper-27 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 12.5%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }
+  
+  .screen-distance .text-wrapper-28 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 60.5%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }
+  
+  .screen-distance .text-wrapper-29 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 35.5%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }
+  
+  .screen-distance .text-wrapper-30 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 700;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 34px;
+    width: 100%;
+    text-align: right;
+  }
+  
+  .screen-distance .day-breakdown {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 662px;
+    width: 100%;
+  }
+  
+  .screen-distance .overlap-4 {
+    height: 148px;
+    position: relative;
+  }
+  
+  .screen-distance .calories-ring {
+    background-image: url(https://c.animaapp.com/QHWYwOlz/img/ellipse-13.svg);
+    background-size: 100% 100%;
+    height: 148px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 148px;
+  }
+  
+  .screen-distance .overlap-5 {
+    background-image: url(https://c.animaapp.com/QHWYwOlz/img/ellipse-14.svg);
+    background-size: 100% 100%;
+    height: 148px;
+    position: relative;
+  }
+  
+  .screen-distance .ellipse-9 {
+    height: 148px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 148px;
+  }
+  
+  .screen-distance .ellipse-10 {
+    background-color: #252525;
+    border-radius: 61px;
+    height: 122px;
+    left: 14px;
+    position: absolute;
+    top: 13px;
+    width: 122px;
+  }
+  
+  .screen-distance .group-34 {
+    height: 44px;
+    left: 49px;
+    position: absolute;
+    top: 53px;
+    width: 55px;
+  }
+  
+  .screen-distance .overlap-group-6 {
+    height: 44px;
+    position: relative;
+    width: 51px;
+  }
+  
+  .screen-distance .text-wrapper-31 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 24px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 51px;
+  }
+  
+  .screen-distance .text-wrapper-32 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 27px;
+    width: 51px;
+  }
+  
+  .screen-distance .average-SD {
+    height: 27px;
+    left: 33px;
+    position: absolute;
+    top: 121px;
+    width: 83px;
+  }
+  
+  .screen-distance .overlap-6 {
+    background-color: #ffffff;
+    border-radius: 8px;
+    height: 27px;
+    position: relative;
+    width: 81px;
+  }
+  
+  .screen-distance .text-wrapper-33 {
+    color: #000000;
+    font-family: "Open Sans", Helvetica;
+    font-size: 14px;
+    font-weight: 600;
+    left: 9px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 4px;
+    width: 64px;
+  }
+  
+  .screen-distance .edit {
+    height: 20px;
+    left: 271px;
+    position: absolute;
+    top: 644px;
+    width: 37px;
+  }
+  
+  .screen-distance .overlap-7 {
+    background-color: #3b3b3b;
+    border-radius: 5px;
+    height: 20px;
+    position: relative;
+    width: 35px;
+  }
+  
+  .screen-distance .text-wrapper-34 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 11px;
+    font-weight: 600;
+    left: 6px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 2px;
+    width: 23px;
+  }
+  
+  .screen-distance .group-35 {
+    height: 34px;
+    left: 187px;
+    position: absolute;
+    top: 646px;
+    width: 11px;
+  }
+  
+  .screen-distance .rectangle-19 {
+    background-color: #69cbd9;
+    border-radius: 2px;
+    height: 22px;
+    left: 2px;
+    position: absolute;
+    top: 12px;
+    transform: rotate(8.1deg);
+    width: 4px;
+  }
+  
+  .screen-distance .polygon {
+    height: 9px;
+    left: 2px;
+    position: absolute;
+    top: 0;
+    width: 9px;
+  }
+  
+  .screen-distance .group-36 {
+    height: 13px;
+    left: 0;
+    position: absolute;
+    top: 321px;
+    width: 100%;
+  }
+
+  .screen-distance .standing-legend {
+    height: 13px;
+    left: 30%;
+    position: absolute;
+    width: 10%;
+  }
+  
+  .screen-distance .ellipse-11 {
+    background-color: #1679DB;
+    border-radius: 5.23px;
+    height: 10px;
+    left: 0;
+    position: absolute;
+    top: 1px;
+    width: 10px;
+  }
+
+  .screen-distance .text-wrapper-36 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 13px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 35px;
+  }
+
+  .screen-distance .sitting-legend {
+    height: 13px;
+    left: 60%;
+    position: absolute;
+    width: 10%;
+  }
+  
+  .screen-distance .ellipse-12 {
+    background-color: #E72830;
+    border-radius: 5.23px;
+    height: 10px;
+    left: 0;
+    position: absolute;
+    top: 1px;
+    width: 10px;
+  }
+  
+  .screen-distance .ellipse-13 {
+    background-color: #78d069;
+    border-radius: 5.23px;
+    height: 10px;
+    left: 0;
+    position: absolute;
+    top: 1px;
+    width: 10px;
+  }
+  
+  .screen-distance .text-wrapper-35 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 13px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 45px;
+  }
+  
+  .screen-distance .text-wrapper-37 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 13px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 35px;
+  }
+  
+  .screen-distance .screen-distance-summary {
+    height: 26px;
+    left: 0;
+    position: relative;
+    top: 130px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .screen-distance .average-SD {
+    height: 26px;
+    position: relative;
+    width: 90%;
+    top: 0;
+    left: 0;
+    margin: 0 auto
+  }
+  
+  .screen-distance .text-wrapper-38 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 15px;
+    font-weight: 600;
+    left: 5%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 0;
+    width: 60%;
+    text-align: left;
+  }
+  
+  .screen-distance .overlap-group-7 {
+    height: 100%;
+    right: 0;
+    position: absolute;
+    bottom: 5px;
+    width: 30%;
+    text-align: right;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  }
+  
+  .screen-distance .text-wrapper-39 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    right: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    top: 0;
+    width: auto;
+    text-align: right;
+  }
+  
+  .screen-distance .text-wrapper-40 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 400;
+    right: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    bottom: 2px;
+    width: auto;
+    text-align: right;
+  }
+  
+  .screen-distance .group-wrapper {
+    background-color: #3b3b3b;
+    border-radius: 7px;
+    height: 161px;
+    left: 0;
+    position: relative;
+    top: 140px;
+    width: 90%;
+    margin: 0 auto;
+  }
+  
+  .screen-distance .group-37 {
+    height: 146px;
+    left: 0;
+    position: relative;
+    top: 10px;
+    width: 90%;
+    margin: 0 auto;
+  }
+  
+  .screen-distance .average-SD-2 {
+    height: 40px;
+    left: 50%;
+    position: absolute;
+    top: 0;
+    width: 50%;
+  }
+  
+  .screen-distance .overlap-group-8 {
+    height: 40px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .screen-distance .text-wrapper-41 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 0;
+    width: 100%;
+  }
+  
+  .screen-distance .text-wrapper-42 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 18px;
+    width: 100%;
+  }
+  
+  .screen-distance .closest {
+    height: 40px;
+    left: 50%;
+    position: absolute;
+    top: 53px;
+    width: 50%;
+  }
+  
+  .screen-distance .text-wrapper-43 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 18px;
+    width: 100%;
+  }
+  
+  .screen-distance .closest-2 {
+    height: 40px;
+    left: 50%;
+    position: absolute;
+    top: 106px;
+    width: 50%;
+  }
+  
+  .screen-distance .overlap-8 {
+    height: 40px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .screen-distance .text-wrapper-44 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 18px;
+    width: 100%;
+  }
+  
+  .screen-distance .text-wrapper-45 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 0;
+    width: 100%;
+  }
+  
+  .screen-distance .closest-3 {
+    height: 40px;
+    left: 0;
+    position: absolute;
+    top: 53px;
+    width: 50%;
+  }
+  
+  .screen-distance .overlap-9 {
+    height: 40px;
+    position: relative;
+    width: 100%;
+    left: 0;
+  }
+  
+  .screen-distance .text-wrapper-46 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 18px;
+    width: 100%;
+  }
+  
+  .screen-distance .text-wrapper-47 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 0;
+    width: 100%;
+  }
+  
+  .screen-distance .closest-4 {
+    height: 40px;
+    left: 0;
+    position: absolute;
+    top: 106px;
+    width: 50%;
+  }
+  
+  .screen-distance .overlap-10 {
+    height: 40px;
+    position: relative;
+    width: 100%;
+    left: 0;
+  }
+  
+  .screen-distance .text-wrapper-48 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 18px;
+    width: 100%;
+  }
+  
+  .screen-distance .text-wrapper-49 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 0;
+    width: 100%;
+  }
+  
+  .screen-distance .closest-5 {
+    height: 40px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 50%;
+  }
+  
+  .screen-distance .text-wrapper-50 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 18px;
+    width: 100%;
+  }
+  
+  .screen-distance .bar-chart-container {
+    height: 25%;
+    left: 0;
+    position: relative;
+    top: 70px;
+    width: 90%;
+    margin: 0 auto
+  }
+
+  .screen-distance .logo-wrapper {
+    height: auto;
+    left: 20px;
+    position: absolute;
+    top: 5px;
+    bottom: 0;
+    width: 200px;
+  }
+
+  .screen-distance .timer-icon-wrapper {
+    height: auto;
+    left: 270px;
+    position: absolute;
+    object-fit: cover;
+    top: 13px;
+    bottom: 0;
+    width: 22px;
+  }
+
+  .screen-distance .goals-icon-wrapper {
+    height: auto;
+    left: 117px;
+    position: absolute;
+    object-fit: cover;
+    top: 13px;
+    bottom: 0;
+    width: 22px;
+  }
+
+  .screen-distance .table-icon-wrapper {
+    height: auto;
+    left: 21px;
+    position: absolute;
+    object-fit: cover;
+    top: 0;
+    bottom: 0;
+    width: 27px;
+  }
+
+  .screen-distance .more-icon-wrapper {
+    height: auto;
+    left: 7px;
+    position: absolute;
+    object-fit: cover;
+    top: 0;
+    bottom: 0;
+    width: 32px;
+  }

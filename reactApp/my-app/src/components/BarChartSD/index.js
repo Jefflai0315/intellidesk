@@ -1,0 +1,1 @@
+export { BarChartSD } from "./BarChartSD";

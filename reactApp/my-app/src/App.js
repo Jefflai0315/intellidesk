@@ -2,8 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './screens/Home/Home';
 import Posture from './screens/Posture/Posture';
-// import ScreenTime from './screens/ScreenTime/ScreenTime';
+import ScreenDistance from './screens/ScreenDistance/ScreenDistance';
 import DeskTime from './screens/DeskTime/DeskTime';
+import DailyActivity from './screens/DailyActivity/DailyActivity';
 
 
 const App = () => {
@@ -19,15 +20,20 @@ const App = () => {
           path="/Posture"
           element={<Posture />}
           />
-        {/* <Route
+        <Route
           exact
-          path="/ScreenTime"
-          element={<ScreenTime />}
-          /> */}
+          path="/ScreenDistance"
+          element={<ScreenDistance />}
+          />
         <Route
           exact
           path="/DeskTime"
           element={<DeskTime />}
+          />
+        <Route
+          exact
+          path="/DailyActivity"
+          element={<DailyActivity />}
           />
       </Routes>
     </Router>

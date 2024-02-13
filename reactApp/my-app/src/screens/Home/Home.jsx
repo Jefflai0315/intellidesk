@@ -25,7 +25,7 @@ function Home() {
     const ESRef = query(ref(database, 'Controls/User'));
   onValue(ESRef, (snapshot) => {
     const data = snapshot.val();
-    setUser(data + '`s');
+    setUser(data + "'s");
 
   });
   const CBRef = query(ref(database, user.slice(0,-2)+'/Params'));
@@ -76,18 +76,22 @@ function Home() {
               <Link to="/DeskTime">
               <BarIcon className="bar-icon-instance" user = {user}/>
               </Link>
+              <Link to="/ScreenDistance">
               <div className="bar-icon-2">
                 <div className="rectangle-9" />
                 <div className="rectangle-10" />
                 <div className="rectangle-11" />
                 <div className="rectangle-12" />
               </div>
+              </Link>
+              <Link to="/DailyActivity">
               <div className="bar-icon-3">
                 <div className="rectangle-9" />
                 <div className="rectangle-10" />
                 <div className="rectangle-11" />
                 <div className="rectangle-12" />
               </div>
+              </Link>
               <div className="desk-time-summary">
                 <LineChart_DeskTime className="line-chart-desk-time-instance-node" user = {user}/>
               </div>
