@@ -19,20 +19,28 @@ export const LineChart_SD = ({user}) => {
     labels: [],
     datasets: [
       {
-        label: 'Standing',
+        label: 'Too CLose',
         data: [],
         fill: false,
-        backgroundColor: '#1679DB',
-        borderColor: '#1679DB',
-        hoverBackgroundColor: '#3199FF',
+        backgroundColor: '#E72830',
+        borderColor: '#E72830',
+        hoverBackgroundColor: '#E72830',
       },
       {
-        label: 'Sitting',
+        label: 'Perfect',
         data: [],
         fill: false,
-        backgroundColor: '#EE5757',
-        borderColor: '#EE5757',
-        hoverBackgroundColor: '#FF7171',
+        backgroundColor: '#78D06A',
+        borderColor: '#78D06A',
+        hoverBackgroundColor: '#78D06A',
+      },
+      {
+        label: 'Too Far',
+        data: [],
+        fill: false,
+        backgroundColor: '#CCA94D',
+        borderColor: '#CCA94D',
+        hoverBackgroundColor: '#CCA94D',
       },
     ],
   });
@@ -151,7 +159,7 @@ export const LineChart_SD = ({user}) => {
     }
 
     // Filtering out specific labels
-    const labelsToShow = ["standing", "sitting"]; // Add labels you want to show
+    const labelsToShow = ["Too Close", "Perfect", "Too Far"]; // Add labels you want to show
     const uniqueLabels = Array.from(new Set(chartData.datasets
       .filter(dataset => labelsToShow.includes(dataset.label))
       .map(dataset => dataset.label)));

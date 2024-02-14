@@ -44,7 +44,7 @@ export const DAGauge = ({ score , user}) => {
   }
   
       return(
-        <div style={{ position: 'relative', width: 'fit-content', margin: '0 auto', top: '160px' }}>
+        <div style={{ position: 'relative', width: 'fit-content', margin: '0 auto', top: '130px' }}>
           <GaugeComponent
             type="semicircle"
             minValue= "0"
@@ -96,6 +96,30 @@ export const DAGauge = ({ score , user}) => {
         fontFamily: 'Helvetica',
       }}>
         of goal
+      </div>
+      <div style={{
+        position: 'absolute',
+        bottom: '0', // Adjust the position accordingly
+        left: '54%',
+        transform: 'translateX(-50%)',
+        fontSize: '17px', // Adjust the font size accordingly
+        color: 'white',
+        zIndex: 10,
+        fontFamily: 'Helvetica',
+      }}>
+        Calories Burnt
+      </div>
+      <div style={{
+        position: 'absolute',
+        bottom: '-20px', // Adjust the position accordingly
+        left: '64%',
+        transform: 'translateX(-50%)',
+        fontSize: '15px', // Adjust the font size accordingly
+        color: 'white',
+        zIndex: 10,
+        fontFamily: 'Helvetica',
+      }}>
+        188 cal 
       </div>
     </div>
   )
