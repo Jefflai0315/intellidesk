@@ -132,6 +132,7 @@ export const BarChartDeskTime = ({user}) => {
 
 
   // Process the actual data
+  if (data != null){
   Object.entries(data).forEach(([timestamp, { PostureMode }]) => {
     const date = new Date(parseInt(timestamp)).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
     if (counts[date]) { // This check is technically redundant now but left for clarity
@@ -144,6 +145,7 @@ export const BarChartDeskTime = ({user}) => {
       }
     }
   });
+}
   labels = Object.keys(counts).sort((a, b) => new Date(a.split('/').reverse().join('/')) - new Date(b.split('/').reverse().join('/'))); 
 }
   // Prepare data for chart or output

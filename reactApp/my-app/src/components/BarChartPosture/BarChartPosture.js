@@ -168,6 +168,7 @@ export const BarChartPosture = ({user}) => {
 
 
   // Process the actual data
+  if (data!= null){
   Object.entries(data).forEach(([timestamp, { PostureQuality, TrunkInclination }]) => {
     const date = new Date(parseInt(timestamp)).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
     // console.log(counts)
@@ -183,7 +184,7 @@ export const BarChartPosture = ({user}) => {
         totalPerfectTime += 1;
       }
     }
-  });
+  });}
   
  }
 

@@ -132,6 +132,7 @@ export const BarChartSD = ({user}) => {
         labels.push(hour);
     
       // Filter and process data for the selected day
+      if (data != null) {
       Object.entries(data).forEach(([timestamp, { Distance }]) => {
         const date = new Date(parseInt(timestamp));
         const dateKey = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
@@ -153,6 +154,7 @@ export const BarChartSD = ({user}) => {
         }
         }
       });
+    }
     }
     lineLabels = Object.keys(lineCounts).sort((a, b) => new Date(a.split('/').reverse().join('/')) - new Date(b.split('/').reverse().join('/'))); 
     
@@ -433,10 +435,12 @@ const formatTime = (minutes) => {
       <div >
       <div className="screen-distance-lineChart">
       <div className="day-selection">
-        {labels.map((label, index) => (
-          <button key={index} onClick={() => setSelectedDay(label)}>{label}</button>
-          // <a className={` ${selectedDay === label ? 'active' : ''}`} onClick={() => setSelectedDay(label)}>{label}</a>
-        ))}
+      {selectedTimeframeB !== "1d" &&
+    labels.map((label, index) => (
+      <button key={index} onClick={() => setSelectedDay(label)}>
+        {label}
+      </button>
+    ))}
       </div>
       <Line 
           data={lineChartData} 

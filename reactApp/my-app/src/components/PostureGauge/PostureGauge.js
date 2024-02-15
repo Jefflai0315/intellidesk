@@ -4,7 +4,7 @@ import database from '../../firebase'; // Adjust the path as needed
 import { query, ref, onValue} from 'firebase/database'
 
 
-export const PostureGauge = ({ score , user}) => {
+export const PostureGauge = ({ user}) => {
   if (user === "My"){
     user = ''
   }
@@ -12,14 +12,18 @@ export const PostureGauge = ({ score , user}) => {
     //remove last 2 characters (`s)
     user = user.slice(0, -2) +'/';
   }
-  const [postureScore, setPostureScore] = useState('My')
+  const [postureScore, setPostureScore] = useState()
 
   useEffect(() => {
     const ESRef = query(ref(database, user+'Params/PostureScore'));
   onValue(ESRef, (snapshot) => {
     const data = snapshot.val();
-    setPostureScore(data);
+    setPostureScore(parseInt(data));
+    console.log(postureScore)
   });});
+  
+
+
   function calculateContinuousPostureScore(trunkInclination) {
     const idealRangeStart = -5;
     const idealRangeEnd = 20;
@@ -42,6 +46,8 @@ export const PostureGauge = ({ score , user}) => {
   
     return score;
   }
+
+  let score = postureScore;
   
       return(
         <div style={{ position: 'relative', width: 'fit-content', margin: '0 auto' }}>
@@ -49,8 +55,6 @@ export const PostureGauge = ({ score , user}) => {
             type="semicircle"
             minValue= "0"
             maxValue= "100"
-            value= {postureScore}
-            
             pointer={{type: "blob", animationDelay: 0}}
             arc={{
               colorArray: ["#EE5757", "#F4B54C", "#78D06A"],
@@ -62,6 +66,7 @@ export const PostureGauge = ({ score , user}) => {
                   { limit: 100 },
                 ],
             }}
+            value= {score}
         />
         {/* Overlay div to cover the labels */}
         <div style={{
@@ -83,7 +88,7 @@ export const PostureGauge = ({ score , user}) => {
           color: 'white',
           fontFamily: 'Helvetica',
         }}>
-          {score}<span style={{ fontSize: '17px', color: '#D4D4D4' }}>{postureScore}/100</span> {/* /100 is smaller */}
+          {postureScore}<span style={{ fontSize: '17px', color: '#D4D4D4' }}>/100</span> {/* /100 is smaller */}
       </div>
       {/* Display the text "Score" below the score */}
       <div style={{
