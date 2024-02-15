@@ -5,7 +5,8 @@ import './styles.css';
 import database from '../../firebase.js'; // Adjust the path as needed
 import { query, ref,set,  onValue, orderByKey , startAt} from 'firebase/database'
 import { Link } from 'react-router-dom';
-
+import { LineChart_SD } from "../../components/LineChartSD";
+import { Line } from 'react-chartjs-2';
 export const BarChartSD = ({user}) => {
   if (user === "My"){
     user = ''
@@ -15,29 +16,60 @@ export const BarChartSD = ({user}) => {
     user = user +'/';
   }
   const [selectedTimeframeB, setselectedTimeframeB] = useState('7d'); // Default to 1 day
-  const [avgHour, setAvgHour] = useState('0 hours');
-  const [totalStanding, setTotalStanding] = useState('0 hours');
-  const [totalSitting, setTotalSitting] = useState('0 hours');
-  const [totalBreak, setTotalBreak] = useState('0 minutes');
-  const [longestStanding, setLongestStanding] = useState('0 hours');
-  const [longestSitting, setLongestSitting] = useState('0 hours');
-  const [longestBreak, setLongestBreak] = useState('0 minutes');
+  const [selectedDay, setSelectedDay] = useState(null);
+  const [avgDist, setAvgDist] = useState('0 hours');
+  const [labels, setLabels] = useState([]);
   const [dateRange, setDateRange] = useState('24/9 - 30/9');
-  const [caloriesBurned, setCaloriesBurned] = useState(0);
+  const [lineChartData, setLineChartData] = useState({
+    labels: [],
+        datasets: [
+          {
+            label: 'Too Close',
+            backgroundColor: '#EE5757',
+            hoverBackgroundColor: '#3199FF',
+            data: [],
+            fill: false,
+          },
+          {
+            label: 'Perfect',
+            backgroundColor: '#00FF00',
+            fill: false,
+            hoverBackgroundColor: '#FF7171',
+            
+            data: [],
+          },
+          {
+            label: 'Too Far',
+            backgroundColor: '#FFDB58',
+            fill: false,
+            hoverBackgroundColor: '#FF7171',
+            
+            data: [],
+          },
+        ],
+  });
   const [chartData, setChartData] = useState({
         labels: [],
         datasets: [
           {
-            label: 'Standing',
-            backgroundColor: '#1679DB',
+            label: 'Too Close',
+            backgroundColor: '#EE5757',
             borderWidth: 1,
             hoverBackgroundColor: '#3199FF',
             cornerRadius: 8,
             data: [],
           },
           {
-            label: 'Sitting',
-            backgroundColor: '#EE5757',
+            label: 'Perfect',
+            backgroundColor: '#00FF00',
+            borderWidth: 1,
+            hoverBackgroundColor: '#FF7171',
+            cornerRadius: 8,
+            data: [],
+          },
+          {
+            label: 'Too Far',
+            backgroundColor: '#FFDB58',
             borderWidth: 1,
             hoverBackgroundColor: '#FF7171',
             cornerRadius: 8,
@@ -66,57 +98,113 @@ export const BarChartSD = ({user}) => {
         default:
           startDate = now; // Default to current day as start date
       }
-      console.log(selectedTimeframeB)
+      // console.log(selectedTimeframeB)
       //convert startDate to UnixTimestamp
       startDate = startDate.getTime()
     
-      const postureRef = query(ref(database, user+'Posture'), orderByKey(), 
+      const postureRef = query(ref(database, user+'EyeScreenDistance'), orderByKey(), 
       startAt(startDate.toString()));
       onValue(postureRef, (snapshot) => {
         const data = snapshot.val();
   
         // if (data) {
-        processSitStandData(data, startDate);
+        processSDData(data, startDate);
+        processLineChartData(data, selectedDay);
         // }
       });
       
-    }, [selectedTimeframeB]);
-    // Function to get unique labels for legend
+    }, [selectedTimeframeB, selectedDay]);
+  
 
-    const updateAvgCaloriesBurned= (data) => {
-      const caloriesBurnedRef = ref(database, user+'Params/CaloriesBurned');
-      set(caloriesBurnedRef, data).catch((error) => {
-        console.error("Error updating height in Firebase", error);});
-    };
+    const processLineChartData = (data, selectedDay) => {
+      let lineTotalCloseTime = 0;
+      let lineTotalPerfectTime = 0;
+      let lineTotalFarTime = 0;
+      let lineLabels = [];
 
-    const processSitStandData = (data,sdate) => {
+      // Initialize your structure to hold the data for the line chart
+      let lineCounts = {
+        // Initialize with hours if necessary, or other structure for the selected day
+      };
+      for (let i = 0; i < 24; i++) {
+        let hour = i.toString().padStart(2, '0') + ':00'; // Format: "HH:00"
+        lineCounts[hour] = { close: 0, perfect: 0 , far:0};
+        labels.push(hour);
+    
+      // Filter and process data for the selected day
+      Object.entries(data).forEach(([timestamp, { Distance }]) => {
+        const date = new Date(parseInt(timestamp));
+        const dateKey = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
+    
+        if (selectedDay === dateKey) {
+          const hourKey = date.getHours().toString().padStart(2, '0') + ':00';
+
+          if (lineCounts[hourKey]) {
+            if (Distance < 50) {
+              lineTotalCloseTime += 1;
+              lineCounts[hourKey]['close'] += 1;
+            } else if (Distance >= 50 && Distance <= 100)  {
+              lineTotalPerfectTime += 1;
+              lineCounts[hourKey]['perfect'] += 1;
+            } else if (Distance > 100) {
+              lineTotalFarTime += 1;
+              lineCounts[hourKey]['far'] += 1;
+            }
+        }
+        }
+      });
+    }
+    lineLabels = Object.keys(lineCounts).sort((a, b) => new Date(a.split('/').reverse().join('/')) - new Date(b.split('/').reverse().join('/'))); 
+    
+    const LineFarData = lineLabels.map(lineLabel => lineCounts[lineLabel].far);
+    const LinePerfectData = lineLabels.map(lineLabel => lineCounts[lineLabel].perfect);
+    const LineCloseData = lineLabels.map(lineLabel => lineCounts[lineLabel].close);
+
+    console.log(selectedDay + ' selected day')
+    setLineChartData({
+      labels: lineLabels,
+      datasets: [
+        { ...lineChartData.datasets[0], data: LineCloseData },
+        { ...lineChartData.datasets[1], data: LinePerfectData },
+        { ...lineChartData.datasets[1], data: LineFarData },
+      ],
+    });
+  }
+    
+    const processSDData = (data,sdate) => {
       let counts = {};
+      // console.log(data)
 
-    let totalStandTime = 0;
-  let totalSitTime = 0;
-  let totalBreakTime = 0;
-  let longestStandDuration = 0;
-  let longestSitDuration = 0;
-  let longestBreakDuration = 0;
+    let totalCloseTime = 0;
+  let totalPerfectTime = 0;
+  let totalFarTime = 0;
+  let distance = 0;
     let labels = [];
     if (selectedTimeframeB === '1d') {
       for (let i = 0; i < 24; i++) {
         let hour = i.toString().padStart(2, '0') + ':00'; // Format: "HH:00"
-        counts[hour] = { sitting: 0, standing: 0 };
+        counts[hour] = { close: 0, perfect: 0 , far:0};
         labels.push(hour);
     }
     if (data != null) {
-    Object.entries(data).forEach(([timestamp, { PostureMode }]) => {
+    Object.entries(data).forEach(([timestamp, { Distance }]) => {
         const date = new Date(parseInt(timestamp));
         const hourKey = date.getHours().toString().padStart(2, '0') + ':00';
+        distance += Distance;
         if (counts[hourKey]) {
-            counts[hourKey][PostureMode] += 1;
+            if (Distance < 50) {
+              totalCloseTime += 1;
+              counts[hourKey]['close'] += 1;
+            } else if (Distance >= 50 && Distance <= 100)  {
+              totalPerfectTime += 1;
+              counts[hourKey]['perfect'] += 1;
+            } else if (Distance > 100) {
+              totalFarTime += 1;
+              counts[hourKey]['far'] += 1;
+            }
         }
-        if (PostureMode === "sitting") {
-          totalSitTime += 1;
-        } else {
-          totalStandTime += 1;
-        }
+       
+
     });
   }
 } else {
@@ -127,30 +215,45 @@ export const BarChartSD = ({user}) => {
 
   for (let d = new Date(startDate); d <= endDate ; d.setDate(d.getDate() + 1)) {
     const dateKey = d.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
-    counts[dateKey] = { sitting: 0, standing: 0 };
+    counts[dateKey] = { close: 0, perfect: 0 , far:0};
   }
 
 
   // Process the actual data
-  Object.entries(data).forEach(([timestamp, { PostureMode }]) => {
+  if (data != null) {
+  Object.entries(data).forEach(([timestamp, { Distance }]) => {
     const date = new Date(parseInt(timestamp)).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
+    distance += Distance;
     if (counts[date]) { // This check is technically redundant now but left for clarity
-      counts[date][PostureMode] += 1;
-
-      if (PostureMode === "sitting") {
-        totalSitTime += 1;
-      } else {
-        totalStandTime += 1;
+      if (Distance < 50) {
+        totalCloseTime += 1;
+        counts[date]['close'] += 1;
+      } else if (Distance >= 50 && Distance <= 100)  {
+        totalPerfectTime += 1;
+        counts[date]['perfect'] += 1;
+      } else if (Distance > 100) {
+        totalFarTime += 1;
+        counts[date]['far'] += 1;
       }
-    }
+       }
+
+     
+   
   });
-  labels = Object.keys(counts).sort((a, b) => new Date(a.split('/').reverse().join('/')) - new Date(b.split('/').reverse().join('/'))); 
 }
+  labels = Object.keys(counts).sort((a, b) => new Date(a.split('/').reverse().join('/')) - new Date(b.split('/').reverse().join('/'))); 
+  setLabels(labels);
+}
+
   // Prepare data for chart or output
-  const standingData = labels.map(label => counts[label].standing);
-  const sittingData = labels.map(label => counts[label].sitting);
-  longestStandDuration = Math.max(...standingData);
-  longestSitDuration = Math.max(...sittingData);
+  const farData = labels.map(label => counts[label].far);
+  const perfectData = labels.map(label => counts[label].perfect);
+  const closeData = labels.map(label => counts[label].close);
+  
+  // console.log('closedata' + closeData)
+  // console.log('labels' + labels)
+  // longestStandDuration = Math.max(...standingData);
+  // longestSitDuration = Math.max(...sittingData);
 
   let denom = 1;
 if (selectedTimeframeB === '1d') {
@@ -159,30 +262,34 @@ if (selectedTimeframeB === '1d') {
   denom = labels.length;
 }
 
-  setTotalStanding(formatTime(totalStandTime/denom));
-  setTotalSitting(formatTime(totalSitTime/denom));
-  setTotalBreak(formatTime(totalBreakTime/denom));
-  setLongestStanding(formatTime(longestStandDuration));
-  setLongestSitting(formatTime(longestSitDuration));
-  setLongestBreak(formatTime(longestBreakDuration));
-  const min = (((totalStandTime + totalSitTime) / denom))
-  setAvgHour((Math.floor(min/60)+ ((min % 60)/60)).toFixed(1));
+  // setTotalClose(formatTime(totalCloseTime/denom));
+  // setTotalOptimum(formatTime(totalOptimumTime/denom));
+  // setTotalFar(formatTime(totalFarTime/denom));
+  // setLongestStanding(formatTime(longestStandDuration));
+  // setLongestSitting(formatTime(longestSitDuration));
+  // setLongestBreak(formatTime(longestBreakDuration));
+
+  setAvgDist((distance / (totalCloseTime + totalPerfectTime + totalFarTime+ 0.0001)).toFixed(0));
   setDateRange(`${labels[0]} - ${labels[labels.length - 1]}`);
 
-  let sitCaloriesBurned = 80
-  let standCaloriesBurned = 88
-  setCaloriesBurned(((totalStandTime /60) * standCaloriesBurned + (totalSitTime/60)* sitCaloriesBurned).toFixed(0))
-  updateAvgCaloriesBurned(caloriesBurned); 
+
+  // let sitCaloriesBurned = 80
+  // let standCaloriesBurned = 88
+  // setCaloriesBurned(((totalStandTime /60) * standCaloriesBurned + (totalSitTime/60)* sitCaloriesBurned).toFixed(0))
+  // updateAvgCaloriesBurned(caloriesBurned); 
 
 
   setChartData({
     labels,
     datasets: [
-      { ...chartData.datasets[0], data: standingData },
-      { ...chartData.datasets[1], data: sittingData },
+      { ...chartData.datasets[0], data: closeData },
+      { ...chartData.datasets[1], data: perfectData },
+      { ...chartData.datasets[2], data: farData },
     ],
   });
+ 
 };
+
 
 const formatTime = (minutes) => {
   const hours = Math.floor(minutes / 60);
@@ -205,7 +312,7 @@ const formatTime = (minutes) => {
         }
 
         // Filtering out specific labels
-        const labelsToShow = ["Standing", "Sitting"]; 
+        const labelsToShow = ["Too Close", "Perfect", "Too Far"]; 
         const uniqueLabels = Array.from(new Set(chartData.datasets
           .filter(dataset => labelsToShow.includes(dataset.label))
           .map(dataset => dataset.label)));
@@ -261,6 +368,32 @@ const formatTime = (minutes) => {
           ],
       },
     };
+    const optionsLineChart = {
+      responsive: true,
+      scales: {
+        yAxes: [
+          {
+            type: 'linear',
+            display: true,
+            position: 'left',
+            id: 'y-axis-1',
+            ticks: {
+              beginAtZero: true,
+              stepSize: 5, // Adjust the step size as needed
+            },
+            gridLines: {
+              color: '#3C3C3C', // Change x-axis grid lines color
+            }
+          },
+        ],
+      },
+      legend: {
+          display: false,
+          labels: {
+            fontColor: 'white', 
+          },
+      },
+    };
 
     return (
       <>
@@ -292,11 +425,28 @@ const formatTime = (minutes) => {
         <div className="average-SD">
           <div className="text-wrapper-38">Average Screen Distance</div>
           <div className="overlap-group-7">
-            <div className="text-wrapper-39">{avgHour}</div>
-            <div className="text-wrapper-40">cm/day</div>
+            <div className="text-wrapper-39">{avgDist} </div>
+            <div className="text-wrapper-40">  cm</div>
           </div>
         </div>
       </div>
+      <div >
+      <div className="screen-distance-lineChart">
+      <div className="day-selection">
+        {labels.map((label, index) => (
+          <button key={index} onClick={() => setSelectedDay(label)}>{label}</button>
+          // <a className={` ${selectedDay === label ? 'active' : ''}`} onClick={() => setSelectedDay(label)}>{label}</a>
+        ))}
+      </div>
+      <Line 
+          data={lineChartData} 
+          options={optionsLineChart} 
+          position="relative"
+      />
+      </div>
+     
+   </div>
+  
     </>  
   )   
 }

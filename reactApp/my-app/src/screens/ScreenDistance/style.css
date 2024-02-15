@@ -1528,6 +1528,15 @@
     width: 100%;
     margin: 0 auto;
   }
+
+  .screen-distance .screen-distance-lineChart {
+    height: 26px;
+    left: 0;
+    position: relative;
+    top: 130px;
+    width: 100%;
+    margin: 0 auto;
+  }
   
   .screen-distance .average-SD {
     height: 26px;

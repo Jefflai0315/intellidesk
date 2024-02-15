@@ -69,23 +69,25 @@ export const LineChart_SD = ({user}) => {
     console.log(selectedTimeframe)
     //convert startDate to UnixTimestamp
     startDate = startDate.getTime()
+    console.log('in linechartSD')
   
-    const postureRef = query(ref(database, user+'Posture'), orderByKey(), 
+    const postureRef = query(ref(database, user+'PostEyeScreenDistanceure'), orderByKey(), 
     startAt(startDate.toString()));
     onValue(postureRef, (snapshot) => {
       const data = snapshot.val();
 
       // if (data) {
-      processSitStandData(data, startDate);
+        processSDData(data, startDate);
       // }
     });
     
   }, [selectedTimeframe]);
 
-  const processSitStandData = (data,sdate) => {
+  const processSDData = (data,sdate) => {
     let counts = {};
-  let totalSitting = 0;
-  let totalStanding = 0;
+    let totalCloseTime = 0;
+    let totalPerfectTime = 0;
+    let totalFarTime = 0;
   let labels = [];
 
   if (selectedTimeframe === '1d') {
@@ -96,13 +98,22 @@ export const LineChart_SD = ({user}) => {
         labels.push(hour);
     }
     if (data != null) {
-    Object.entries(data).forEach(([timestamp, { PostureMode }]) => {
+    Object.entries(data).forEach(([timestamp, { Distance }]) => {
         const date = new Date(parseInt(timestamp));
         const hourKey = date.getHours().toString().padStart(2, '0') + ':00';
 
         if (counts[hourKey]) {
-            counts[hourKey][PostureMode] += 1;
-        }
+          if (Distance < 50) {
+            totalCloseTime += 1;
+            counts[hourKey]['close'] += 1;
+          } else if (Distance >= 50 && Distance <= 100)  {
+            totalPerfectTime += 1;
+            counts[hourKey]['perfect'] += 1;
+          } else if (Distance > 100) {
+            totalFarTime += 1;
+            counts[hourKey]['far'] += 1;
+          }
+      }
     });
   }
 } else {
@@ -117,17 +128,23 @@ export const LineChart_SD = ({user}) => {
   }
 
   // Process the actual data
-  Object.entries(data).forEach(([timestamp, { PostureMode }]) => {
+    if (data != null) {
+  Object.entries(data).forEach(([timestamp, { Distance }]) => {
     const date = new Date(parseInt(timestamp)).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
+  
     if (counts[date]) { // This check is technically redundant now but left for clarity
-      counts[date][PostureMode] += 1;
-
-      if (PostureMode === "sitting") {
-        totalSitting += 1;
-      } else {
-        totalStanding += 1;
+      if (Distance < 50) {
+        totalCloseTime += 1;
+        counts[date]['close'] += 1;
+      } else if (Distance >= 50 && Distance <= 100)  {
+        totalPerfectTime += 1;
+        counts[date]['perfect'] += 1;
+      } else if (Distance > 100) {
+        totalFarTime += 1;
+        counts[date]['far'] += 1;
       }
-    }
+       }
+
   });
   labels = Object.keys(counts).sort((a, b) => new Date(a.split('/').reverse().join('/')) - new Date(b.split('/').reverse().join('/'))); 
 }
@@ -139,8 +156,6 @@ export const LineChart_SD = ({user}) => {
   
   
    
-    setSittingAvg((totalSitting/sittingData.length).toFixed(1));
-    setStandingAvg((totalStanding/standingData.length).toFixed(1));
 
 
     setChartData({
@@ -207,10 +222,11 @@ export const LineChart_SD = ({user}) => {
         },
     },
   };
-
+  console.log(data)
   return(
     <>
       <div className="navbar-wrapper">
+     
         {/* <div className="navbar">
           <a className={`text-wrapper-25 ${selectedTimeframe === '1d' ? 'active' : ''}`} onClick={() => setSelectedTimeframe('1d')}>1d</a>
           <a className={`text-wrapper-26 ${selectedTimeframe === '7d' ? 'active' : ''}`} onClick={() => setSelectedTimeframe('7d')}>7d</a>
@@ -241,4 +257,4 @@ export const LineChart_SD = ({user}) => {
       </div> */}
     </>
   ) 
-};
+}}

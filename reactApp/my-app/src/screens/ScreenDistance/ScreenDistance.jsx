@@ -10,17 +10,18 @@ import moreIcon from '../../imgs/Group 27more.png';
 import timerIcon from '../../imgs/Asset 2@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
 import database from '../../firebase'; // Adjust the path as needed
-import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
+import { query, ref, onValue, orderByKey, startAt } from 'firebase/database'
 
 function ScreenDistance() {
   const [user, setUser] = useState('My')
 
   useEffect(() => {
     const ESRef = query(ref(database, 'Controls/User'));
-  onValue(ESRef, (snapshot) => {
-    const data = snapshot.val();
-    setUser(data );
-  });});
+    onValue(ESRef, (snapshot) => {
+      const data = snapshot.val();
+      setUser(data);
+    });
+  });
   return (
     <div className="screen-distance">
       <div className="overlap-wrapper">
@@ -71,14 +72,15 @@ function ScreenDistance() {
               </div>
               <div className="text-wrapper-14">Screen Distance</div>
               <Link to="/">
-              <img className="frame-2" alt="Frame" src="https://c.animaapp.com/QHWYwOlz/img/frame-3.svg" />
+                <img className="frame-2" alt="Frame" src="https://c.animaapp.com/QHWYwOlz/img/frame-3.svg" />
               </Link>
-              <BarChartSD className="bar-chart-screen-distance" user = {user}/>
-              <LineChart_SD className="line-chart-screen-distance" user = {user}/>
+              <BarChartSD className="bar-chart-screen-distance" user={user} />
+
             </div>
           </div>
         </div>
       </div>
+      {/* <LineChart_SD className="line-chart-screen-distance" user={user} /> */}
     </div>
   );
 };
