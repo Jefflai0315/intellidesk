@@ -13,6 +13,7 @@ from threading import Timer
 from statistics import mean, mode
 import numpy as np
 from detection import ObjectDetection
+import time
 
 
 
@@ -199,10 +200,17 @@ class PostureAnalyzer:
     def run(self):
         timer = Timer(12, self.average_and_send)
         timer.start()
+        # while self.cap.isOpened():
+        #     cur_time = datetime.now().timestamp()*1000
+        #     if (cur_time - self.last_firebase_update_time) >= self.update_interval:
+        #         self.last_firebase_update_time = cur_time
+        last_time = time.time()
         while self.cap.isOpened():
-            cur_time = datetime.now().timestamp()*1000
-            if (cur_time - self.last_firebase_update_time) >= self.update_interval:
-                self.last_firebase_update_time = cur_time
+            # cur_time = datetime.now().timestamp()*1000
+            current_time = time.time()
+            if current_time - last_time >= 3:  # 3-second interval has passed
+                # Capture and process frame
+                last_time = current_time
             # Capture frames.
                 image = self.read()
             # Write frames.
@@ -473,15 +481,15 @@ class PostureAnalyzer:
             knee_angle = self.calculate_angle_3p(l_hip_x,l_hip_y,l_knee_x,l_knee_y,l_ankle_x,l_ankle_y)
             trunk_angle = self.calculate_angle_3p(l_ear_x,l_ear_y,l_shldr_x,l_shldr_y,l_hip_x,l_hip_y)
             feet_angle = self.calculate_angle_3p(l_knee_x,l_knee_y,l_heel_x,l_heel_y,l_foot_index_x,l_foot_index_y)
-            print('trunk inclination: ' , trunk_inclication)
-            print('hip angle: ' , hip_angle)
-            print('upper arm inclination: ' , upper_arm_inclination)
-            print('elbow angle: ' , elbow_angle)
-            print('neck inclination: ' , neck_inclination)
-            print('ear shoulder distance: ' , ear_shoulder_distance)
-            print('knee angle: ' , knee_angle)
-            print('trunk angle: ' , trunk_angle)
-            print('feet angle: ' , feet_angle)
+            # print('trunk inclination: ' , trunk_inclication)
+            # print('hip angle: ' , hip_angle)
+            # print('upper arm inclination: ' , upper_arm_inclination)
+            # print('elbow angle: ' , elbow_angle)
+            # print('neck inclination: ' , neck_inclination)
+            # print('ear shoulder distance: ' , ear_shoulder_distance)
+            # print('knee angle: ' , knee_angle)
+            # print('trunk angle: ' , trunk_angle)
+            # print('feet angle: ' , feet_angle)
 
             # Draw landmarks.
             cv2.circle(image, (l_shldr_x, l_shldr_y), 7, yellow, -1)
