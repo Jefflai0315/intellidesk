@@ -18,6 +18,8 @@ function Home() {
   const [user, setUser] = useState('My')
   const [caloriesBurned, setCaloriesBurned] = useState('0')
   const [caloriesBurnedGoal, setCaloriesBurnedGoal] = useState('1000')
+  const [uprightStreak, setUprightStreak] = useState('0')
+  const [uprightTime, setUprightTime] = useState(0)
 
   
 
@@ -28,6 +30,15 @@ function Home() {
     setUser(data + "'s");
 
   });
+
+  const UprightRef = query(ref(database, user.slice(0,-2)+'/Params'));
+  onValue(UprightRef, (snapshot) => {
+    const UprightStreak = snapshot.val()['UprightStreak'];
+    const UprightTime = snapshot.val()['UprightTime'];
+    setUprightStreak(UprightStreak);
+    setUprightTime(UprightTime);
+  });
+
   const CBRef = query(ref(database, user.slice(0,-2)+'/Params'));
   onValue(CBRef, (snapshot) => {
     const CBdata = snapshot.val()['CaloriesBurned'];
@@ -121,7 +132,7 @@ function Home() {
               <div className="group-9">
                 <div className="upright-streak">
                   <div className="group-10">
-                    <div className="text-wrapper-33">55</div>
+                    <div className="text-wrapper-33">{uprightStreak}</div>
                     <div className="text-wrapper-34">mins</div>
                   </div>
                 </div>
@@ -130,7 +141,7 @@ function Home() {
               <div className="group-11">
                 <div className="upright-streak">
                   <div className="group-10">
-                    <div className="text-wrapper-36">179</div>
+                    <div className="text-wrapper-36">{uprightTime}</div>
                     <div className="text-wrapper-34">mins</div>
                   </div>
                 </div>

@@ -117,6 +117,9 @@ export const BarChartPosture = ({user}) => {
     let totalPerfectTime = 0;
     let angles = [];
     let longestPerfect = 0;
+    let uprightStreak = 0 
+    let uprightTotal = 0
+    let longestStreak = 0;
    
 
     console.log(counts)
@@ -144,10 +147,21 @@ export const BarChartPosture = ({user}) => {
         }
         if (PostureQuality === "bad") {
           totalBadTime += 1;
+          if (uprightStreak > longestStreak){
+            longestStreak = uprightStreak
+          }
+          uprightStreak = 0
         } else if (PostureQuality === "good"){
           totalGoodTime += 1;
+          uprightTotal += 1
+          uprightStreak += 1
+
+        
         } else {
           totalPerfectTime += 1;
+          uprightTotal += 1
+          uprightStreak += 1
+          
         }
     });
     console.log(counts)
@@ -199,11 +213,25 @@ const updatePostureScoreInFirebase = (data) => {
     console.error("Error updating height in Firebase", error);});
 };
 
+const updateUprightTimeInFirebase = (data) => {
+  const UprightTimeRef = ref(database, user+'Params/UprightTime');
+  set(UprightTimeRef, data).catch((error) => {
+    console.error("Error updating upright time in Firebase", error);});
+};
+
+const updateUprightStreakInFirebase = (data) => {
+  const UprightStreakRef = ref(database, user+'Params/UprightStreak');
+  set(UprightStreakRef, data).catch((error) => {
+    console.error("Error updating upright streak in Firebase", error);});
+};
+
 // sum angles array divide by the array length
 console.log(totalPerfectTime)
 if (angles.length > 0){
 setAvgAngle((angles.reduce((accumulator, currentAngle) => accumulator + currentAngle, 0)/angles.length).toFixed(1));
 updatePostureScoreInFirebase(calculateContinuousPostureScore(avgAngle).toFixed(0))
+updateUprightTimeInFirebase(uprightTotal)
+updateUprightStreakInFirebase(longestStreak)
 
 } else {setAvgAngle(0)}
 let denom = 1;
