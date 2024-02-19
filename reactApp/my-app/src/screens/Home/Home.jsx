@@ -20,6 +20,7 @@ function Home() {
   const [caloriesBurnedGoal, setCaloriesBurnedGoal] = useState('1000')
   const [uprightStreak, setUprightStreak] = useState('0')
   const [uprightTime, setUprightTime] = useState(0)
+  const [lastFetched, setLastFetched] = useState(Date.now());
 
   
 
@@ -51,6 +52,7 @@ function Home() {
     console.log('CaloriesBurned' + ' ' + caloriesBurned)
     console.log('CaloriesBurnedGoal' + ' ' + caloriesBurnedGoal)
     // }
+    setLastFetched(CBdata); // this line is to rerender the components only
   });});
 
   return (
@@ -71,7 +73,7 @@ function Home() {
               <div className="text-wrapper-3">Screen Distance</div>
               <div className="text-wrapper-4">Daily Activity</div>
               <div className="text-wrapper-5">Posture</div>
-              <BarChartSD_Home className="bar-chart-sd-home-instance-node" user = {user} />
+              <BarChartSD_Home key={lastFetched} className="bar-chart-sd-home-instance-node" user = {user} />
               <div className="overlap-group-wrapper">
                 <div className="overlap-4">
                   <div className="text-wrapper-9">{caloriesBurned} cal</div>
@@ -104,7 +106,8 @@ function Home() {
               </div>
               </Link>
               <div className="desk-time-summary">
-                <LineChart_DeskTime className="line-chart-desk-time-instance-node" user = {user}/>
+                
+                <LineChart_DeskTime key={lastFetched} redraw={true} className="line-chart-desk-time-instance-node" user = {user}/>
               </div>
               <div className="group-4">
                 <div className="overlap-8">
@@ -125,7 +128,7 @@ function Home() {
               <div className="group-6">
                 <div className="overlap-9">
                   <div className="group-7">
-                    <PostureGauge className="posture-gauge-instance" user={user}/>
+                    <PostureGauge key={lastFetched} className="posture-gauge-instance" user={user}/>
                   </div>
                 </div>
               </div>

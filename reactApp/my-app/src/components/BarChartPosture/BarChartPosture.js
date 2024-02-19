@@ -253,7 +253,14 @@ setData({
     { ...chartData.datasets[2], data: badPostureData  },
   ],
 });
-setDateRange(`${labels[0]} - ${labels[labels.length - 1]}`);
+if (selectedTimeframeB !== '1d') { 
+  setDateRange(`${labels[0]} - ${labels[labels.length - 1]}`);
+}else{
+  //today's date 
+  const date = new Date();
+  setDateRange(date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }));
+  console.log(dateRange)
+}
 };
     const options={
         responsive: true,

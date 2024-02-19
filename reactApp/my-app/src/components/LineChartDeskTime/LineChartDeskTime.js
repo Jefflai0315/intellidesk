@@ -2,16 +2,17 @@
 import { Line } from 'react-chartjs-2';
 import React, { useEffect, useState } from 'react';
 import database from '../../firebase'; // Adjust the path as needed
-import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
+import { query, ref, onValue, orderByKey, startAt } from 'firebase/database'
 
-export const LineChart_DeskTime = ({user}) => {
-  if (user === "My"){
+export const LineChart_DeskTime = ({ user }) => {
+  if (user === "My") {
     user = ''
   }
   else {
     //remove last 2 characters (`s)
-    user = user.slice(0, -2) +'/';
+    user = user.slice(0, -2) + '/';
   }
+  const seconds = 3
   const [selectedTimeframe, setSelectedTimeframe] = useState('7d'); // Default to 1 day
   const [sittingAvg, setSittingAvg] = useState(0)
   const [standingAvg, setStandingAvg] = useState(0)
@@ -61,9 +62,9 @@ export const LineChart_DeskTime = ({user}) => {
     console.log(selectedTimeframe)
     //convert startDate to UnixTimestamp
     startDate = startDate.getTime()
-  
-    const postureRef = query(ref(database, user+'Posture'), orderByKey(), 
-    startAt(startDate.toString()));
+
+    const postureRef = query(ref(database, user + 'Posture'), orderByKey(),
+      startAt(startDate.toString()));
     onValue(postureRef, (snapshot) => {
       const data = snapshot.val();
 
@@ -71,72 +72,78 @@ export const LineChart_DeskTime = ({user}) => {
       processSitStandData(data, startDate);
       // }
     });
-    
+
   }, [selectedTimeframe]);
 
-  const processSitStandData = (data,sdate) => {
+  const processSitStandData = (data, sdate) => {
     let counts = {};
-  let totalSitting = 0;
-  let totalStanding = 0;
-  let labels = [];
+    let totalSitting = 0;
+    let totalStanding = 0;
+    let labels = [];
 
-  if (selectedTimeframe === '1d') {
-    // Initialize counts for each hour of the day
-    for (let i = 0; i < 24; i++) {
+    if (selectedTimeframe === '1d') {
+      // Initialize counts for each hour of the day
+      for (let i = 0; i < 24; i++) {
         let hour = i.toString().padStart(2, '0') + ':00'; // Format: "HH:00"
         counts[hour] = { sitting: 0, standing: 0 };
         labels.push(hour);
-    }
-    if (data != null) {
-    Object.entries(data).forEach(([timestamp, { PostureMode }]) => {
-        const date = new Date(parseInt(timestamp));
-        const hourKey = date.getHours().toString().padStart(2, '0') + ':00';
-
-        
-
-        if (counts[hourKey]) {
-            counts[hourKey][PostureMode] += 1;
-        }
-    });
-  }
-} else {
-  const now = new Date();
-  const startDate = new Date(sdate); // selectedStartDate should be the Unix Timestamp of your start date
-  // const endDate = new Date(Math.max(...Object.keys(data).map(ts => parseInt(ts ))));
-  const endDate = new Date(now.setDate(now.getDate() ))
-
-  for (let d = new Date(startDate); d <= endDate ; d.setDate(d.getDate() + 1)) {
-    const dateKey = d.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
-    counts[dateKey] = { sitting: 0, standing: 0 };
-  }
-
-  // Process the actual data
-  if (data != null) {
-  Object.entries(data).forEach(([timestamp, { PostureMode }]) => {
-    const date = new Date(parseInt(timestamp)).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
-    if (counts[date]) { // This check is technically redundant now but left for clarity
-      counts[date][PostureMode] += 1;
-
-      if (PostureMode === "sitting") {
-        totalSitting += 1;
-      } else {
-        totalStanding += 1;
       }
+      if (data != null) {
+        Object.entries(data).forEach(([timestamp, { PostureMode }]) => {
+          const date = new Date(parseInt(timestamp));
+          const hourKey = date.getHours().toString().padStart(2, '0') + ':00';
+
+
+
+          if (counts[hourKey]) {
+            counts[hourKey][PostureMode] += 1;
+          }
+        });
+      }
+    } else {
+      const now = new Date();
+      const startDate = new Date(sdate); // selectedStartDate should be the Unix Timestamp of your start date
+      // const endDate = new Date(Math.max(...Object.keys(data).map(ts => parseInt(ts ))));
+      const endDate = new Date(now.setDate(now.getDate()))
+
+      for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+        const dateKey = d.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
+        counts[dateKey] = { sitting: 0, standing: 0 };
+      }
+
+      // Process the actual data
+      if (data != null) {
+        Object.entries(data).forEach(([timestamp, { PostureMode }]) => {
+          const date = new Date(parseInt(timestamp)).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
+          if (counts[date]) { // This check is technically redundant now but left for clarity
+            counts[date][PostureMode] += 1;
+
+            if (PostureMode === "sitting") {
+              totalSitting += 1;
+            } else {
+              totalStanding += 1;
+            }
+          }
+        });
+      }
+      labels = Object.keys(counts).sort((a, b) => new Date(a.split('/').reverse().join('/')) - new Date(b.split('/').reverse().join('/')));
     }
-  });
-}
-  labels = Object.keys(counts).sort((a, b) => new Date(a.split('/').reverse().join('/')) - new Date(b.split('/').reverse().join('/'))); 
-}
 
-  // Prepare data for chart or output
-  const standingData = labels.map(label => counts[label].standing);
-  const sittingData = labels.map(label => counts[label].sitting);
+    const formatTime = (minutes) => {
+      const hours = Math.floor(minutes / 60);
+      const mins = minutes % 60;
+      return `${hours} hours ${mins} minutes`;
+    };
 
-  
-  
-   
-    setSittingAvg((totalSitting/sittingData.length).toFixed(1));
-    setStandingAvg((totalStanding/standingData.length).toFixed(1));
+    // Prepare data for chart or output
+    const standingData = labels.map(label => counts[label].standing);
+    const sittingData = labels.map(label => counts[label].sitting);
+
+
+
+
+    setSittingAvg(((totalSitting / sittingData.length)/60).toFixed(1));
+    setStandingAvg(((totalStanding / standingData.length)/60).toFixed(1));
 
 
     setChartData({
@@ -161,21 +168,21 @@ export const LineChart_DeskTime = ({user}) => {
       .map(dataset => dataset.label)));
 
     return (
-        <div className="chartjs-legend">
-            <ul>
-                {uniqueLabels.map((label, index) => {
-                    const dataset = chartData.datasets.find(d => d.label === label);
-                    return (
-                        <li key={index}>
-                            <span style={{ backgroundColor: dataset.backgroundColor }}></span>
-                            {label}
-                        </li>
-                    );
-                })}
-            </ul>
-        </div>
+      <div className="chartjs-legend">
+        <ul>
+          {uniqueLabels.map((label, index) => {
+            const dataset = chartData.datasets.find(d => d.label === label);
+            return (
+              <li key={index}>
+                <span style={{ backgroundColor: dataset.backgroundColor }}></span>
+                {label}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     );
-};
+  };
 
   const options = {
     responsive: true,
@@ -197,44 +204,45 @@ export const LineChart_DeskTime = ({user}) => {
       ],
     },
     legend: {
-        display: false,
-        labels: {
-          fontColor: 'white', 
-        },
+      display: false,
+      labels: {
+        fontColor: 'white',
+      },
     },
   };
 
-  return(
+  return (
     <>
-        <div className="navbar-wrapper">
-          <div className="navbar">
-            <a className={`text-wrapper-25 ${selectedTimeframe === '1d' ? 'active' : ''}`} onClick={() => setSelectedTimeframe('1d')}>1d</a>
-            <a className={`text-wrapper-26 ${selectedTimeframe === '7d' ? 'active' : ''}`} onClick={() => setSelectedTimeframe('7d')}>7d</a>
-            <a className={`text-wrapper-27 ${selectedTimeframe === '2w' ? 'active' : ''}`} onClick={() => setSelectedTimeframe('2w')}>2w</a>
-            <a className={`text-wrapper-28 ${selectedTimeframe === '1m' ? 'active' : ''}`} onClick={() => setSelectedTimeframe('1m')}>1m</a>
-            
-          </div>
+      <div className="navbar-wrapper">
+        <div className="navbar">
+          <a className={`text-wrapper-25 ${selectedTimeframe === '1d' ? 'active' : ''}`} onClick={() => setSelectedTimeframe('1d')}>1d</a>
+          <a className={`text-wrapper-26 ${selectedTimeframe === '7d' ? 'active' : ''}`} onClick={() => setSelectedTimeframe('7d')}>7d</a>
+          <a className={`text-wrapper-27 ${selectedTimeframe === '2w' ? 'active' : ''}`} onClick={() => setSelectedTimeframe('2w')}>2w</a>
+          <a className={`text-wrapper-28 ${selectedTimeframe === '1m' ? 'active' : ''}`} onClick={() => setSelectedTimeframe('1m')}>1m</a>
+
         </div>
-        <Line 
-            data={chartData} 
-            options={options} 
-            position="relative"
-        />
-        <CustomLegend chartData={chartData} />
-        <div className="average-DT">
-          <div className="text-wrapper-14">Average Standing</div>
-          <div className="overlap-group-3">
-            <div className="text-wrapper-15">{standingAvg}</div>
-            <div className="text-wrapper-16">hrs/day</div>
-          </div>
+      </div>
+      <Line
+        redraw={true}
+        data={chartData}
+        options={options}
+        position="relative"
+      />
+      <CustomLegend chartData={chartData} />
+      <div className="average-DT">
+        <div className="text-wrapper-14">Average Standing</div>
+        <div className="overlap-group-3">
+          <div className="text-wrapper-15">{standingAvg}</div>
+          <div className="text-wrapper-16">hrs/day</div>
         </div>
-        <div className="average-DT-2">
-          <div className="text-wrapper-14-2">Average Sitting</div>
-          <div className="overlap-group-3-2">
-            <div className="text-wrapper-15-2">{sittingAvg}</div>
-            <div className="text-wrapper-16-2">hrs/day</div>
-          </div>
+      </div>
+      <div className="average-DT-2">
+        <div className="text-wrapper-14-2">Average Sitting</div>
+        <div className="overlap-group-3-2">
+          <div className="text-wrapper-15-2">{sittingAvg}</div>
+          <div className="text-wrapper-16-2">hrs/day</div>
         </div>
+      </div>
     </>
-  ) 
+  )
 };

@@ -14,12 +14,14 @@ import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
 
 function DailyActivity() {
   const [user, setUser] = useState('My')
+  const [lastFetched, setLastFetched] = useState()
 
   useEffect(() => {
     const ESRef = query(ref(database, 'Controls/User'));
   onValue(ESRef, (snapshot) => {
     const data = snapshot.val();
     setUser(data );
+    setLastFetched(data) //for data render
   });});
   return (
     <div className="daily-activity">
@@ -73,7 +75,7 @@ function DailyActivity() {
               <Link to="/">
               <img className="frame-2" alt="Frame" src="https://c.animaapp.com/QHWYwOlz/img/frame-3.svg" />
               </Link>
-              <BarChartDailyActivity className="bar-chart-daily-activity" user = {user}/>
+              <BarChartDailyActivity key={lastFetched} className="bar-chart-daily-activity" user = {user}/>
               <DAGauge className="daily-activity-gauge" user = {user}/>
             </div>
           </div>

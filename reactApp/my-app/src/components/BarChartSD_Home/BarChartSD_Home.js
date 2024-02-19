@@ -31,7 +31,7 @@ export const BarChartSD_Home = ({user}) => {
 
     useEffect(() => {
       const now = new Date();
-      let startDate = new Date(now.setDate(now.getDate() -7))
+      let startDate = new Date(now.setDate(now.getDate())) //today's data
       const ESRef = query(ref(database, user+'EyeScreenDistance'), orderByKey(), 
     startAt(startDate.getTime().toString())); // 7 days
     onValue(ESRef, (snapshot) => {
@@ -63,12 +63,14 @@ export const BarChartSD_Home = ({user}) => {
     }
   } 
   )
+  setAvg((avg/(counts.reduce((a, b) => a + b, 0)+0.0001)).toFixed(0));
+  setClosest(min);
 }else {
   // console.log("No data")
+  setAvg('No activity')
+  setClosest('No activity ')
 }
   // console.log(counts);
-  setAvg((avg/counts.reduce((a, b) => a + b, 0)).toFixed(1));
-  setClosest(min);
   setChartData({
     datasets: [
       {...chartData.datasets[0], data: counts },
@@ -124,7 +126,7 @@ export const BarChartSD_Home = ({user}) => {
         </div>
         <div className="closest">
           <div className="overlap-3">
-            <div className="text-wrapper-8">{closest}cm</div>
+            <div className="text-wrapper-8">{closest} cm</div>
             <div className="text-wrapper-6">Closest</div>
           </div>
         </div>

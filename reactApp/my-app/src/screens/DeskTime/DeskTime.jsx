@@ -13,12 +13,14 @@ import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
 
 function DeskTime() {
   const [user, setUser] = useState('My')
+  const [lastFetchedTime, setLastFetchedTime] = useState();
 
   useEffect(() => {
     const ESRef = query(ref(database, 'Controls/User'));
   onValue(ESRef, (snapshot) => {
     const data = snapshot.val();
     setUser(data );
+    setLastFetchedTime(data) //for data render
   });});
   return (
     <div className="desk-time">
@@ -72,7 +74,7 @@ function DeskTime() {
               <Link to="/">
               <img className="frame-2" alt="Frame" src="https://c.animaapp.com/QHWYwOlz/img/frame-3.svg" />
               </Link>
-                <BarChartDeskTime className="bar-chart-desk-time" user = {user}/>
+                <BarChartDeskTime key={lastFetchedTime} className="bar-chart-desk-time" user = {user}/>
              
             </div>
           </div>

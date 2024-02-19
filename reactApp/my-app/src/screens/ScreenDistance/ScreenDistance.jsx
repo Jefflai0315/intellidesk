@@ -14,12 +14,14 @@ import { query, ref, onValue, orderByKey, startAt } from 'firebase/database'
 
 function ScreenDistance() {
   const [user, setUser] = useState('My')
+  const [lastFetched, setLastFetched] = useState();
 
   useEffect(() => {
     const ESRef = query(ref(database, 'Controls/User'));
     onValue(ESRef, (snapshot) => {
       const data = snapshot.val();
       setUser(data);
+      setLastFetched(data) //for data render
     });
   });
   return (
@@ -74,7 +76,7 @@ function ScreenDistance() {
               <Link to="/">
                 <img className="frame-2" alt="Frame" src="https://c.animaapp.com/QHWYwOlz/img/frame-3.svg" />
               </Link>
-              <BarChartSD className="bar-chart-screen-distance" user={user} />
+              <BarChartSD key={lastFetched} className="bar-chart-screen-distance" user={user} />
 
             </div>
           </div>

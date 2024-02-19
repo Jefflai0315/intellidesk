@@ -132,6 +132,7 @@ export const BarChartDailyActivity = ({user}) => {
 
 
   // Process the actual data
+  if (data !== null){
   Object.entries(data).forEach(([timestamp, { PostureMode }]) => {
     const date = new Date(parseInt(timestamp)).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
     if (counts[date]) { // This check is technically redundant now but left for clarity
@@ -144,13 +145,33 @@ export const BarChartDailyActivity = ({user}) => {
       }
     }
   });
+}
   labels = Object.keys(counts).sort((a, b) => new Date(a.split('/').reverse().join('/')) - new Date(b.split('/').reverse().join('/'))); 
 }
-  // Prepare data for chart or output
-  const standingData = labels.map(label => counts[label].standing);
-  const sittingData = labels.map(label => counts[label].sitting);
-  longestStandDuration = Math.max(...standingData);
-  longestSitDuration = Math.max(...sittingData);
+const standingData = labels.map(label => counts[label].standing);
+const sittingData = labels.map(label => counts[label].sitting);
+
+function addArraysElementwise(arr1, arr2) {
+  // Check if arrays are of the same length
+  if (arr1.length !== arr2.length) {
+      throw new Error("Arrays must be of the same length");
+  }
+
+  // Initialize an empty array to store the result
+  var result = [];
+
+  // Loop through the arrays and add corresponding elements
+  for (var i = 0; i < arr1.length; i++) {
+      result.push(arr1[i]* 88/60 + arr2[i]*80/60);
+  }
+
+  return result;
+}
+const total = addArraysElementwise(standingData, sittingData);
+let lenght = total.length
+const goals = Array.from({ lenght }, () => 200);
+longestStandDuration = Math.max(...standingData);
+longestSitDuration = Math.max(...sittingData);
 
   let denom = 1;
 if (selectedTimeframeB === '1d') {
@@ -167,7 +188,14 @@ if (selectedTimeframeB === '1d') {
   setLongestBreak(formatTime(longestBreakDuration));
   const min = (((totalStandTime + totalSitTime) / denom))
   setAvgHour((Math.floor(min/60)+ ((min % 60)/60)).toFixed(1));
-  setDateRange(`${labels[0]} - ${labels[labels.length - 1]}`);
+  if (selectedTimeframeB !== '1d') { 
+    setDateRange(`${labels[0]} - ${labels[labels.length - 1]}`);
+  }else{
+    //today's date 
+    const date = new Date();
+    setDateRange(date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }));
+    console.log(dateRange)
+  }
 
   let sitCaloriesBurned = 80
   let standCaloriesBurned = 88
@@ -178,8 +206,8 @@ if (selectedTimeframeB === '1d') {
   setChartData({
     labels,
     datasets: [
-      { ...chartData.datasets[0], data: standingData },
-      { ...chartData.datasets[1], data: sittingData },
+      { ...chartData.datasets[0], data: total },
+      { ...chartData.datasets[1], data: goals },
     ],
   });
 };

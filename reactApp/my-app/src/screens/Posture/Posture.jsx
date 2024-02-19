@@ -10,16 +10,18 @@ import moreIcon from '../../imgs/Group 27more.png';
 import timerIcon from '../../imgs/Asset 2@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
 import database from '../../firebase'; // Adjust the path as needed
-import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
+import { query, ref, onValue, orderByKey , startAt, set} from 'firebase/database'
 
 function Posture() {
   const [user, setUser] = useState('My')
+  const [lastFetched,setLastFetched] = useState();
 
   useEffect(() => {
     const ESRef = query(ref(database, 'Controls/User'));
   onValue(ESRef, (snapshot) => {
     const data = snapshot.val();
     setUser(data);
+    setLastFetched(data) //for data render
   });});
   return (
     
@@ -101,7 +103,7 @@ function Posture() {
               </div> */}
             
               {/* <div className="bar-chart-container"> */}
-                <BarChartPosture className="bar-chart-posture" user = {user}/>
+                <BarChartPosture key={lastFetched} className="bar-chart-posture" user = {user}/>
               {/* </div> */}
               {/* <div className="day-breakdown">
                 <PostureAngle className="posture-angle-instance" angle={110}/>
