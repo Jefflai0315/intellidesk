@@ -256,7 +256,7 @@ function Home() {
                 </div>
                 <div className="text-wrapper-37">Total Upright Time</div>
               </div>
-              <div className="text-wrapper-38">Timers</div>
+              {/* <div className="text-wrapper-38">Timers</div>
               <div className="hydration">
                 <div className="text-wrapper-39">Hydration</div>
                 <img className="group-12" alt="Group" src="https://c.animaapp.com/VczO8maf/img/group-31@2x.png" />
@@ -273,9 +273,9 @@ function Home() {
                   <div className="rectangle-18" />
                   <div className="rectangle-19" />
                 </div>
-              </div>
-              <BarIcon className="design-component-instance-node" />
-              <BarIcon className="bar-icon-4" />
+              </div> */}
+              {/* <BarIcon className="design-component-instance-node" />
+              <BarIcon className="bar-icon-4" /> */}
               <div className="frame">
                 <Link to="/Posture">
                 <div className="bar-icon-5">

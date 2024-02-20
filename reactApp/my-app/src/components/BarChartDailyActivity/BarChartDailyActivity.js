@@ -28,18 +28,18 @@ export const BarChartDailyActivity = ({user}) => {
         labels: [],
         datasets: [
           {
-            label: 'In Progress',
-            backgroundColor: '#69CBD9',
-            borderWidth: 1,
-            hoverBackgroundColor: '#69CBD9',
-            cornerRadius: 8,
-            data: [],
-          },
-          {
             label: 'Success',
             backgroundColor: '#78D06A',
             borderWidth: 1,
             hoverBackgroundColor: '#78D06A',
+            cornerRadius: 8,
+            data: [],
+          },
+          {
+            label: 'In Progress',
+            backgroundColor: '#69CBD9',
+            borderWidth: 1,
+            hoverBackgroundColor: '#69CBD9',
             cornerRadius: 8,
             data: [],
           },
@@ -168,8 +168,10 @@ function addArraysElementwise(arr1, arr2) {
   return result;
 }
 const total = addArraysElementwise(standingData, sittingData);
-let lenght = total.length
-const goals = Array.from({ lenght }, () => 200);
+let length = total.length
+
+const goals = new Array(length).fill(200);;
+const goals_remain = goals.map((element, index) => element - total[index]);
 longestStandDuration = Math.max(...standingData);
 longestSitDuration = Math.max(...sittingData);
 
@@ -202,12 +204,12 @@ if (selectedTimeframeB === '1d') {
   setCaloriesBurned(((totalStandTime /60) * standCaloriesBurned + (totalSitTime/60)* sitCaloriesBurned).toFixed(0))
   updateAvgCaloriesBurned(caloriesBurned); 
 
-
+  console.log(total, goals)
   setChartData({
     labels,
     datasets: [
-      { ...chartData.datasets[0], data: total },
-      { ...chartData.datasets[1], data: goals },
+      { ...chartData.datasets[1], data: total },
+      { ...chartData.datasets[0], data: goals_remain },
     ],
   });
 };
@@ -320,7 +322,7 @@ const formatTime = (minutes) => {
         <div className="average-DA">
           <div className="text-wrapper-38">Average</div>
           <div className="overlap-group-7">
-            <div className="text-wrapper-39">{avgHour}</div>
+            <div className="text-wrapper-39">{caloriesBurned}</div>
             <div className="text-wrapper-40">cal/day</div>
           </div>
         </div>

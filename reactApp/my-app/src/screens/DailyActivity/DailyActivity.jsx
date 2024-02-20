@@ -76,7 +76,7 @@ function DailyActivity() {
               <img className="frame-2" alt="Frame" src="https://c.animaapp.com/QHWYwOlz/img/frame-3.svg" />
               </Link>
               <BarChartDailyActivity key={lastFetched} className="bar-chart-daily-activity" user = {user}/>
-              <DAGauge className="daily-activity-gauge" user = {user}/>
+              {/* <DAGauge className="daily-activity-gauge" user = {user}/> */}
             </div>
           </div>
         </div>
