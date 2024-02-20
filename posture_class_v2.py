@@ -537,8 +537,8 @@ class PostureAnalyzer:
             else:
                 position_category = "sitting"
                 self.sitting_frames += 1
-            cv2.putText(image,"Standing : " + str(round(self.standing_frames/fps,1)) + "s", (10, 130), font, 0.9, green, 2)
-            cv2.putText(image,"Sitting : " + str(round(self.sitting_frames/fps,1)) + "s", (int(w/3), 130), font, 0.9, light_green, 2)
+            # cv2.putText(image,"Standing : " + str(round(self.standing_frames/fps,1)) + "s", (10, 130), font, 0.9, green, 2)
+            # cv2.putText(image,"Sitting : " + str(round(self.sitting_frames/fps,1)) + "s", (int(w/3), 130), font, 0.9, light_green, 2)
 
             # if position_category == "standing":
             #     cv2.putText(image, 'standing', (int(w/2), int(h/2)-100), font, 0.9, red, 2)
@@ -616,22 +616,22 @@ class PostureAnalyzer:
             prolong_bad_time = (1 / fps) * self.prolong_bad
 
             time_string = 'Total Time : ' + str(round(self.total_frames *1/fps, 1)) + 's'
-            cv2.putText(image, time_string, (10, h - 100), font, 0.9, dark_blue, 2)
+            # cv2.putText(image, time_string, (10, h - 100), font, 0.9, dark_blue, 2)
            
             correction_string = 'Correction Count : ' + str(len(self.correction)) 
-            cv2.putText(image, correction_string, (int(w/3), h - 100), font, 0.9, yellow , 2)
+            # cv2.putText(image, correction_string, (int(w/3), h - 100), font, 0.9, yellow , 2)
             # Pose time.
             bad_count_string = 'Prolong Bad Time : ' + str(round(prolong_bad_time,1)) + 's'
-            cv2.putText(image, bad_count_string, (int(2*w/3), h - 100), font, 0.9, yellow, 2)
+            # cv2.putText(image, bad_count_string, (int(2*w/3), h - 100), font, 0.9, yellow, 2)
             # Pose time.
             time_string_perfect = 'Perfect Posture Time : ' + str(round(perfect_time, 1)) + 's'
-            cv2.putText(image, time_string_perfect, (10, h - 20), font, 0.9, blue, 2)
+            # cv2.putText(image, time_string_perfect, (10, h - 20), font, 0.9, blue, 2)
             # if self.good_pos_frames > 0:
             time_string_good = 'Good Posture Time : ' + str(round(good_time, 1)) + 's'
-            cv2.putText(image, time_string_good, ( int(w/3), h - 20), font, 0.9, green, 2)
+            # cv2.putText(image, time_string_good, ( int(w/3), h - 20), font, 0.9, green, 2)
             # else:
             time_string_bad = 'Bad Posture Time : ' + str(round(bad_time, 1)) + 's'
-            cv2.putText(image, time_string_bad, (int(2*w/3), h - 20), font, 0.9, red, 2)
+            # cv2.putText(image, time_string_bad, (int(2*w/3), h - 20), font, 0.9, red, 2)
 
             # If you stay in bad posture for more than 3 minutes (180s) send an alert.
             print(prolong_bad_time)
