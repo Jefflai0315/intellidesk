@@ -110,15 +110,15 @@ class PostureAnalyzer:
         return angle_degrees
     
     def reset_nudge(self):
-        self.send_to_firebase('Controls',{'PostureNudge': '0'})
+        self.send_to_firebase('Controls',{'PostureNudge': 0})
 
 
-    def sendWarning(self):
+    def sendWarning(self, ind):
         self.correction.append(datetime.now().timestamp()*1000)
-        self.send_to_firebase('Controls',{'PostureNudge': '1'})
+        self.send_to_firebase('Controls',{'PostureNudge': ind})
         timer = Timer(10, self.reset_nudge)
         timer.start()
-        return 'bad posture'
+        return f'warning_{ind}'
 
     def is_fist(self, hand_landmarks):
     # Get the landmarks for the fingertips, MCP joints, and wrist
@@ -464,9 +464,11 @@ class PostureAnalyzer:
                             # Handle numerical fields
                             'Distance' :eye_screen_distance, 
                             'Angle' :eye_screen_angle}})
+                if eye_screen_distance < 50: 
+                    self.sendWarning(2)
                 #clear screen list
-                
-                self.screens_list.removeAll()
+                if len(self.screens_list) >0:
+                    self.screens_list = []
 
 
             
@@ -528,7 +530,8 @@ class PostureAnalyzer:
             stand_sit_string = 'Hip Angle ' + str(int(hip_angle)) 
 
             cv2.putText(image, stand_sit_string, (10, 100), font, 0.9, light_green, 2)
-            if hip_angle > 150:
+            print('hipangle', hip_angle)
+            if hip_angle < 60:
                 position_category = 'standing'
                 self.standing_frames += 1
             else:
@@ -633,7 +636,7 @@ class PostureAnalyzer:
             # If you stay in bad posture for more than 3 minutes (180s) send an alert.
             print(prolong_bad_time)
             if prolong_bad_time > 0.16: # 5 seconds
-                correction_type = self.sendWarning()
+                correction_type = self.sendWarning(1)
 
                 self.prolong_bad =0
                 try:
