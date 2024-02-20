@@ -422,9 +422,9 @@ class PostureAnalyzer:
                 return image
 
             if eye_offset < 50:
-                cv2.putText(image, str(int(offset)) + ' Eyes Aligned', (w - 300, 100), font, 0.9, green, 2)
+                cv2.putText(image, str(int(eye_offset)) + ' Eyes Aligned', (w - 300, 100), font, 0.9, green, 2)
             else:
-                cv2.putText(image, str(int(offset)) + ' Eyes Not Aligned', (w - 300, 100), font, 0.9, red, 2)
+                cv2.putText(image, str(int(eye_offset)) + ' Eyes Not Aligned', (w - 300, 100), font, 0.9, red, 2)
     
             # Measure screen distance
             if len(self.screens_list) == 0:
@@ -531,7 +531,7 @@ class PostureAnalyzer:
 
             cv2.putText(image, stand_sit_string, (10, 100), font, 0.9, light_green, 2)
             print('hipangle', hip_angle)
-            if hip_angle < 60:
+            if hip_angle < 70:
                 position_category = 'standing'
                 self.standing_frames += 1
             else:
@@ -556,7 +556,7 @@ class PostureAnalyzer:
             # The threshold angles have been set based on intuition.
             if (neck_inclination < 5 and neck_inclination > -20
             and trunk_inclication < 10 and trunk_inclication > 0
-            and upper_arm_inclination < 20 and upper_arm_inclination >-10
+            and upper_arm_inclination < 40 and upper_arm_inclination >-10
             # and knee_angle >80 and knee_angle < 100
             ): 
                 posture_category = 'perfect'
@@ -569,7 +569,7 @@ class PostureAnalyzer:
             
             elif  (neck_inclination < 5 and neck_inclination > -35 
                    and trunk_inclication < 30 and trunk_inclication > -5
-                   and upper_arm_inclination < 40 and upper_arm_inclination >-10
+                #    and upper_arm_inclination < 40 and upper_arm_inclination >-10
                 #    and  knee_angle > 70 and knee_angle < 110
                    ):
                 posture_category = 'good'
@@ -604,9 +604,9 @@ class PostureAnalyzer:
 
 
 
-            if ear_shoulder_distance < 70: #shrug
-                posture_category = 'bad'
-                print('shrug')
+            # if ear_shoulder_distance < 70: #shrug
+            #     posture_category = 'bad'
+            #     print('shrug')
         
         
             # Calculate the time of remaining in a particular posture.
@@ -617,6 +617,8 @@ class PostureAnalyzer:
 
             time_string = 'Total Time : ' + str(round(self.total_frames *1/fps, 1)) + 's'
             # cv2.putText(image, time_string, (10, h - 100), font, 0.9, dark_blue, 2)
+            cv2.putText(image, posture_category, (10, h - 100), font, 0.9, yellow, 2)
+            cv2.putText(image, position_category, (10, h - 200), font, 0.9, yellow, 2)
            
             correction_string = 'Correction Count : ' + str(len(self.correction)) 
             # cv2.putText(image, correction_string, (int(w/3), h - 100), font, 0.9, yellow , 2)
