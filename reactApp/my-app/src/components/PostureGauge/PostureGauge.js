@@ -4,7 +4,7 @@ import database from '../../firebase'; // Adjust the path as needed
 import { query, ref, onValue} from 'firebase/database'
 
 
-export const PostureGauge = ({ user}) => {
+export const PostureGauge = ({ user, postureScore}) => {
   if (user === "My"){
     user = ''
   }
@@ -12,15 +12,15 @@ export const PostureGauge = ({ user}) => {
     //remove last 2 characters (`s)
     user = user.slice(0, -2) +'/';
   }
-  const [postureScore, setPostureScore] = useState()
+  // const [postureScore, setPostureScore] = useState()
 
-  useEffect(() => {
-    const ESRef = query(ref(database, user+'Params/PostureScore'));
-  onValue(ESRef, (snapshot) => {
-    const data = snapshot.val();
-    setPostureScore(parseInt(data));
-    console.log(postureScore)
-  });});
+  // useEffect(() => {
+  //   const ESRef = query(ref(database, user+'Params/PostureScore'));
+  // onValue(ESRef, (snapshot) => {
+  //   const data = snapshot.val();
+  //   setPostureScore(parseInt(data));
+  //   console.log(postureScore)
+  // });});
   
 
 
@@ -47,7 +47,8 @@ export const PostureGauge = ({ user}) => {
     return score;
   }
 
-  let score = postureScore;
+  // let score = postureScore;
+  console.log(postureScore)
   
       return(
         <div style={{ position: 'relative', width: 'fit-content', margin: '0 auto' }}>
@@ -66,7 +67,7 @@ export const PostureGauge = ({ user}) => {
                   { limit: 100 },
                 ],
             }}
-            value= {score}
+            value= {postureScore}
         />
         {/* Overlay div to cover the labels */}
         <div style={{

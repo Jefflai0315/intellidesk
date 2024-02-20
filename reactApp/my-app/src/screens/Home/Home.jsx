@@ -20,7 +20,9 @@ function Home() {
   const [caloriesBurnedGoal, setCaloriesBurnedGoal] = useState('1000')
   const [uprightStreak, setUprightStreak] = useState('0')
   const [uprightTime, setUprightTime] = useState(0)
+  const [postureScore, setPostureScore] = useState(0)
   const [lastFetched, setLastFetched] = useState(Date.now());
+  const [avgAngle, setAvgAngle] = useState('0 degrees');
 
   
 
@@ -32,13 +34,117 @@ function Home() {
 
   });
 
-  const UprightRef = query(ref(database, user.slice(0,-2)+'/Params'));
-  onValue(UprightRef, (snapshot) => {
-    const UprightStreak = snapshot.val()['UprightStreak'];
-    const UprightTime = snapshot.val()['UprightTime'];
-    setUprightStreak(UprightStreak);
-    setUprightTime(UprightTime);
-  });
+  // const UprightRef = query(ref(database, user.slice(0,-2)+'/Params'));
+  // onValue(UprightRef, (snapshot) => {
+  //   const UprightStreak = snapshot.val()['UprightStreak'];
+  //   const UprightTime = snapshot.val()['UprightTime'];
+  //   setUprightStreak(UprightStreak);
+  //   setUprightTime(UprightTime);
+  // });
+  const startDate = new Date().getTime().toString()
+  const postureRef = query(ref(database, user+'Posture'), orderByKey(), 
+      startAt(startDate));
+      onValue(postureRef, (snapshot) => {
+        const data = snapshot.val();
+  
+        // if (data) {
+        processPostureData(data, startDate);
+        // }
+      });
+
+      const processPostureData = (data,sdate) => {
+        let counts = {};
+  
+      let totalBadTime = 0;
+      let totalGoodTime = 0;
+      let totalPerfectTime = 0;
+      let angles = [];
+      let longestPerfect = 0;
+      let uprightStreak = 0 
+      let uprightTotal = 0
+      let longestStreak = 0;
+     
+  
+      // console.log(counts)
+    
+      let labels = [];
+        for (let i = 0; i < 24; i++) {
+          let hour = i.toString().padStart(2, '0') + ':00'; // Format: "HH:00"
+          counts[hour] = { bad: 0, good: 0, perfect: 0 };
+          
+          labels.push(hour);
+          // console.log(counts)
+      }
+  
+     
+      if (data != null) {
+      Object.entries(data).forEach(([timestamp, { PostureQuality, TrunkInclination }]) => {
+          const date = new Date(parseInt(timestamp));
+          const hourKey = date.getHours().toString().padStart(2, '0') + ':00';
+  
+  
+          if (counts[hourKey]) {
+              counts[hourKey][PostureQuality] += 1;
+              angles.push(TrunkInclination);
+          }
+          if (PostureQuality === "bad") {
+            totalBadTime += 1;
+            if (uprightStreak > longestStreak){
+              longestStreak = uprightStreak
+            }
+            uprightStreak = 0
+          } else if (PostureQuality === "good"){
+            totalGoodTime += 1;
+            uprightTotal += 1
+            uprightStreak += 1
+  
+          
+          } else {
+            totalPerfectTime += 1;
+            uprightTotal += 1
+            uprightStreak += 1
+            
+          }
+      });
+      
+    }
+    setUprightStreak(longestStreak);
+  setUprightTime(uprightTotal);
+  console.log(longestStreak, uprightStreak)
+  if (angles.length >0){
+  setAvgAngle((angles.reduce((accumulator, currentAngle) => accumulator + currentAngle, 0)/(angles.length+ 0.0001)).toFixed(1));
+  setPostureScore(calculateContinuousPostureScore(avgAngle).toFixed(0))
+
+ console.log(angles, avgAngle, postureScore)
+  }else{
+    setPostureScore(0)
+  }
+  } 
+
+  function calculateContinuousPostureScore(trunkInclination) {
+    const idealRangeStart = -5;
+    const idealRangeEnd = 20;
+  
+    // Calculate the distance from the ideal range
+    const distanceToIdeal = Math.min(
+      Math.abs(trunkInclination - idealRangeStart),
+      Math.abs(trunkInclination - idealRangeEnd)
+    );
+  
+    // Calculate a continuous score based on the distance to the ideal range
+    const maxScore = 100;
+    const minScore = 50;
+    const maxDistance = Math.max(idealRangeEnd - idealRangeStart, 0);
+  
+    const score = Math.max(
+      maxScore - (distanceToIdeal / maxDistance) * (maxScore - minScore),
+      minScore
+    );
+  
+    return score;
+  }
+
+  
 
   const CBRef = query(ref(database, user.slice(0,-2)+'/Params'));
   onValue(CBRef, (snapshot) => {
@@ -128,7 +234,7 @@ function Home() {
               <div className="group-6">
                 <div className="overlap-9">
                   <div className="group-7">
-                    <PostureGauge key={lastFetched} className="posture-gauge-instance" user={user}/>
+                    <PostureGauge key={lastFetched} className="posture-gauge-instance" user={user} postureScore={postureScore}/>
                   </div>
                 </div>
               </div>

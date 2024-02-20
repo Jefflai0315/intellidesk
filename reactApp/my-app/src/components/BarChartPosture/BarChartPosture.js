@@ -356,7 +356,7 @@ if (selectedTimeframeB !== '1d') {
       <CustomLegend chartData={chartData} />
     </div>
     <div className="day-breakdown">
-                <PostureAngle className="posture-angle-instance" angle={avgAngle} user={user}/>
+                <PostureAngle key={avgAngle} className="posture-angle-instance" angle={avgAngle} user={user}/>
               </div>
       <div className="desk-time-summary">
                 <div className="average-DT">
