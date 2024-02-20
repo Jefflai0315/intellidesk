@@ -31,11 +31,12 @@ export const BarChartSD_Home = ({user}) => {
 
     useEffect(() => {
       const now = new Date();
-      let startDate = new Date(now.setDate(now.getDate())) //today's data
+      let startDate = new Date(now.setDate(now.getDate()-1)) //today's data
       const ESRef = query(ref(database, user+'EyeScreenDistance'), orderByKey(), 
     startAt(startDate.getTime().toString())); // 7 days
     onValue(ESRef, (snapshot) => {
       const data = snapshot.val();
+
 
       // if (data) {
       processESData(data, startDate);
