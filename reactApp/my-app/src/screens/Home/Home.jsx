@@ -41,11 +41,14 @@ function Home() {
   //   setUprightStreak(UprightStreak);
   //   setUprightTime(UprightTime);
   // });
-  const startDate = new Date().getTime().toString()
-  const postureRef = query(ref(database, user+'Posture'), orderByKey(), 
-      startAt(startDate));
+  const now = new Date();
+  const startDate = new Date(now.setDate(now.getDate()-1))
+  
+  const postureRef = query(ref(database, user.slice(0,-2)+'/Posture'), orderByKey(), 
+      startAt(startDate.getTime().toString()));
       onValue(postureRef, (snapshot) => {
         const data = snapshot.val();
+        console.log(data);
   
         // if (data) {
         processPostureData(data, startDate);
@@ -115,7 +118,6 @@ function Home() {
   setAvgAngle((angles.reduce((accumulator, currentAngle) => accumulator + currentAngle, 0)/(angles.length+ 0.0001)).toFixed(1));
   setPostureScore(calculateContinuousPostureScore(avgAngle).toFixed(0))
 
- console.log(angles, avgAngle, postureScore)
   }else{
     setPostureScore(0)
   }
