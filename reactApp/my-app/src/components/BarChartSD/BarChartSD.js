@@ -168,10 +168,31 @@ export const BarChartSD = ({ user }) => {
     console.log(selectedDay + ' selected day')
     setLineChartData({
       labels: lineLabels,
+      // datasets: [
+      //   { ...lineChartData.datasets[0], data: LineCloseData },
+      //   { ...lineChartData.datasets[1], data: LinePerfectData },
+      //   { ...lineChartData.datasets[2], data: LineFarData },
+      // ],
+
       datasets: [
-        { ...lineChartData.datasets[0], data: LineCloseData },
-        { ...lineChartData.datasets[1], data: LinePerfectData },
-        { ...lineChartData.datasets[2], data: LineFarData },
+        {
+          ...lineChartData.datasets[0],
+          data: LineCloseData,
+          borderColor: '#EE5757', // Example color for the 'Too Close' dataset line
+          backgroundColor: '#EE5757', // Adjust the background color of the fill if needed
+        },
+        {
+          ...lineChartData.datasets[1],
+          data: LinePerfectData,
+          borderColor: '#78D06A', // Example color for the 'Perfect' dataset line
+          backgroundColor: '#78D06A', // Adjust the background color of the fill if needed
+        },
+        {
+          ...lineChartData.datasets[2],
+          data: LineFarData,
+          borderColor: '#F4B54C', // Example color for the 'Too Far' dataset line
+          backgroundColor: '#F4B54C', // Adjust the background color of the fill if needed
+        },
       ],
     });
   }
