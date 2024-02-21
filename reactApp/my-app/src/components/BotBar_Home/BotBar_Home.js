@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.css";
+import profileImage from '../../imgs/Asset 41@720x.png';
 
 export const BotBar_Home = ({ className }) => {
 
@@ -20,8 +21,8 @@ export const BotBar_Home = ({ className }) => {
                   </div>
                 </div>
               </div>
-              <div className="text-wrapper-42">My Timers</div>
-              <img className="asset" alt="Asset" src="https://c.animaapp.com/VczO8maf/img/asset-7-720x-1@2x.png" />
+              <div className="text-wrapper-42">My Profile</div>
+              <img className="asset" alt="Asset" src={profileImage} />
               <div className="group-19">
                 <div className="overlap-11">
                   <div className="text-wrapper-43">My Day</div>

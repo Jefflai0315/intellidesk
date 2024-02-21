@@ -1756,7 +1756,7 @@
   width: 22px;
 }
 
-.home .timer-icon-wrapper {
+.home .profile-icon-wrapper {
   height: auto;
   left: 270px;
   position: absolute;
@@ -1837,7 +1837,7 @@
   line-height: normal;
   position: absolute;
   text-align: center;
-  top: 36px;
+  top: 38px;
   width: 81px;
 }
 

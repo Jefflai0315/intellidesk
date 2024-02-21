@@ -160,7 +160,7 @@
   line-height: normal;
   position: absolute;
   text-align: center;
-  top: 36px;
+  top: 38px;
   width: 81px;
 }
 
@@ -1848,7 +1848,7 @@
   width: 200px;
 }
 
-.posture .timer-icon-wrapper {
+.posture .profile-icon-wrapper {
   height: auto;
   left: 270px;
   position: absolute;

@@ -160,7 +160,7 @@
     line-height: normal;
     position: absolute;
     text-align: center;
-    top: 36px;
+    top: 38px;
     width: 81px;
   }
   
@@ -1828,7 +1828,7 @@
     width: 200px;
   }
 
-  .desk-time .timer-icon-wrapper {
+  .desk-time .profile-icon-wrapper {
     height: auto;
     left: 270px;
     position: absolute;

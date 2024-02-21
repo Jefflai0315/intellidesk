@@ -5,9 +5,10 @@ import { PostureGauge } from "../../components/PostureGauge";
 import "./style.css";
 import { Link } from 'react-router-dom';
 import logoImage from '../../imgs/logo@720x.png';
+import profileIcon from '../../imgs/Asset 41@720x.png';
 import tableIcon from '../../imgs/Group 28table.png';
 import moreIcon from '../../imgs/Group 27more.png';
-import timerIcon from '../../imgs/Asset 2@720x.png';
+// import timerIcon from '../../imgs/Asset 2@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
 import { LineChart_DeskTime } from "../../components/LineChartDeskTime";
 import { BarChartSD_Home } from "../../components/BarChartSD_Home";
@@ -297,8 +298,8 @@ function Home() {
                 <div className="more-text-wrapper-2">More</div>
                 <img src={moreIcon} alt="More Icon" className="more-icon-wrapper" />
               </div>
-              <div className="timer-text-wrapper-3">My Timers</div>
-              <img src={timerIcon} alt="Timer Icon" className="timer-icon-wrapper" />
+              <div className="timer-text-wrapper-3">My Profile</div>
+              <img src={profileIcon} alt="Profile Icon" className="profile-icon-wrapper" />
               <div className="bot-bar-overlap-group-wrapper">
                 <div className="bot-bar-overlap-2">
                   <div className="day-text-wrapper-4">My Day</div>

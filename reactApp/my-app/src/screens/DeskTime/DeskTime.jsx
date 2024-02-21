@@ -4,6 +4,7 @@ import "./style.css";
 import { Link } from 'react-router-dom';
 import { BarChartDeskTime } from "../../components/BarChartDeskTime";
 import logoImage from '../../imgs/logo@720x.png';
+import profileIcon from '../../imgs/Asset 41@720x.png';
 import tableIcon from '../../imgs/Group 28table.png';
 import moreIcon from '../../imgs/Group 27more.png';
 import timerIcon from '../../imgs/Asset 2@720x.png';
@@ -40,8 +41,8 @@ function DeskTime() {
                 <div className="text-wrapper-2">More</div>
                 <img src={moreIcon} alt="More Icon" className="more-icon-wrapper" />
               </div>
-              <div className="text-wrapper-3">My Timers</div>
-              <img src={timerIcon} alt="Timer Icon" className="timer-icon-wrapper" />
+              <div className="text-wrapper-3">My Profile</div>
+              <img src={profileIcon} alt="Timer Icon" className="profile-icon-wrapper" />
               <div className="overlap-group-wrapper">
                 <div className="overlap-2">
                   <div className="text-wrapper-4">My Day</div>

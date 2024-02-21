@@ -160,7 +160,7 @@
     line-height: normal;
     position: absolute;
     text-align: center;
-    top: 36px;
+    top: 38px;
     width: 81px;
   }
   
@@ -1853,7 +1853,7 @@
     width: 200px;
   }
 
-  .screen-distance .timer-icon-wrapper {
+  .screen-distance .profile-icon-wrapper {
     height: auto;
     left: 270px;
     position: absolute;
