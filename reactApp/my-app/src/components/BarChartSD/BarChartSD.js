@@ -56,23 +56,23 @@ export const BarChartSD = ({ user }) => {
         label: 'Too Close',
         backgroundColor: '#EE5757',
         borderWidth: 1,
-        hoverBackgroundColor: '#3199FF',
+        hoverBackgroundColor: '#EE5757',
         cornerRadius: 8,
         data: [],
       },
       {
         label: 'Perfect',
-        backgroundColor: '#00FF00',
+        backgroundColor: '#78D06A',
         borderWidth: 1,
-        hoverBackgroundColor: '#FF7171',
+        hoverBackgroundColor: '#78D06A',
         cornerRadius: 8,
         data: [],
       },
       {
         label: 'Too Far',
-        backgroundColor: '#FFDB58',
+        backgroundColor: '#F4B54C',
         borderWidth: 1,
-        hoverBackgroundColor: '#FF7171',
+        hoverBackgroundColor: '#F4B54C',
         cornerRadius: 8,
         data: [],
       },
@@ -209,8 +209,6 @@ export const BarChartSD = ({ user }) => {
               counts[hourKey]['far'] += 1;
             }
           }
-
-
         });
       }
     } else {
@@ -305,7 +303,6 @@ export const BarChartSD = ({ user }) => {
     // let standCaloriesBurned = 88
     // setCaloriesBurned(((totalStandTime /60) * standCaloriesBurned + (totalSitTime/60)* sitCaloriesBurned).toFixed(0))
     // updateAvgCaloriesBurned(caloriesBurned); 
-
 
     setChartData({
       labels,
@@ -458,16 +455,18 @@ export const BarChartSD = ({ user }) => {
           </div>
         </div>
       </div>
-
-
       <div >
         <div className="screen-distance-lineChart">
           <div className="day-selection">
             {selectedTimeframeB !== "1d" &&
               labels.map((label, index) => (
                 availLabels.includes(index) && (
-                  <button key={index} onClick={() => setSelectedDay(label)}>
-                    {label}
+                  <button 
+                    key={index} 
+                    onClick={() => setSelectedDay(label)}
+                    className={selectedDay === label ? "active" : ""}
+                  >
+                    {label.slice(0, -3)}
                   </button>
                 )))}
           </div>
@@ -479,9 +478,7 @@ export const BarChartSD = ({ user }) => {
             />
           }
         </div>
-
       </div>
-
     </>
   )
 }

@@ -1521,7 +1521,7 @@
   }
   
   .screen-distance .screen-distance-summary {
-    height: 26px;
+    height: 40px;
     left: 0;
     position: relative;
     top: 130px;
@@ -1557,7 +1557,7 @@
     line-height: normal;
     position: absolute;
     top: 0;
-    width: 60%;
+    width: 65%;
     text-align: left;
   }
   

@@ -76,8 +76,7 @@ function ScreenDistance() {
               <Link to="/">
                 <img className="frame-2" alt="Frame" src="https://c.animaapp.com/QHWYwOlz/img/frame-3.svg" />
               </Link>
-              <BarChartSD key={lastFetched} className="bar-chart-screen-distance" user={user} />
-
+            <BarChartSD key={lastFetched} className="bar-chart-screen-distance" user={user} />
             </div>
           </div>
         </div>
