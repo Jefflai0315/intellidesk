@@ -478,19 +478,21 @@ export const BarChartSD = ({ user }) => {
       </div>
       <div >
         <div className="screen-distance-lineChart">
-          <div className="day-selection">
-            {selectedTimeframeB !== "1d" &&
-              labels.map((label, index) => (
-                availLabels.includes(index) && (
-                  <button 
-                    key={index} 
-                    onClick={() => setSelectedDay(label)}
-                    className={selectedDay === label ? "active" : ""}
-                  >
-                    {label.slice(0, -3)}
-                  </button>
-                )))}
-          </div>
+          {selectedTimeframeB !== "1d" &&
+            <div className="day-selection">
+              {selectedTimeframeB !== "1d" &&
+                labels.map((label, index) => (
+                  availLabels.includes(index) && (
+                    <button 
+                      key={index} 
+                      onClick={() => setSelectedDay(label)}
+                      className={selectedDay === label ? "active" : ""}
+                    >
+                      {label.slice(0, -3)}
+                    </button>
+                  )))}
+            </div>
+          }
           {selectedTimeframeB !== "1d" &&
             <Line
               data={lineChartData}

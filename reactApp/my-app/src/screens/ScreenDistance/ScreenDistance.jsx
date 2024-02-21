@@ -82,7 +82,6 @@ function ScreenDistance() {
           </div>
         </div>
       </div>
-      {/* <LineChart_SD className="line-chart-screen-distance" user={user} /> */}
     </div>
   );
 };
