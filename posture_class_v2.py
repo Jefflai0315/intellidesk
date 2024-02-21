@@ -172,7 +172,7 @@ class PostureAnalyzer:
         'TrunkInclination' : mean(data_points['TrunkInclination']) if data_points['TrunkInclination'] else None,
         'HipAngle' : mean(data_points['HipAngle']) if data_points['HipAngle'] else None,
         'UpperArmInclination' : mean(data_points['UpperArmInclination']) if data_points['UpperArmInclination'] else None,
-        'ElbowAngle': mean(data_points['ElbowAngle'] if data_points['ElbowAngle'] else None),
+        'ElbowAngle': mean(data_points['ElbowAngle']) if data_points['ElbowAngle'] else None,
         'EarShoulderDistance': mean(data_points['EarShoulderDistance']) if data_points['EarShoulderDistance'] else None,
         'KneeAngle': mean(data_points['KneeAngle']) if data_points['KneeAngle'] else None,
         'TrunkAngle': mean(data_points['TrunkAngle']) if data_points['TrunkAngle'] else None,
