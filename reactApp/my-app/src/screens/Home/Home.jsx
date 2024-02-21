@@ -8,7 +8,7 @@ import logoImage from '../../imgs/logo@720x.png';
 import profileIcon from '../../imgs/Asset 41@720x.png';
 import tableIcon from '../../imgs/Group 28table.png';
 import moreIcon from '../../imgs/Group 27more.png';
-// import timerIcon from '../../imgs/Asset 2@720x.png';
+import tickIcon from '../../imgs/Asset 51@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
 import { LineChart_DeskTime } from "../../components/LineChartDeskTime";
 import { BarChartSD_Home } from "../../components/BarChartSD_Home";
@@ -215,7 +215,6 @@ function Home() {
               </div>
               </Link>
               <div className="desk-time-summary">
-                
                 <LineChart_DeskTime key={lastFetched} redraw={true} className="line-chart-desk-time-instance-node" user = {user}/>
               </div>
               <div className="group-4">
@@ -304,10 +303,7 @@ function Home() {
                 <div className="bot-bar-overlap-2">
                   <div className="day-text-wrapper-4">My Day</div>
                   <div className="day-group-4">
-                    <div className="tick-overlap-group-2">
-                      <div className="tick-rectangle" />
-                      <div className="tick-rectangle-2" />
-                    </div>
+                    <img src={tickIcon} alt="Tick Icon" className="tick-icon-wrapper" />
                   </div>
                 </div>
               </div>

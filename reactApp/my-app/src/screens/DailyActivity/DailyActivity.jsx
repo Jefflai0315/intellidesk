@@ -8,7 +8,7 @@ import logoImage from '../../imgs/logo@720x.png';
 import tableIcon from '../../imgs/Group 28table.png';
 import moreIcon from '../../imgs/Group 27more.png';
 import profileIcon from '../../imgs/Asset 41@720x.png';
-import timerIcon from '../../imgs/Asset 2@720x.png';
+import tickIcon from '../../imgs/Asset 51@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
 import database from '../../firebase'; // Adjust the path as needed
 import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
@@ -45,15 +45,14 @@ function DailyActivity() {
               <div className="text-wrapper-3">My Profile</div>
               <img src={profileIcon} alt="Profile Icon" className="profile-icon-wrapper" />
               <div className="overlap-group-wrapper">
-                <div className="overlap-2">
-                  <div className="text-wrapper-4">My Day</div>
-                  <div className="group-4">
-                    <div className="overlap-group-2">
-                      <div className="rectangle" />
-                      <div className="rectangle-2" />
+                <Link to="/">
+                  <div className="overlap-2">
+                    <div className="text-wrapper-4">My Day</div>
+                    <div className="group-4">
+                      <img src={tickIcon} alt="Tick Icon" className="tick-icon-wrapper" />
                     </div>
                   </div>
-                </div>
+                </Link>
               </div>
               <div className="group-5">
                 <div className="text-wrapper-5">My Table</div>

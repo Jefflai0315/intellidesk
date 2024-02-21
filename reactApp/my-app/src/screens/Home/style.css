@@ -464,6 +464,16 @@
   top: 83px !important;
 }
 
+.home .tick-icon-wrapper {
+  height: auto;
+  left: 0;
+  position: absolute;
+  object-fit: cover;
+  top: 3px;
+  bottom: 0;
+  width: 24px;
+}
+
 .home .bar-icon-2 {
   height: 16px;
   left: 306px;

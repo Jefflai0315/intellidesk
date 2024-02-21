@@ -1838,6 +1838,16 @@
     width: 22px;
   }
 
+  .desk-time .tick-icon-wrapper {
+    height: auto;
+    left: 0;
+    position: absolute;
+    object-fit: cover;
+    top: 3px;
+    bottom: 0;
+    width: 24px;
+  }
+
   .desk-time .goals-icon-wrapper {
     height: auto;
     left: 117px;
