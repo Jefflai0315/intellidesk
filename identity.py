@@ -120,6 +120,7 @@ if __name__ == "__main__":
                 result_img, identity = face_recognition.identify_persons(img_path)
                 #update identity
                 if identity == "Unknown":
+                    firebase_refs.child(f'Controls/').update({'PostureNudge': 4})
                     identity = ''
                 firebase_refs.child(f'Controls/').update({'User': identity})
 
