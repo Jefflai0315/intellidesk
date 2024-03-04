@@ -1,0 +1,2046 @@
+.my-profile {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .my-profile .overlap-wrapper {
+    background-color: #ffffff;
+    height: 844px;
+    overflow: hidden;
+    width: 390px;
+  }
+  
+  .my-profile .overlap {
+    height: 100%;
+    position: relative;
+    width: 100%;
+  }
+  
+  .my-profile .background {
+    background-color: #101010;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+  
+  .my-profile .title {
+    height: 56px;
+    left: 0;
+    position: absolute;
+    top: 20px;
+    width: 100%;
+  }
+  
+  .my-profile .overlap-group {
+    height: 56px;
+    position: relative;
+    width: 390px;
+  }
+  
+  .my-profile .text-wrapper {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 40px;
+    font-weight: 700;
+    left: 36px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 0;
+    width: 262px;
+  }
+  
+  .my-profile .line {
+    height: 2px;
+    left: 0;
+    position: absolute;
+    top: 54px;
+    width: 390px;
+  }
+  
+  .my-profile .bot-bar-home {
+    height: 71px;
+    left: 0;
+    position: absolute;
+    top: 773px;
+    width: 100%;
+  }
+  
+  .my-profile .div {
+    background-image: url(https://c.animaapp.com/VczO8maf/img/rectangle-16-1.svg);
+    background-size: 100% 100%;
+    height: 71px;
+    left: 1px;
+    position: relative;
+    width: 389px;
+  }
+  
+  .my-profile .group {
+    height: 36px;
+    left: 329px;
+    position: absolute;
+    top: 22px;
+    width: 47px;
+  }
+  
+  .my-profile .text-wrapper-2 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 16px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 15px;
+    width: 45px;
+  }
+  
+  .my-profile .group-2 {
+    height: 8px;
+    left: 7px;
+    position: absolute;
+    top: 0;
+    width: 32px;
+  }
+  
+  .my-profile .ellipse-wrapper {
+    background-color: #9c9c9c;
+    border-radius: 4px;
+    height: 8px;
+    left: 24px;
+    position: absolute;
+    top: 0;
+    width: 8px;
+  }
+  
+  .my-profile .ellipse {
+    background-color: #000000;
+    border-radius: 3.11px;
+    height: 6px;
+    left: 1px;
+    position: relative;
+    top: 1px;
+    width: 6px;
+  }
+  
+  .my-profile .div-wrapper {
+    background-color: #9c9c9c;
+    border-radius: 4px;
+    height: 8px;
+    left: 12px;
+    position: absolute;
+    top: 0;
+    width: 8px;
+  }
+  
+  .my-profile .group-3 {
+    background-color: #9c9c9c;
+    border-radius: 4px;
+    height: 8px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 8px;
+  }
+  
+  .my-profile .text-wrapper-3 {
+    color: #A9FF9B;
+    font-family: "Open Sans", Helvetica;
+    font-size: 16px;
+    font-weight: 600;
+    left: 240px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 38px;
+    width: 81px;
+  }
+  
+  .my-profile .asset {
+    height: 22px;
+    left: 268px;
+    object-fit: cover;
+    position: absolute;
+    top: 14px;
+    width: 22px;
+  }
+  
+  .my-profile .overlap-group-wrapper {
+    height: 45px;
+    left: 172px;
+    position: absolute;
+    top: 13px;
+    width: 62px;
+  }
+  
+  .my-profile .overlap-2 {
+    height: 45px;
+    position: relative;
+    width: 60px;
+  }
+  
+  .my-profile .text-wrapper-4 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 16px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 24px;
+    width: 60px;
+  }
+  
+  .my-profile .group-4 {
+    height: 24px;
+    left: 14px;
+    position: absolute;
+    top: 0;
+    width: 31px;
+  }
+  
+  .my-profile .overlap-group-2 {
+    height: 24px;
+    position: relative;
+  }
+  
+  .my-profile .rectangle {
+    background-color: #A9FF9B;
+    height: 9px;
+    left: 6px;
+    position: absolute;
+    top: 8px;
+    transform: rotate(-41.74deg);
+    width: 26px;
+  }
+  
+  .my-profile .rectangle-2 {
+    background-color: #A9FF9B;
+    border-radius: 1px 0px 1px 1px;
+    height: 8px;
+    left: 1px;
+    position: absolute;
+    top: 11px;
+    transform: rotate(45.21deg);
+    width: 16px;
+  }
+  
+  .my-profile .group-5 {
+    height: 44px;
+    left: 13px;
+    position: absolute;
+    top: 14px;
+    width: 72px;
+  }
+  
+  .my-profile .text-wrapper-5 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 16px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 23px;
+    width: 70px;
+  }
+  
+  .my-profile .group-6 {
+    height: 20px;
+    left: 21px;
+    position: absolute;
+    top: 0;
+    width: 27px;
+  }
+  
+  .my-profile .rectangle-3 {
+    border: 0.5px solid;
+    border-color: #898989;
+    border-radius: 1px;
+    height: 4px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 27px;
+  }
+  
+  .my-profile .img {
+    height: 14px;
+    left: 5px;
+    position: absolute;
+    top: 6px;
+    width: 18px;
+  }
+  
+  .my-profile .group-7 {
+    height: 21px;
+    left: 91px;
+    position: absolute;
+    top: 37px;
+    width: 75px;
+  }
+  
+  .my-profile .text-wrapper-6 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 16px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 73px;
+  }
+  
+  .my-profile .asset-x {
+    height: 21px;
+    left: 117px;
+    position: absolute;
+    top: 14px;
+    width: 22px;
+  }
+  
+  .my-profile .frame {
+    height: 660px;
+    left: 0;
+    overflow: hidden;
+    overflow-y: scroll;
+    position: absolute;
+    top: 92px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .my-profile .overlap-3 {
+    height: 100%;
+    position: relative;
+    width: 90%;
+    left: 0;
+    margin: 0 auto;
+  }
+  
+  .my-profile .group-8 {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .my-profile .overlap-group-3 {
+    height: 97%;
+    position: relative;
+  }
+  
+  .my-profile .rectangle-4 {
+    background-color: #101010;
+    height: 70px;
+    left: 0;
+    position: absolute;
+    top: 810px;
+    width: 350px;
+  }
+  
+  .my-profile .group-9 {
+    background-color: #252525;
+    border-radius: 25px;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .my-profile .navbar {
+    height: 9px;
+    left: 48px;
+    position: absolute;
+    top: 294px;
+    width: 291px;
+  }
+  
+  .my-profile .text-wrapper-7 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    white-space: nowrap;
+    width: 19px;
+  }
+  
+  .my-profile .text-wrapper-8 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 44px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    white-space: nowrap;
+    width: 19px;
+  }
+  
+  .my-profile .text-wrapper-9 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 86px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    white-space: nowrap;
+    width: 19px;
+  }
+  
+  .my-profile .text-wrapper-10 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 129px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    white-space: nowrap;
+    width: 19px;
+  }
+  
+  .my-profile .text-wrapper-11 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 173px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    white-space: nowrap;
+    width: 19px;
+  }
+  
+  .my-profile .text-wrapper-12 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 215px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    white-space: nowrap;
+    width: 19px;
+  }
+  
+  .my-profile .text-wrapper-13 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 257px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    white-space: nowrap;
+    width: 19px;
+  }
+  
+  .my-profile .grid-lines {
+    height: 123px;
+    left: 51px;
+    position: absolute;
+    top: 144px;
+    width: 270px;
+  }
+  
+  .my-profile .line-2 {
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 81px;
+    width: 270px;
+  }
+  
+  .my-profile .line-3 {
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 61px;
+    width: 270px;
+  }
+  
+  .my-profile .line-4 {
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 123px;
+    width: 270px;
+  }
+  
+  .my-profile .line-5 {
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 103px;
+    width: 270px;
+  }
+  
+  .my-profile .line-6 {
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 41px;
+    width: 270px;
+  }
+  
+  .my-profile .line-7 {
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 20px;
+    width: 270px;
+  }
+  
+  .my-profile .line-8 {
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 270px;
+  }
+  
+  .my-profile .rectangle-wrapper {
+    height: 75px;
+    left: 136px;
+    position: absolute;
+    top: 192px;
+    width: 6px;
+  }
+  
+  .my-profile .rectangle-5 {
+    background-color: #78d069;
+    border-radius: 5px;
+    height: 6px;
+    left: -35px;
+    position: relative;
+    top: 35px;
+    transform: rotate(-90deg);
+    width: 75px;
+  }
+  
+  .my-profile .group-10 {
+    height: 107px;
+    left: 141px;
+    position: absolute;
+    top: 160px;
+    width: 6px;
+  }
+  
+  .my-profile .rectangle-6 {
+    background-color: #f4b54c;
+    border-radius: 5px;
+    height: 6px;
+    left: -51px;
+    position: relative;
+    top: 51px;
+    transform: rotate(-90deg);
+    width: 107px;
+  }
+  
+  .my-profile .group-11 {
+    height: 31px;
+    left: 147px;
+    position: absolute;
+    top: 236px;
+    width: 6px;
+  }
+  
+  .my-profile .rectangle-7 {
+    background-color: #ee5757;
+    border-radius: 5px;
+    height: 6px;
+    left: -13px;
+    position: relative;
+    top: 13px;
+    transform: rotate(-90deg);
+    width: 31px;
+  }
+  
+  .my-profile .group-12 {
+    height: 68px;
+    left: 264px;
+    position: absolute;
+    top: 199px;
+    width: 6px;
+  }
+  
+  .my-profile .rectangle-8 {
+    background-color: #78d069;
+    border-radius: 5px;
+    height: 6px;
+    left: -31px;
+    position: relative;
+    top: 31px;
+    transform: rotate(-90deg);
+    width: 68px;
+  }
+  
+  .my-profile .group-13 {
+    height: 90px;
+    left: 270px;
+    position: absolute;
+    top: 177px;
+    width: 6px;
+  }
+  
+  .my-profile .rectangle-9 {
+    background-color: #f4b54c;
+    border-radius: 5px;
+    height: 6px;
+    left: -42px;
+    position: relative;
+    top: 42px;
+    transform: rotate(-90deg);
+    width: 90px;
+  }
+  
+  .my-profile .group-14 {
+    height: 28px;
+    left: 275px;
+    position: absolute;
+    top: 239px;
+    width: 6px;
+  }
+  
+  .my-profile .rectangle-10 {
+    background-color: #ee5757;
+    border-radius: 5px;
+    height: 6px;
+    left: -11px;
+    position: relative;
+    top: 11px;
+    transform: rotate(-90deg);
+    width: 28px;
+  }
+  
+  .my-profile .group-15 {
+    height: 46px;
+    left: 307px;
+    position: absolute;
+    top: 221px;
+    width: 6px;
+  }
+  
+  .my-profile .rectangle-11 {
+    background-color: #78d069;
+    border-radius: 5px;
+    height: 6px;
+    left: -20px;
+    position: relative;
+    top: 20px;
+    transform: rotate(-90deg);
+    width: 46px;
+  }
+  
+  .my-profile .group-16 {
+    height: 76px;
+    left: 312px;
+    position: absolute;
+    top: 192px;
+    width: 6px;
+  }
+  
+  .my-profile .rectangle-12 {
+    background-color: #f4b54c;
+    border-radius: 5px;
+    height: 6px;
+    left: -35px;
+    position: relative;
+    top: 35px;
+    transform: rotate(-90deg);
+    width: 76px;
+  }
+  
+  .my-profile .group-17 {
+    height: 24px;
+    left: 318px;
+    position: absolute;
+    top: 243px;
+    width: 6px;
+  }
+  
+  .my-profile .rectangle-13 {
+    background-color: #ee5757;
+    border-radius: 5px;
+    height: 6px;
+    left: -9px;
+    position: relative;
+    top: 9px;
+    transform: rotate(-90deg);
+    width: 24px;
+  }
+  
+  .my-profile .group-18 {
+    height: 68px;
+    left: 93px;
+    position: absolute;
+    top: 199px;
+    width: 6px;
+  }
+  
+  .my-profile .group-19 {
+    height: 99px;
+    left: 99px;
+    position: absolute;
+    top: 168px;
+    width: 6px;
+  }
+  
+  .my-profile .rectangle-14 {
+    background-color: #f4b54c;
+    border-radius: 5px;
+    height: 6px;
+    left: -47px;
+    position: relative;
+    top: 47px;
+    transform: rotate(-90deg);
+    width: 99px;
+  }
+  
+  .my-profile .group-20 {
+    height: 31px;
+    left: 104px;
+    position: absolute;
+    top: 236px;
+    width: 6px;
+  }
+  
+  .my-profile .group-21 {
+    height: 45px;
+    left: 222px;
+    position: absolute;
+    top: 222px;
+    width: 6px;
+  }
+  
+  .my-profile .rectangle-15 {
+    background-color: #78d069;
+    border-radius: 5px;
+    height: 6px;
+    left: -20px;
+    position: relative;
+    top: 20px;
+    transform: rotate(-90deg);
+    width: 45px;
+  }
+  
+  .my-profile .group-22 {
+    height: 74px;
+    left: 227px;
+    position: absolute;
+    top: 193px;
+    width: 6px;
+  }
+  
+  .my-profile .rectangle-16 {
+    background-color: #f4b54c;
+    border-radius: 5px;
+    height: 6px;
+    left: -34px;
+    position: relative;
+    top: 34px;
+    transform: rotate(-90deg);
+    width: 74px;
+  }
+  
+  .my-profile .group-23 {
+    height: 23px;
+    left: 233px;
+    position: absolute;
+    top: 244px;
+    width: 6px;
+  }
+  
+  .my-profile .rectangle-17 {
+    background-color: #ee5757;
+    border-radius: 5px;
+    height: 6px;
+    left: -9px;
+    position: relative;
+    top: 9px;
+    transform: rotate(-90deg);
+    width: 23px;
+  }
+  
+  .my-profile .group-24 {
+    height: 56px;
+    left: 51px;
+    position: absolute;
+    top: 211px;
+    width: 6px;
+  }
+  
+  .my-profile .rectangle-18 {
+    background-color: #78d069;
+    border-radius: 5px;
+    height: 6px;
+    left: -25px;
+    position: relative;
+    top: 25px;
+    transform: rotate(-90deg);
+    width: 56px;
+  }
+  
+  .my-profile .group-25 {
+    height: 74px;
+    left: 56px;
+    position: absolute;
+    top: 193px;
+    width: 6px;
+  }
+  
+  .my-profile .group-26 {
+    height: 23px;
+    left: 62px;
+    position: absolute;
+    top: 244px;
+    width: 6px;
+  }
+  
+  .my-profile .group-27 {
+    height: 68px;
+    left: 179px;
+    position: absolute;
+    top: 199px;
+    width: 6px;
+  }
+  
+  .my-profile .group-28 {
+    height: 99px;
+    left: 185px;
+    position: absolute;
+    top: 168px;
+    width: 6px;
+  }
+  
+  .my-profile .group-29 {
+    height: 31px;
+    left: 190px;
+    position: absolute;
+    top: 236px;
+    width: 6px;
+  }
+  
+  .my-profile .text-wrapper-14 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 24px;
+    font-weight: 700;
+    left: 59px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 29px;
+    width: 235px;
+  }
+  
+  .my-profile .text-wrapper-15 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 21px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 560px;
+    width: 235px;
+  }
+  
+  .my-profile .date-line {
+    height: 155px;
+    left: 25px;
+    position: absolute;
+    top: 138px;
+    width: 292px;
+  }
+  
+  .my-profile .group-30 {
+    height: 131px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 33px;
+  }
+  
+  .my-profile .text-wrapper-16 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 121px;
+    width: 25px;
+  }
+  
+  .my-profile .text-wrapper-17 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 81px;
+    width: 25px;
+  }
+  
+  .my-profile .text-wrapper-18 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 40px;
+    width: 25px;
+  }
+  
+  .my-profile .text-wrapper-19 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 2px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 20px;
+  }
+  
+  .my-profile .group-31 {
+    height: 3px;
+    left: 32px;
+    position: absolute;
+    top: 152px;
+    width: 260px;
+  }
+  
+  .my-profile .ellipse-2 {
+    background-color: #d9d9d9;
+    border-radius: 1.9px/1.7px;
+    height: 3px;
+    left: 256px;
+    position: absolute;
+    top: 0;
+    width: 4px;
+  }
+  
+  .my-profile .ellipse-3 {
+    background-color: #d9d9d9;
+    border-radius: 1.27px/1.13px;
+    height: 2px;
+    left: 214px;
+    position: absolute;
+    top: 1px;
+    width: 3px;
+  }
+  
+  .my-profile .ellipse-4 {
+    background-color: #d9d9d9;
+    border-radius: 1.27px/1.13px;
+    height: 2px;
+    left: 128px;
+    position: absolute;
+    top: 1px;
+    width: 3px;
+  }
+  
+  .my-profile .ellipse-5 {
+    background-color: #d9d9d9;
+    border-radius: 1.27px/1.13px;
+    height: 2px;
+    left: 43px;
+    position: absolute;
+    top: 1px;
+    width: 3px;
+  }
+  
+  .my-profile .ellipse-6 {
+    background-color: #d9d9d9;
+    border-radius: 1.27px/1.13px;
+    height: 2px;
+    left: 172px;
+    position: absolute;
+    top: 1px;
+    width: 3px;
+  }
+  
+  .my-profile .ellipse-7 {
+    background-color: #d9d9d9;
+    border-radius: 1.27px/1.13px;
+    height: 2px;
+    left: 86px;
+    position: absolute;
+    top: 1px;
+    width: 3px;
+  }
+  
+  .my-profile .ellipse-8 {
+    background-color: #d9d9d9;
+    border-radius: 1.9px/1.7px;
+    height: 3px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 4px;
+  }
+  
+  .my-profile .group-32 {
+    height: 31px;
+    left: 29px;
+    position: absolute;
+    top: 603px;
+    width: 310px;
+  }
+  
+  .my-profile .overlap-group-4 {
+    background-color: #3b3b3b;
+    border-radius: 6px;
+    height: 31px;
+    position: relative;
+    width: 100%;
+    left: 0;
+  }
+  
+  .my-profile .text-wrapper-20 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 700;
+    left: 23px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 8px;
+    width: 16px;
+  }
+  
+  .my-profile .text-wrapper-21 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 700;
+    left: 180px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 8px;
+    width: 16px;
+  }
+  
+  .my-profile .overlap-group-5 {
+    background-color: #7b7b7b;
+    border-radius: 11.17px/10px;
+    height: 20px;
+    left: 59px;
+    position: absolute;
+    top: 6px;
+    width: 22px;
+  }
+  
+  .my-profile .text-wrapper-22 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 700;
+    left: 3px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 1px;
+    width: 16px;
+  }
+  
+  .my-profile .text-wrapper-23 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 82.5%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }
+  
+  .my-profile .text-wrapper-24 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 700;
+    left: 102px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 8px;
+    width: 16px;
+  }
+  
+  .my-profile .text-wrapper-25 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 700;
+    left: 140px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 8px;
+    width: 16px;
+  }
+  
+  .my-profile .text-wrapper-26 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 700;
+    left: 221px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 8px;
+    width: 16px;
+  }
+  
+  .my-profile .frame-2 {
+    height: 30px;
+    left: 23px;
+    position: absolute;
+    top: 28px;
+    width: 31px;
+  }
+  
+  .my-profile .time-interval-bar {
+    height: 50px;
+    left: 0;
+    position: relative;
+    top: 72px;
+    width: 85%;
+    margin: 0 auto;
+  }
+  
+  .my-profile .group-33 {
+    height: 31px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+  
+  .my-profile .text-wrapper-27 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 12.5%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }
+  
+  .my-profile .text-wrapper-28 {
+    color: #898989;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 60.5%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }
+  
+  .my-profile .text-wrapper-29 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 700;
+    left: 35.5%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 25%;
+    width: 16px;
+  }
+  
+  .my-profile .text-wrapper-30 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 700;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 34px;
+    width: 100%;
+    text-align: right;
+  }
+  
+  .my-profile .day-breakdown {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 662px;
+    width: 100%;
+  }
+  
+  .my-profile .overlap-4 {
+    height: 148px;
+    position: relative;
+  }
+  
+  .my-profile .calories-ring {
+    background-image: url(https://c.animaapp.com/QHWYwOlz/img/ellipse-13.svg);
+    background-size: 100% 100%;
+    height: 148px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 148px;
+  }
+  
+  .my-profile .overlap-5 {
+    background-image: url(https://c.animaapp.com/QHWYwOlz/img/ellipse-14.svg);
+    background-size: 100% 100%;
+    height: 148px;
+    position: relative;
+  }
+  
+  .my-profile .ellipse-9 {
+    height: 148px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 148px;
+  }
+  
+  .my-profile .ellipse-10 {
+    background-color: #252525;
+    border-radius: 61px;
+    height: 122px;
+    left: 14px;
+    position: absolute;
+    top: 13px;
+    width: 122px;
+  }
+  
+  .my-profile .group-34 {
+    height: 44px;
+    left: 49px;
+    position: absolute;
+    top: 53px;
+    width: 55px;
+  }
+  
+  .my-profile .overlap-group-6 {
+    height: 44px;
+    position: relative;
+    width: 51px;
+  }
+  
+  .my-profile .text-wrapper-31 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 24px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 51px;
+  }
+  
+  .my-profile .text-wrapper-32 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 27px;
+    width: 51px;
+  }
+  
+  .my-profile .average-SD {
+    height: 27px;
+    left: 33px;
+    position: absolute;
+    top: 121px;
+    width: 83px;
+  }
+  
+  .my-profile .overlap-6 {
+    background-color: #ffffff;
+    border-radius: 8px;
+    height: 27px;
+    position: relative;
+    width: 81px;
+  }
+  
+  .my-profile .text-wrapper-33 {
+    color: #000000;
+    font-family: "Open Sans", Helvetica;
+    font-size: 14px;
+    font-weight: 600;
+    left: 9px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 4px;
+    width: 64px;
+  }
+  
+  .my-profile .edit {
+    height: 20px;
+    left: 271px;
+    position: absolute;
+    top: 644px;
+    width: 37px;
+  }
+  
+  .my-profile .overlap-7 {
+    background-color: #3b3b3b;
+    border-radius: 5px;
+    height: 20px;
+    position: relative;
+    width: 35px;
+  }
+  
+  .my-profile .text-wrapper-34 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 11px;
+    font-weight: 600;
+    left: 6px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 2px;
+    width: 23px;
+  }
+  
+  .my-profile .group-35 {
+    height: 34px;
+    left: 187px;
+    position: absolute;
+    top: 646px;
+    width: 11px;
+  }
+  
+  .my-profile .rectangle-19 {
+    background-color: #69cbd9;
+    border-radius: 2px;
+    height: 22px;
+    left: 2px;
+    position: absolute;
+    top: 12px;
+    transform: rotate(8.1deg);
+    width: 4px;
+  }
+  
+  .my-profile .polygon {
+    height: 9px;
+    left: 2px;
+    position: absolute;
+    top: 0;
+    width: 9px;
+  }
+  
+  .my-profile .group-36 {
+    height: 13px;
+    left: 0;
+    position: absolute;
+    top: 321px;
+    width: 100%;
+  }
+
+  .my-profile .standing-legend {
+    height: 13px;
+    left: 30%;
+    position: absolute;
+    width: 10%;
+  }
+  
+  .my-profile .ellipse-11 {
+    background-color: #1679DB;
+    border-radius: 5.23px;
+    height: 10px;
+    left: 0;
+    position: absolute;
+    top: 1px;
+    width: 10px;
+  }
+
+  .my-profile .text-wrapper-36 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 13px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 35px;
+  }
+
+  .my-profile .sitting-legend {
+    height: 13px;
+    left: 60%;
+    position: absolute;
+    width: 10%;
+  }
+  
+  .my-profile .ellipse-12 {
+    background-color: #E72830;
+    border-radius: 5.23px;
+    height: 10px;
+    left: 0;
+    position: absolute;
+    top: 1px;
+    width: 10px;
+  }
+  
+  .my-profile .ellipse-13 {
+    background-color: #78d069;
+    border-radius: 5.23px;
+    height: 10px;
+    left: 0;
+    position: absolute;
+    top: 1px;
+    width: 10px;
+  }
+  
+  .my-profile .text-wrapper-35 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 13px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 45px;
+  }
+  
+  .my-profile .text-wrapper-37 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 8px;
+    font-weight: 400;
+    left: 13px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 35px;
+  }
+  
+  .my-profile .my-profile-summary {
+    height: 26px;
+    left: 0;
+    position: relative;
+    top: 130px;
+    width: 60%;
+    margin: 0 auto;
+  }
+  
+  .my-profile .average-DT {
+    height: 26px;
+    position: relative;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+  
+  .my-profile .text-wrapper-38 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 16px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 0;
+    width: 50%;
+    text-align: center;
+  }
+  
+  .my-profile .overlap-group-7 {
+    height: 26px;
+    left: 124px;
+    position: absolute;
+    top: 0;
+    width: 54px;
+  }
+  
+  .my-profile .text-wrapper-39 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 0;
+    width: 26px;
+    text-align: center;
+  }
+  
+  .my-profile .text-wrapper-40 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    font-weight: 400;
+    left: 35px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 7px;
+    width: 30px;
+    text-align: center;
+  }
+  
+  .my-profile .group-wrapper {
+    background-color: #3b3b3b;
+    border-radius: 7px;
+    height: 161px;
+    left: 0;
+    position: relative;
+    top: 140px;
+    width: 90%;
+    margin: 0 auto;
+  }
+  
+  .my-profile .group-37 {
+    height: 146px;
+    left: 0;
+    position: relative;
+    top: 10px;
+    width: 90%;
+    margin: 0 auto;
+  }
+  
+  .my-profile .average-SD-2 {
+    height: 40px;
+    left: 50%;
+    position: absolute;
+    top: 0;
+    width: 50%;
+  }
+  
+  .my-profile .overlap-group-8 {
+    height: 40px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .my-profile .text-wrapper-41 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 0;
+    width: 100%;
+  }
+  
+  .my-profile .text-wrapper-42 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 18px;
+    width: 100%;
+  }
+  
+  .my-profile .closest {
+    height: 40px;
+    left: 50%;
+    position: absolute;
+    top: 53px;
+    width: 50%;
+  }
+  
+  .my-profile .text-wrapper-43 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 18px;
+    width: 100%;
+  }
+  
+  .my-profile .closest-2 {
+    height: 40px;
+    left: 50%;
+    position: absolute;
+    top: 106px;
+    width: 50%;
+  }
+  
+  .my-profile .overlap-8 {
+    height: 40px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .my-profile .text-wrapper-44 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 18px;
+    width: 100%;
+  }
+  
+  .my-profile .text-wrapper-45 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 0;
+    width: 100%;
+  }
+  
+  .my-profile .closest-3 {
+    height: 40px;
+    left: 0;
+    position: absolute;
+    top: 53px;
+    width: 50%;
+  }
+  
+  .my-profile .overlap-9 {
+    height: 40px;
+    position: relative;
+    width: 100%;
+    left: 0;
+  }
+  
+  .my-profile .text-wrapper-46 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 18px;
+    width: 100%;
+  }
+  
+  .my-profile .text-wrapper-47 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 0;
+    width: 100%;
+  }
+  
+  .my-profile .closest-4 {
+    height: 40px;
+    left: 0;
+    position: absolute;
+    top: 106px;
+    width: 50%;
+  }
+  
+  .my-profile .overlap-10 {
+    height: 40px;
+    position: relative;
+    width: 100%;
+    left: 0;
+  }
+  
+  .my-profile .text-wrapper-48 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 18px;
+    width: 100%;
+  }
+  
+  .my-profile .text-wrapper-49 {
+    color: #ffffff;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 600;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 0;
+    width: 100%;
+  }
+  
+  .my-profile .closest-5 {
+    height: 40px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 50%;
+  }
+  
+  .my-profile .text-wrapper-50 {
+    color: #d3d3d3;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: right;
+    top: 18px;
+    width: 100%;
+  }
+  
+  .my-profile .bar-chart-container {
+    height: 25%;
+    left: 0;
+    position: relative;
+    top: 70px;
+    width: 90%;
+    margin: 0 auto
+  }
+
+  .my-profile .logo-wrapper {
+    height: auto;
+    left: 20px;
+    position: absolute;
+    top: 5px;
+    bottom: 0;
+    width: 200px;
+  }
+
+  .my-profile .profile-icon-wrapper {
+    height: auto;
+    left: 270px;
+    position: absolute;
+    object-fit: cover;
+    top: 13px;
+    bottom: 0;
+    width: 22px;
+  }
+
+  .my-profile .tick-icon-wrapper {
+    height: auto;
+    left: 0;
+    position: absolute;
+    object-fit: cover;
+    top: 3px;
+    bottom: 0;
+    width: 24px;
+  }
+
+  .my-profile .goals-icon-wrapper {
+    height: auto;
+    left: 117px;
+    position: absolute;
+    object-fit: cover;
+    top: 13px;
+    bottom: 0;
+    width: 22px;
+  }
+
+  .my-profile .table-icon-wrapper {
+    height: auto;
+    left: 21px;
+    position: absolute;
+    object-fit: cover;
+    top: 0;
+    bottom: 0;
+    width: 27px;
+  }
+
+  .my-profile .more-icon-wrapper {
+    height: auto;
+    left: 7px;
+    position: absolute;
+    object-fit: cover;
+    top: 0;
+    bottom: 0;
+    width: 32px;
+  }
+
+  .my-profile .profile-card {
+    padding: 20px; /* Padding around the card */
+    background-color: #252525;
+    border-radius: 25px;
+    height: 95%;
+    position: absolute;
+    top: 0;
+    width: 88%;
+    margin: 0 auto;
+  }
+  
+  .my-profile .profile-header {
+    font-family: "Open Sans", Helvetica;
+    font-size: 13px;
+    color: #A9FF9B; /* Light green text color as seen in the image */
+    background-color: #444444;
+    margin-top: 50px; /* Spacing under the header */
+    text-align: left;
+    border-radius: 15px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 15px; 
+  }
+  
+  .my-profile .header-border {
+    height: 2px;
+    background-color: #A9FF9B; /* Light green line */
+    width: 100%; /* Full width */
+    margin: 10px 0; /* Spacing around the line */
+  }
+  
+  .my-profile .profile-picture {
+    background-color: #757575; /* Gray background for the picture */
+    border-radius: 50%; /* Circle shape */
+    width: 145px; /* Adjust size as needed */
+    height: 145px; /* Adjust size as needed */
+    margin: 20px auto; /* Center the circle */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .my-profile .profile-info {
+    background-color: #3B3B3B; /* Slightly lighter background for the info section */
+    border-radius: 10px;
+    font-family: "Open Sans", Helvetica;
+    padding: 15px;
+    margin-top: 20px; /* Spacing above the info section */
+    position: relative;
+  }
+  
+  .my-profile .profile-info-item {
+    display: flex;
+    justify-content: space-between;
+    font-family: "Open Sans", Helvetica;
+    margin-bottom: 10px; /* Spacing between items */
+    color: #ffffff; /* Text color for items */
+    position: relative;
+    width: 100%;
+    flex-direction: column;
+  }
+  
+  .my-profile .edit-button {
+    position: absolute; /* Position it relative to the profile card */
+    top: 140px; /* Position from the top */
+    right: 20px; /* Position from the right */
+    font-family: "Open Sans", Helvetica;
+    color: #A9FF9B; /* Light green text color as seen in the image */
+    background-color: #444444;
+    border-radius: 5px;
+  }
+  
+  .my-profile .done-button {
+    background-color: #444444; 
+    color: #A9FF9B; 
+    font-family: "Open Sans", Helvetica;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px; /* Spacing above the button */
+    display: flex;
+    margin-left: auto;
+  }
+  
+  .my-profile .info-section {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px; /* Add some space between each section */
+    width: 100%;
+  }
+
+  .my-profile .info-section .label {
+    font-family: "Open Sans", Helvetica;
+    font-size: 18px;
+    margin-left: 10px;
+  }
+
+  .my-profile .info-section .value1 {
+    position: absolute;
+    font-weight: bold;
+    font-family: "Open Sans", Helvetica;
+    font-size: 23px;
+    right: 0;
+    margin-top: 12px;
+  }
+
+  .my-profile .info-section .value2 {
+    position: absolute;
+    font-weight: bold;
+    font-family: "Open Sans", Helvetica;
+    font-size: 23px;
+    right: 35px;
+    margin-top: 12px;
+  }
+
+  .my-profile .info-section .unit {
+    position: absolute;
+    font-family: "Open Sans", Helvetica;
+    font-size: 12px;
+    top: 3px; 
+    right: 0; 
+    padding-left: 5px;
+    margin-top: 12px;
+  }
+
+  .my-profile .profile-header {
+    /* Other styles... */
+    cursor: pointer; /* Indicates clickable area */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .my-profile .dropdown-arrow {
+    transition: transform 0.2s ease; /* Smooth transition for rotation */
+  }
+  
+  .my-profile .dropdown-arrow.open {
+    transform: rotate(-90deg); /* Rotates the arrow when open */
+  }
+  
+  .my-profile .dropdown-content {
+    position: absolute;
+    background-color: #3B3B3B;
+    width: 70%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+    z-index: 1;
+    border-radius: 5px;
+    left: 30px;
+  }
+  
+  .my-profile .dropdown-content div {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .my-profile .dropdown-content div:hover {
+    background-color: #252525;
+  }

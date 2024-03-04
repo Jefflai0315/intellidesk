@@ -43,8 +43,10 @@ function Posture() {
                 <div className="text-wrapper-2">More</div>
                 <img src={moreIcon} alt="More Icon" className="more-icon-wrapper" />
               </div>
-              <div className="text-wrapper-3">My Profile</div>
-              <img src={profileIcon} alt="Profile Icon" className="profile-icon-wrapper" />
+              <Link to="/MyProfile">
+                <div className="text-wrapper-3">My Profile</div>
+                <img src={profileIcon} alt="Timer Icon" className="profile-icon-wrapper" />
+              </Link>
               <div className="overlap-group-wrapper">
                 <Link to="/">
                   <div className="overlap-2">

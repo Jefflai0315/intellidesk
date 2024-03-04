@@ -6,6 +6,7 @@ import "./style.css";
 import { Link } from 'react-router-dom';
 import logoImage from '../../imgs/logo@720x.png';
 import profileIcon from '../../imgs/Asset 41@720x.png';
+import profileGreen from '../../imgs/Asset 42@720x.png';
 import tableIcon from '../../imgs/Group 28table.png';
 import moreIcon from '../../imgs/Group 27more.png';
 import tickIcon from '../../imgs/Asset 51@720x.png';
@@ -25,7 +26,6 @@ function Home() {
   const [lastFetched, setLastFetched] = useState(Date.now());
   const [avgAngle, setAvgAngle] = useState('0 degrees');
 
-  
 
   useEffect(() => {
     const ESRef = query(ref(database, 'Controls/User'));
@@ -297,8 +297,10 @@ function Home() {
                 <div className="more-text-wrapper-2">More</div>
                 <img src={moreIcon} alt="More Icon" className="more-icon-wrapper" />
               </div>
-              <div className="timer-text-wrapper-3">My Profile</div>
-              <img src={profileIcon} alt="Profile Icon" className="profile-icon-wrapper" />
+              <Link to="/MyProfile">
+                <div className="timer-text-wrapper-3">My Profile</div>
+                <img src={profileIcon} alt="Timer Icon" className="profile-icon-wrapper" />
+              </Link>
               <div className="bot-bar-overlap-group-wrapper">
                 <div className="bot-bar-overlap-2">
                   <div className="day-text-wrapper-4">My Day</div>
