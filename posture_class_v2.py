@@ -14,26 +14,18 @@ from statistics import mean, mode
 import numpy as np
 from detection import ObjectDetection
 import time
-
+from identity import FaceRecognition
 
 
 # Initialize Firebase
+
+
 def initialize_firebase():
     cred = credentials.Certificate("intellidesk-174c9-firebase-adminsdk-garkf-abe9a9fb75.json")
     firebase_admin.initialize_app(cred, {
         'databaseURL' : "https://intellidesk-174c9-default-rtdb.asia-southeast1.firebasedatabase.app/"
                               })
     return db.reference()
-    # return {
-    #     'Posture': db.reference('Posture/'),
-    #     'Correction': db.reference('Correction/'),
-    #     'Session': db.reference('Session/'),
-    #     'EyeScreenDistance': db.reference('EyeScreenDistance/'),
-    #     'Controls': db.reference('Controls/')
-    # }
-
-
-
 
 class PostureAnalyzer:    
     def __init__(self, firebase_refs):
@@ -67,7 +59,8 @@ class PostureAnalyzer:
         self.data_points = defaultdict(list)
 
         self.last_firebase_update_time = datetime.now().timestamp()*1000  # Initialize the last update time
-        self.update_interval = 4000
+        self.last_identity_update_time = datetime.now().timestamp()*1000 
+        self.update_interval = 20000
 
 
 
@@ -156,8 +149,8 @@ class PostureAnalyzer:
     
     def send_to_firebase(self, ref,data):
         if ref == 'Controls':
-            self.firebase_refs.child('{ref}/').update(data)
-            print('nudge value', self.firebase_refs.child('{ref}/PostureNudge/').get())
+            self.firebase_refs.child(f'{ref}/').update(data)
+            print('nudge value', self.firebase_refs.child(f'{ref}/PostureNudge/').get())
             
         else:
             self.firebase_refs.child(f'{self.user}/{ref}/').update(data)
@@ -185,6 +178,17 @@ class PostureAnalyzer:
         return averaged_data
 
 # Store data points here
+    def detect_identity(self, firebase_refs):
+        img_dir = "Intellidesk"
+        # img_path= '/Users/jefflai/intellidesk-screen/XiongWei_10.jpg'
+        img_path = "static/images/frame.jpg"
+        face_recognition = FaceRecognition(img_dir,similarity_threshold = 0.4, firebase_refs= self.firebase_refs)
+        # face_recognition.add_face_embeddings('/Users/jefflai/intellidesk-screen/faceRecog/Intellidesk/XiongWei', 'XiongWei')
+        result_img, identity = face_recognition.identify_persons(img_path)
+
+        firebase_refs.child(f'Controls/').update({'User': identity})
+        image = result_img
+        return image 
 
 
     def average_and_send(self):
@@ -260,12 +264,10 @@ class PostureAnalyzer:
         # save image to path = 'intellidesk/static/images'
         cv2.imwrite('static/images/frame.jpg', image)
 
-        # # Convert the BGR image to RGB.
-        # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        # keypoints = self.pose.process(image)
-
-        # Convert the image back to BGR.
-        # image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+        # very lag to run this, so i seperate the script
+        # if (timestamp - self.last_identity_update_time) >= self.update_interval:
+        #     self.last_identity_update_time = timestamp
+        #     image = self.detect_identity(self.firebase_refs)
 
 
 
@@ -295,73 +297,12 @@ class PostureAnalyzer:
                 font_thickness = 3
                 cv2.putText(image, f'{label} {conf:.2f}', (int(cords[0]), int(cords[1]-10)), font, font_scale, font_color, font_thickness)
             self.screens_list = results
-            # result = results[0]
-            # largest_person_area = 0
-            # largest_person_cords = None
-            # for box in result.boxes:
-            #     cords = box.xyxy[0].tolist()  # [xmin, ymin, xmax, ymax]
-            #     class_id = box.cls[0].item()
-            #     conf = box.conf[0].item()
-            #     label = result.names[class_id]
-            #     if conf > 0.5 and (label == "laptop" or label == "monitor"):
-            #         # Draw rectangle (bounding box)
-            #         start_point = (int(cords[0]), int(cords[1]))  # Top left corner
-            #         end_point = (int(cords[2]), int(cords[3]))    # Bottom right corner
-            #         color = (255, 0, 0)  # Color of the rectangle (in BGR)
-            #         thickness = 2       # Thickness of the rectangle border
-            #         cv2.rectangle(image, start_point, end_point, color, thickness)
-            #         # Put label near the top left corner of the rectangle
-            #         font = cv2.FONT_HERSHEY_SIMPLEX
-            #         font_scale = 5
-            #         font_color = (255, 0,0)  
-            #         font_thickness = 3
-            #         cv2.putText(image, f'{label} {conf:.2f}', (int(cords[0]), int(cords[1]-10)), font, font_scale, font_color, font_thickness)
-                    
-            #         # store screen
-            #         self.screens_list.append([cords,class_id,conf,label])
-
-            #     elif conf > 0.7 and (label =='person'):
-            #         start_point = (int(cords[0]), int(cords[1]))  # Top left corner
-            #         end_point = (int(cords[2]), int(cords[3]))    # Bottom right corner
-            #         color = (0, 255, 0)  # Color of the rectangle (in BGR)
-            #         thickness = 2       # Thickness of the rectangle border
-                    
-            #         # area of the rectangle
-            #         area = (cords[2] - cords[0]) * (cords[3] - cords[1])
-            #         if area > largest_person_area:
-            #             largest_person_area = area
-            #             largest_person_cords = cords
-            #             cv2.rectangle(image, start_point, end_point, color, thickness)
+        
             if largest_person_cords:
                 # Ensure the coordinates are within the image boundaries
                 x_min, y_min, x_max, y_max = [max(0, int(coord)) for coord in largest_person_cords]
                 # draw box on the image 
                 cv2.rectangle(image, (x_min, y_min), (x_max, y_max), (0, 255, 0), 2)
-               
-
-    
-
-            # if largest_person_cords:
-            #         # # Ensure the coordinates are within the image boundaries
-            #         # x_min, y_min, x_max, y_max = [max(0, int(coord)) for coord in largest_person_cords]
-            #         # x_max = min(x_max, image.shape[1])
-            #         # y_max = min(y_max, image.shape[0])
-
-            #         # Crop the image to the largest person's bounding box
-            #         # cropped_image = image[y_min:y_max, x_min:x_max]
-            #         # Crop and pad the image
-            #     isolated_img = self.isolate_object(image, largest_person_cords)
-            #     isolated_img = cv2.cvtColor(isolated_img, cv2.COLOR_BGR2RGB)
-            #     keypoints = self.pose.process(isolated_img)
-
-            #         # Convert the image back to BGR.
-            #         # padded_img = cv2.cvtColor(isolated_img, cv2.COLOR_RGB2BGR)
-
-            #     lm = keypoints.pose_landmarks
-            #     lmPose = self.mp_pose.PoseLandmark
-            #     print('time for yolo: ' , datetime.now()-time_now)
-            # else: 
-            #     return image
 
 
         except Exception as e:
@@ -410,7 +351,7 @@ class PostureAnalyzer:
             l_foot_index_y = int(lm.landmark[lmPose.LEFT_FOOT_INDEX].y * h)
 
 
-             # Calculate distance between left shoulder and right shoulder points.
+            # Calculate distance between left shoulder and right shoulder points.
             offset = self.findDistance(l_shldr_x, l_shldr_y, r_shldr_x, r_shldr_y)
             eye_offset = self.findDistance(l_eye_x, l_eye_y, r_eye_x, r_eye_y)
         
@@ -512,7 +453,7 @@ class PostureAnalyzer:
             cv2.circle(image, (l_wrist_x, l_wrist_y), 7, yellow, -1)
             cv2.circle(image, (l_knee_x, l_knee_y), 7, yellow, -1)
 
-             # ankle, heel, foot index
+            # ankle, heel, foot index
             cv2.circle(image, (l_ankle_x, l_ankle_y), 7, yellow, -1)
             cv2.circle(image, (l_heel_x, l_heel_y), 7, yellow, -1)
             cv2.circle(image, (l_foot_index_x, l_foot_index_y), 7, yellow, -1)
@@ -542,13 +483,13 @@ class PostureAnalyzer:
 
             # if position_category == "standing":
             #     cv2.putText(image, 'standing', (int(w/2), int(h/2)-100), font, 0.9, red, 2)
-               
+            
             #     self.current_standing_frames += 1
                 # if (1/fps) *self.current_standing_frames > 5:
                     # print("Please hold a fist to move the table up.")
                     # cv2.putText(image, 'Please hold a fist to move the table up.', (int(w/2), int(h/2)), font, 0.9, red, 2)
                     # cv2.putText(image, 'table movnig up .', (int(w/2), int(h/2)), font, 0.9, red, 2)
-               
+            
             # else:
             #     self.current_standing_frames =0
 
@@ -564,19 +505,15 @@ class PostureAnalyzer:
                 self.prolong_bad = 0
                 color = blue
 
-        
-            
-            
             elif  (neck_inclination < 5 and neck_inclination > -35 
-                   and trunk_inclication < 30 and trunk_inclication > -5
+                and trunk_inclication < 30 and trunk_inclication > -5
                 #    and upper_arm_inclination < 40 and upper_arm_inclination >-10
                 #    and  knee_angle > 70 and knee_angle < 110
-                   ):
+                ):
                 posture_category = 'good'
                 self.good_pos_frames += 1
                 self.prolong_bad = 0
                 color = green
-        
         
             else:
                 posture_category = 'bad'
@@ -619,7 +556,7 @@ class PostureAnalyzer:
             # cv2.putText(image, time_string, (10, h - 100), font, 0.9, dark_blue, 2)
             cv2.putText(image, posture_category, (10, h - 100), font, 0.9, yellow, 2)
             cv2.putText(image, position_category, (10, h - 200), font, 0.9, yellow, 2)
-           
+        
             correction_string = 'Correction Count : ' + str(len(self.correction)) 
             # cv2.putText(image, correction_string, (int(w/3), h - 100), font, 0.9, yellow , 2)
             # Pose time.
@@ -685,7 +622,9 @@ class PostureAnalyzer:
 
 if __name__ == "__main__":    
     firebase_refs = initialize_firebase()
+  
     post = PostureAnalyzer(firebase_refs)
+    ## within run, have to constantly test if the person identity and update the self.user
     post.run()
 
     
