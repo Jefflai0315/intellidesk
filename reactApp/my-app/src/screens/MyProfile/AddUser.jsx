@@ -10,7 +10,7 @@ import tickIcon from '../../imgs/Asset 51@720x.png';
 import tickWhite from '../../imgs/Asset 52@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
 import database from '../../firebase'; // Adjust the path as needed
-import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
+import { query, ref, onValue, orderByKey , startAt, set} from 'firebase/database'
 
 
 function AddUser() {
@@ -46,9 +46,16 @@ function AddUser() {
 
   // Handler function for the button click
   const AddNewUser = async () => {
+    //update the username to InputName at firebase 
+
+    const InputNameRef = ref(database, 'Controls/InputName')
+    set(InputNameRef, name).catch((error) => {
+      console.error("Error updating InputName in Firebase", error);
+    });
+   
 
     try {
-      const response = await fetch('http://raspberry_pi_ip:5000');
+      const response = await fetch('http://raspberry_pi_ip:8080'); //need to change the url
       const jsonResult = await response.json();
 
       // Update the state with the result
