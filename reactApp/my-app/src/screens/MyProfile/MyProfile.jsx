@@ -14,21 +14,45 @@ import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
 
 function ProfileHeader() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [user, setUser] = useState('');
+  const [userlist, setUserlist] = useState([]);
+
+  useEffect(() => {
+    const UserRef = query(ref(database, 'Controls/User'));
+  onValue(UserRef, (snapshot) => {
+    const data = snapshot.val();
+    setUser((prevUser) => {
+      console.log('Updated user:', data);
+      return data;
+    });
+     })
+    const usersRef = query(ref(database, 'Controls/FaceEmbeddings'));
+    onValue(usersRef, (snapshot) => {
+      const data = snapshot.val();
+      setUserlist(Object.keys(data));
+    })
+
+  },[]);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
+  
 
   return (
     <div className="profile-header" onClick={toggleDropdown}>
-      <h1>Jeff</h1>
+      <h1>{user}</h1>
       <span className={`dropdown-arrow ${dropdownOpen ? 'open' : ''}`}>◀</span>
       {dropdownOpen && (
         <div className="dropdown-content">
           {/* Dropdown items go here */}
-          <div>Option 1</div>
+          {userlist.map((user) => (
+            //clicking on the user should change the user in the profile header
+            <div key={user} onClick={() => setUser(user)} >{user} </div>
+          ))}
+          {/* <div>Option 1</div>
           <div>Option 2</div>
-          <div>Option 3</div>
+          <div>Option 3</div> */}
         </div>
       )}
     </div>
@@ -102,7 +126,7 @@ function MyProfile() {
                       <div className="profile-info-item">
                         <div className="info-section">
                           <span className="label">Name</span>
-                          <span className="value2">Jeff</span>
+                          <span className="value2">{user}</span>
                         </div>
                         <div className="info-section">
                           <span className="label">Age</span>
