@@ -71,9 +71,40 @@ class FaceSetUp:
             cv2.putText(img, identity, (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
         return img, identity
+    
+def capture_images(output_dir, num_images, interval):
+    # Create the output directory if it doesn't exist
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    # Initialize the camera
+    cap = cv2.VideoCapture(0)
+
+    # Capture images
+    for i in range(num_images):
+        # Wait for the specified interval
+        time.sleep(interval)
+
+        # Capture frame from the camera
+        ret, frame = cap.read()
+
+        # Save the captured frame as an image
+        image_path = os.path.join(output_dir, f"{i+1:03d}.jpg")
+        cv2.imwrite(image_path, frame)
+        cv2.imshow('frame', frame)
+        print(f"Saved image: {image_path}")
+
+    # Release the camera
+    cap.release()
+    cv2.destroyAllWindows()
 
 if __name__ == "__main__":
+    num_images = 5
+    interval = 3  # seconds
     img_dir = "SetUpImages"
+
+    capture_images(img_dir, num_images, interval)
+    
     # img_path = '/Users/jefflai/intellidesk-screen/test.jpg'
     firebase_refs = initialize_firebase()
     input_name = firebase_refs.child('Controls/InputName').get()
