@@ -168,9 +168,6 @@ function AddUser() {
         </div>
       </div>
       <div>
-      <button onClick={AddNewUser} id="setupProfileButton">Add User</button>
-      {result && <div>Result: {JSON.stringify(result)}</div>}
-      {error && <div>{error}</div>}
     </div>
     </div>
     
