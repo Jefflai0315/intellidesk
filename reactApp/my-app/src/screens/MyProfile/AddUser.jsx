@@ -12,66 +12,56 @@ import goalsIcon from '../../imgs/Asset 14@720x.png';
 import database from '../../firebase'; // Adjust the path as needed
 import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
 
-function ProfileHeader() {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [user, setUser] = useState('');
-  const [userlist, setUserlist] = useState([]);
 
-  useEffect(() => {
-    const UserRef = query(ref(database, 'Controls/User'));
-  onValue(UserRef, (snapshot) => {
-    const data = snapshot.val();
-    setUser((prevUser) => {
-      console.log('Updated user:', data);
-      return data;
-    });
-     })
-    const usersRef = query(ref(database, 'Controls/FaceEmbeddings'));
-    onValue(usersRef, (snapshot) => {
-      const data = snapshot.val();
-      setUserlist(Object.keys(data));
-    })
-
-  },[]);
-
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-  
-
-  return (
-    <div className="profile-header" onClick={toggleDropdown}>
-      <h1>{user}</h1>
-      <span className={`dropdown-arrow ${dropdownOpen ? 'open' : ''}`}>◀</span>
-      {dropdownOpen && (
-        <div className="dropdown-content">
-          {/* Dropdown items go here */}
-          {userlist.map((user) => (
-            //clicking on the user should change the user in the profile header
-            <div key={user} onClick={() => setUser(user)} >{user} </div>
-          ))}
-          {/* <div>Option 1</div>
-          <div>Option 2</div>
-          <div>Option 3</div> */}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function MyProfile() {
-  const [user, setUser] = useState('My')
+function AddUser() {
+  // const [user, setUser] = useState('My')
+  const [name, setName] = useState('');
+  const [age, setAge] = useState('');
+  const [gender, setGender] = useState('');
+  const [height, setHeight] = useState('');
+  const [weight, setWeight] = useState('');
   const [lastFetchedTime, setLastFetchedTime] = useState();
-
-  useEffect(() => {
-    const ESRef = query(ref(database, 'Controls/User'));
-  onValue(ESRef, (snapshot) => {
-    const data = snapshot.val();
-    setUser(data );
-    setLastFetchedTime(data) //for data render
-  });});
+   // State to store the fetched result
+   const [result, setResult] = useState(null);
+   // State to store any potential error
+   const [error, setError] = useState('');
 
 
+   const handleSave = () => {
+    // Perform the save operation, e.g., update Firebase with the user data
+    // You can use the state variables (name, age, gender, height, weight) here
+    // ...
+
+    // Optionally, you can update the user state to reflect the changes
+
+    // Optionally, reset the input fields after saving
+    setName('');
+    setAge('');
+    setGender('');
+    setHeight('');
+    setWeight('');
+  };
+
+
+
+  // Handler function for the button click
+  const AddNewUser = async () => {
+
+    try {
+      const response = await fetch('http://raspberry_pi_ip:5000');
+      const jsonResult = await response.json();
+
+      // Update the state with the result
+      setResult(jsonResult);
+      // Reset any previous error
+      setError('');
+      // Optionally, handle the result accordingly, like updating UI
+    } catch (err) {
+      // Update the state with the error
+      setError('Error: ' + err.message);
+      // Optionally, handle errors, like showing error messages
+    }
+  };
   return (
     <div className="my-profile">
       <div className="overlap-wrapper">
@@ -119,40 +109,47 @@ function MyProfile() {
               <div className="group-8">
                 <div className="overlap-group-3">
                   <div className="profile-card">
-                    <ProfileHeader />
+          
                     <button className="edit-button">Edit</button>
                     <div className="profile-picture">
                       <span>add profile photo</span>
                     </div>
                     <div className="profile-info">
-                      <div className="profile-info-item">
-                        <div className="info-section">
-                          <span className="label">Name</span>
-                          <span className="value2">{user}</span>
-                        </div>
-                        <div className="info-section">
-                          <span className="label">Age</span>
-                          <span className="value2">25</span>
-                          <span className="unit"> years</span>
-                        </div>
-                        <div className="info-section">
-                          <span className="label">Gender</span>
-                          <span className="value2">Male</span>
-                        </div>
-                        <div className="info-section">
-                          <span className="label">Height</span>
-                          <span className="value2">172</span>
-                          <span className="unit" style={{ right: '13px' }}> cm</span>
-                        </div>
-                        <div className="info-section">
-                          <span className="label">Weight</span>
-                          <span className="value2">72</span>
-                          <span className="unit" style={{ right: '17px' }}> kg</span>
-                        </div>
-                        <button className="done-button">Done</button>
-                      </div>
-                    </div>
-                  </div>
+            <div className="profile-info-item">
+              <div className="info-section">
+                <span className="label">Name</span>
+                <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+              </div>
+              <div className="info-section">
+                <span className="label">Age</span>
+                <input type="text" value={age} onChange={(e) => setAge(e.target.value)} />
+                <span className="unit"> years</span>
+              </div>
+              <div className="info-section">
+                <span className="label">Gender</span>
+                <input type="text" value={gender} onChange={(e) => setGender(e.target.value)} />
+              </div>
+              <div className="info-section">
+                <span className="label">Height</span>
+                <input type="text" value={height} onChange={(e) => setHeight(e.target.value)} />
+                <span className="unit"> cm</span>
+              </div>
+              <div className="info-section">
+                <span className="label">Weight</span>
+                <input type="text" value={weight} onChange={(e) => setWeight(e.target.value)} />
+                <span className="unit"> kg</span>
+              </div>
+              <div>
+              <button className="done-button" onClick={AddNewUser} id="setupProfileButton">SetUp Biometric Valification</button>
+              {result && <div>Result: {JSON.stringify(result)}</div>}
+              {error && <div>{error}</div>}
+            </div>
+              <button className="done-button" onClick={handleSave}>
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
                 </div>
               </div>
               <div className="text-wrapper-14">My Profile</div>
@@ -163,12 +160,14 @@ function MyProfile() {
           </div>
         </div>
       </div>
-      <Link to="/AddUser">
-        <div className="add-user">Add User</div>
-      </Link>
+      <div>
+      <button onClick={AddNewUser} id="setupProfileButton">Add User</button>
+      {result && <div>Result: {JSON.stringify(result)}</div>}
+      {error && <div>{error}</div>}
+    </div>
     </div>
     
   );
 };
 
-export default MyProfile;
+export default AddUser;

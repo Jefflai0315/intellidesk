@@ -6,6 +6,7 @@ import ScreenDistance from './screens/ScreenDistance/ScreenDistance';
 import DeskTime from './screens/DeskTime/DeskTime';
 import DailyActivity from './screens/DailyActivity/DailyActivity';
 import MyProfile from './screens/MyProfile/MyProfile';
+import AddUser from './screens/MyProfile/AddUser';
 
 
 const App = () => {
@@ -40,6 +41,11 @@ const App = () => {
           exact
           path="/MyProfile"
           element={<MyProfile />}
+          />
+          <Route
+          exact
+          path="/AddUser"
+          element={<AddUser />}
           />
       </Routes>
     </Router>
