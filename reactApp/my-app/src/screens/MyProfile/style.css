@@ -1987,6 +1987,17 @@
     display: flex;
     margin-left: auto;
   }
+
+  .my-profile .bio-verif-button {
+    background-color: #444444; 
+    color: #A9FF9B; 
+    font-family: "Open Sans", Helvetica;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    margin-left: auto;
+  }
   
   .my-profile .info-section {
     display: flex;
@@ -2098,3 +2109,37 @@
     position: relative;
     right: 25px;
   }
+
+  .my-profile .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .my-profile .modal-content {
+    background-color: #3b3b3b;
+    padding: 20px;
+    border-radius: 5px;
+    width: 90%; /* or a fixed width */
+    max-width: 285px; /* maximum width */
+  }
+
+  .error-message {
+    color: #EE5757; /* Red color for error messages */
+    margin-top: 5px;
+    font-size: 13px;
+    font-family: "Open Sans", Helvetica;
+    padding: 5px;
+    width: 45%; /* Adjust based on your layout */
+    text-align: center;
+    margin-left: auto;
+    text-decoration: underline;
+  }
+  

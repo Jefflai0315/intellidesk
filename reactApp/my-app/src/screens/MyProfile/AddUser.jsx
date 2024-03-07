@@ -12,7 +12,6 @@ import goalsIcon from '../../imgs/Asset 14@720x.png';
 import database from '../../firebase'; // Adjust the path as needed
 import { query, ref, onValue, orderByKey , startAt, set} from 'firebase/database'
 
-
 function AddUser() {
   // const [user, setUser] = useState('My')
   const [name, setName] = useState('');
@@ -42,7 +41,34 @@ function AddUser() {
     setWeight('');
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const renderModal = () => {
+    if (!isModalOpen) return null;
+  
+    return (
+      <div className="modal-backdrop" onClick={() => setIsModalOpen(false)}>
+        <div className="modal-content" onClick={e => e.stopPropagation()}>
+          <button 
+            onClick={() => setIsModalOpen(false)}
+            style={{
+              position: 'relative',
+              top: '-8px', // Distance from the top
+              left: '270px', // Distance from the right
+              background: 'transparent',
+              border: 'none',
+              fontSize: '15px', // Adjust the size as needed
+              color: '#fff',
+              cursor: 'pointer'
+            }}>
+            X
+          </button>
+            {/* Modal content goes here */}
+            <p>Biometric Verification Setup...</p>
+        </div>
+      </div>
+    );
+  };
 
   // Handler function for the button click
   const AddNewUser = async () => {
@@ -145,9 +171,12 @@ function AddUser() {
                 <span className="unit-au"> kg</span>
               </div>
               <div>
-              <button className="done-button" onClick={AddNewUser} id="setupProfileButton">SetUp Biometric Valification</button>
+              <button className="bio-verif-button" onClick={ () => {setIsModalOpen(true); AddNewUser(); }} id="setupProfileButton">
+                Set Up Biometric Verification
+              </button>
+              {renderModal()}
               {result && <div>Result: {JSON.stringify(result)}</div>}
-              {error && <div>{error}</div>}
+              {error && <div className="error-message">{error}</div>}
             </div>
               <button className="done-button" onClick={handleSave}>
                 Save
