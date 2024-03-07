@@ -121,31 +121,36 @@ function MyProfile() {
                   <div className="profile-card">
                     <ProfileHeader />
                     <button className="edit-button">Edit</button>
+                    <Link to="/AddUser">
+                      <button className="add-button">
+                        <span>+ user</span>
+                      </button>
+                    </Link>
                     <div className="profile-picture">
                       <span>add profile photo</span>
                     </div>
                     <div className="profile-info">
                       <div className="profile-info-item">
                         <div className="info-section">
-                          <span className="label">Name</span>
+                          <span className="label">Name:</span>
                           <span className="value2">{user}</span>
                         </div>
                         <div className="info-section">
-                          <span className="label">Age</span>
+                          <span className="label">Age:</span>
                           <span className="value2">25</span>
                           <span className="unit"> years</span>
                         </div>
                         <div className="info-section">
-                          <span className="label">Gender</span>
+                          <span className="label">Gender:</span>
                           <span className="value2">Male</span>
                         </div>
                         <div className="info-section">
-                          <span className="label">Height</span>
+                          <span className="label">Height:</span>
                           <span className="value2">172</span>
                           <span className="unit" style={{ right: '13px' }}> cm</span>
                         </div>
                         <div className="info-section">
-                          <span className="label">Weight</span>
+                          <span className="label">Weight:</span>
                           <span className="value2">72</span>
                           <span className="unit" style={{ right: '17px' }}> kg</span>
                         </div>
@@ -163,11 +168,10 @@ function MyProfile() {
           </div>
         </div>
       </div>
-      <Link to="/AddUser">
+      {/* <Link to="/AddUser">
         <div className="add-user">Add User</div>
-      </Link>
+      </Link> */}
     </div>
-    
   );
 };
 

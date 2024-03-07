@@ -194,7 +194,6 @@ function Home() {
               <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '380px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
               <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '616px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
               <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '967px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
-              <div className="line" style={{ height: '1px', backgroundColor: '#A9FF9B', width: '80%', left: '0', top: '1210px', opacity: '0.3', margin: '0 auto', position: 'relative' }}></div> {/* Replace the img tag with this div */}
               <Link to="/DeskTime">
               <BarIcon className="bar-icon-instance" user = {user}/>
               </Link>
@@ -258,26 +257,6 @@ function Home() {
                 </div>
                 <div className="text-wrapper-37">Total Upright Time</div>
               </div>
-              {/* <div className="text-wrapper-38">Timers</div>
-              <div className="hydration">
-                <div className="text-wrapper-39">Hydration</div>
-                <img className="group-12" alt="Group" src="https://c.animaapp.com/VczO8maf/img/group-31@2x.png" />
-                <div  className="text-wrapper-39" style={{height:'100px'}}> </div>
-              </div>
-              <div className="pomodoro">
-                <div className="text-wrapper-40">Pomodoro</div>
-                <div className="group-13">
-                  <div className="rectangle-13" />
-                  <div className="rectangle-14" />
-                  <div className="rectangle-15" />
-                  <div className="rectangle-16" />
-                  <div className="rectangle-17" />
-                  <div className="rectangle-18" />
-                  <div className="rectangle-19" />
-                </div>
-              </div> */}
-              {/* <BarIcon className="design-component-instance-node" />
-              <BarIcon className="bar-icon-4" /> */}
               <div className="frame">
                 <Link to="/Posture">
                 <div className="bar-icon-5">

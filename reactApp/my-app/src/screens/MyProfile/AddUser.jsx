@@ -115,36 +115,34 @@ function AddUser() {
             <div className="overlap-3">
               <div className="group-8">
                 <div className="overlap-group-3">
-                  <div className="profile-card">
-          
-                    <button className="edit-button">Edit</button>
+                  <div className="profile-card-add-user">
                     <div className="profile-picture">
                       <span>add profile photo</span>
                     </div>
                     <div className="profile-info">
             <div className="profile-info-item">
               <div className="info-section">
-                <span className="label">Name</span>
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                <span className="label">Name:</span>
+                <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="profile-input name-input"/>
               </div>
               <div className="info-section">
-                <span className="label">Age</span>
-                <input type="text" value={age} onChange={(e) => setAge(e.target.value)} />
-                <span className="unit"> years</span>
+                <span className="label">Age:</span>
+                <input type="text" value={age} onChange={(e) => setAge(e.target.value)} className="profile-input age-input"/>
+                <span className="unit-au"> years</span>
               </div>
               <div className="info-section">
-                <span className="label">Gender</span>
-                <input type="text" value={gender} onChange={(e) => setGender(e.target.value)} />
+                <span className="label">Gender:</span>
+                <input type="text" value={gender} onChange={(e) => setGender(e.target.value)} className="profile-input gender-input"/>
               </div>
               <div className="info-section">
-                <span className="label">Height</span>
-                <input type="text" value={height} onChange={(e) => setHeight(e.target.value)} />
-                <span className="unit"> cm</span>
+                <span className="label">Height:</span>
+                <input type="text" value={height} onChange={(e) => setHeight(e.target.value)} className="profile-input height-input"/>
+                <span className="unit-au"> cm</span>
               </div>
               <div className="info-section">
-                <span className="label">Weight</span>
-                <input type="text" value={weight} onChange={(e) => setWeight(e.target.value)} />
-                <span className="unit"> kg</span>
+                <span className="label">Weight:</span>
+                <input type="text" value={weight} onChange={(e) => setWeight(e.target.value)} className="profile-input weight-input"/>
+                <span className="unit-au"> kg</span>
               </div>
               <div>
               <button className="done-button" onClick={AddNewUser} id="setupProfileButton">SetUp Biometric Valification</button>
@@ -160,7 +158,7 @@ function AddUser() {
                 </div>
               </div>
               <div className="text-wrapper-14">My Profile</div>
-              <Link to="/">
+              <Link to="/MyProfile">
               <img className="frame-2" alt="Frame" src="https://c.animaapp.com/QHWYwOlz/img/frame-3.svg" />
               </Link>             
             </div>
@@ -170,7 +168,6 @@ function AddUser() {
       <div>
     </div>
     </div>
-    
   );
 };
 
