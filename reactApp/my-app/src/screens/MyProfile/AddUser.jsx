@@ -53,8 +53,8 @@ function AddUser() {
             onClick={() => setIsModalOpen(false)}
             style={{
               position: 'relative',
-              top: '-8px', // Distance from the top
-              left: '270px', // Distance from the right
+              top: '-2px', // Distance from the top
+              left: '257px', // Distance from the right
               background: 'transparent',
               border: 'none',
               fontSize: '15px', // Adjust the size as needed
@@ -63,8 +63,14 @@ function AddUser() {
             }}>
             X
           </button>
-            {/* Modal content goes here */}
-            <p>Biometric Verification Setup...</p>
+            <p style={{
+              color: '#fff', 
+              fontSize: '14px', 
+              textAlign: 'center', 
+              lineHeight: '1.3', 
+            }}>
+              Proceed to your table to set up biometric verification.
+            </p>
         </div>
       </div>
     );
