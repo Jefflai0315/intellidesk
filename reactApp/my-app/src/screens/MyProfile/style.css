@@ -2142,4 +2142,12 @@
     margin-left: auto;
     text-decoration: underline;
   }
+
+  .profile-input {
+    width: 100%; /* Makes input take full width of its parent */
+    border-radius: 4px; /* Rounds the corners of the input box */
+    background-color: #757575;
+  }
+
+  
   
