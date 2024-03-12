@@ -23,3 +23,11 @@ yarn-debug.log*
 yarn-error.log*
 
 */__pycache__/*
+
+.DS_Store
+Intellidesk/
+SetUpImages/
+__pycache__/
+embedding.py
+output.jpg
+reactApp/.DS_Store
