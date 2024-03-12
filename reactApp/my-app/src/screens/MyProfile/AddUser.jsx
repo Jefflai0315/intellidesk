@@ -10,7 +10,7 @@ import tickIcon from '../../imgs/Asset 51@720x.png';
 import tickWhite from '../../imgs/Asset 52@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
 import database from '../../firebase'; // Adjust the path as needed
-import { query, ref, onValue, orderByKey , startAt, set} from 'firebase/database'
+import { query, ref, set,update} from 'firebase/database'
 
 function AddUser() {
   // const [user, setUser] = useState('My')
@@ -27,18 +27,6 @@ function AddUser() {
    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
     const [biometricEmbedding, setBiometricEmbedding] = useState(null);
-
-
-   const handleSave = () => {
-    console.log('handle save')
-    // Perform the save operation, e.g., update Firebase with the user data
-    // You can use the state variables (name, age, gender, height, weight) here
-    // ...
-
-    // Optionally, you can update the user state to reflect the changes
-
-    // Optionally, reset the input fields after saving
-  };
 
 
   const renderModal = () => {
@@ -153,8 +141,8 @@ function AddUser() {
       setError('');
       // Optionally, handle the result accordingly, like updating UI
 
-       //setBiometricEmbedding
-       setBiometricEmbedding(null)
+       //TODO: setBiometricEmbedding
+       //setBiometricEmbedding(jsonResult.biometricEmbedding)
     } catch (err) {
       // Update the state with the error
       setError('Error: ' + err.message);
@@ -165,17 +153,20 @@ function AddUser() {
     }
   };
 
-  // Render the error pop-up
-  const renderErrorPopup = () => {
-    if (!error) return null;
+  const handleSave = () => {
+    if (!name || !age || !gender || !height || !weight || !biometricEmbedding){
+      return;
+    }
+    console.log('handle save')
+     // Perform the save operation, e.g., update Firebase with the user data
+     const UserDetailRef = query(ref(database, name + '/Params'));
+     update(UserDetailRef,{'Age': age, 'Gender': gender, 'Height': height, 'Weight': weight}).catch((error) => { console.error("Error updating InputName in Firebase", error);})
+     const embeddingRef = query(ref(database, 'Controls/FaceEmbeddings/'+name));
+     update(embeddingRef, biometricEmbedding).catch((error) => { console.error("Error updating biometricEmbedding in Firebase", error);})
 
-    return (
-      <div className="error-popup">
-        <p>{error}</p>
-        <button onClick={() => setError('')}>Close</button>
-      </div>
-    );
   };
+
+
   
   return (
     <div className="my-profile">
