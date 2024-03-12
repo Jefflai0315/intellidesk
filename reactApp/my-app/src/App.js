@@ -7,6 +7,7 @@ import DeskTime from './screens/DeskTime/DeskTime';
 import DailyActivity from './screens/DailyActivity/DailyActivity';
 import MyProfile from './screens/MyProfile/MyProfile';
 import AddUser from './screens/MyProfile/AddUser';
+import EditUser from './screens/MyProfile/EditUser';
 
 
 const App = () => {
@@ -46,6 +47,11 @@ const App = () => {
           exact
           path="/AddUser"
           element={<AddUser />}
+          />
+          <Route
+          exact
+          path="/EditUser"
+          element={<EditUser />}
           />
       </Routes>
     </Router>

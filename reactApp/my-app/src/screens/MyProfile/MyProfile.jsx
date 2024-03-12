@@ -10,7 +10,7 @@ import tickIcon from '../../imgs/Asset 51@720x.png';
 import tickWhite from '../../imgs/Asset 52@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
 import database from '../../firebase'; // Adjust the path as needed
-import { query, ref, onValue, orderByKey , startAt, set} from 'firebase/database'
+import { query, ref, onValue, get, set} from 'firebase/database'
 
 function ProfileHeader() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -66,7 +66,7 @@ function ProfileHeader() {
 }
 
 function MyProfile() {
-  const [user, setUser] = useState('My')
+  const [user, setUser] = useState('')
   const [lastFetchedTime, setLastFetchedTime] = useState();
   const [age, setAge] = useState();
   const [height, setHeight] = useState();
@@ -74,28 +74,26 @@ function MyProfile() {
   const [gender, setGender] = useState();
 
   useEffect(() => {
-    const ESRef = query(ref(database, 'Controls/User'));
-  onValue(ESRef, (snapshot) => {
-    const data = snapshot.val();
-    setUser(data );
-    setLastFetchedTime(data) //for data render
-  });
+    const fetchData = async () => {
+      const ESRef = query(ref(database, 'Controls/User'));
+      const esSnapshot = await get(ESRef);
+      const userData = esSnapshot.val();
+      
+      setUser(userData);
+      setLastFetchedTime(userData);
 
-  const Ref = query(ref(database, user + '/Params'));
-  onValue(Ref, (snapshot) => {
-  const age = snapshot.val()['Age'];
-  const height = snapshot.val()['Height'];
-  const weight = snapshot.val()['Weight'];
-  const gender = snapshot.val()['Gender'];
+      const userRef = query(ref(database, userData + '/Params'));
+      const userSnapshot = await get(userRef);
+      const userParams = userSnapshot.val();
 
-  setAge(age);
-  setHeight(height);
-  setWeight(weight);
-  setGender(gender);
-  });
+      setAge(userParams.Age);
+      setHeight(userParams.Height);
+      setWeight(userParams.Weight);
+      setGender(userParams.Gender);
+    };
 
-
-});
+    fetchData();
+  }, []);
 
 
   return (
@@ -146,7 +144,9 @@ function MyProfile() {
                 <div className="overlap-group-3">
                   <div className="profile-card">
                     <ProfileHeader />
-                    <button className="edit-button">Edit</button>
+                    <Link to='/EditUser'>
+                      <button className="edit-button" >Edit</button>
+                    </Link>
                     <Link to="/AddUser">
                       <button className="add-button">
                         <span>+ user</span>

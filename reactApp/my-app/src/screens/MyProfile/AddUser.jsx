@@ -24,9 +24,13 @@ function AddUser() {
    const [result, setResult] = useState(null);
    // State to store any potential error
    const [error, setError] = useState('');
+   const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
+    const [biometricEmbedding, setBiometricEmbedding] = useState(null);
 
 
    const handleSave = () => {
+    console.log('handle save')
     // Perform the save operation, e.g., update Firebase with the user data
     // You can use the state variables (name, age, gender, height, weight) here
     // ...
@@ -34,14 +38,8 @@ function AddUser() {
     // Optionally, you can update the user state to reflect the changes
 
     // Optionally, reset the input fields after saving
-    setName('');
-    setAge('');
-    setGender('');
-    setHeight('');
-    setWeight('');
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const renderModal = () => {
     if (!isModalOpen) return null;
@@ -76,15 +74,74 @@ function AddUser() {
     );
   };
 
+  const renderSaveModal = () => {
+    if (!isSaveModalOpen || error) return null;
+  
+    return (
+      <div className="modal-backdrop" onClick={() => setIsSaveModalOpen(false)}>
+        <div className="modal-content" onClick={e => e.stopPropagation()}>
+        <Link to="/MyProfile">
+          <button 
+            onClick={() => setIsSaveModalOpen(false)}
+            style={{
+              position: 'relative',
+              top: '-2px', // Distance from the top
+              left: '257px', // Distance from the right
+              background: 'transparent',
+              border: 'none',
+              fontSize: '15px', // Adjust the size as needed
+              color: '#fff',
+              cursor: 'pointer'
+            }}>
+            X
+          </button>
+          </Link>
+            <p style={{
+              color: '#fff', 
+              fontSize: '14px', 
+              textAlign: 'center', 
+              lineHeight: '1.3', 
+            }}>
+              User data Added
+            </p>
+        </div>
+      </div>
+    );
+  };
+
   // Handler function for the button click
   const AddNewUser = async () => {
+    //update the username to InputName at firebase 
+
+    // const InputNameRef = ref(database, 'Controls/InputName')
+    // set(InputNameRef, name).catch((error) => {
+    //   console.error("Error updating InputName in Firebase", error);
+    // });
+    setError('');
+
+    if (!name || !age || !gender || !height || !weight) {
+      // If any of the fields is empty, show an error message
+      setError('Please fill in all fields.');
+    }
+    // Update the error state to an empty string to clear any previous errors
+    if (!biometricEmbedding){
+      setError(prevError => (prevError ? `${prevError} \n Please set up biometric verification first.` : `Please set up biometric verification first.`));
+    }
+
+    if (error ===''){
+      handleSave();
+    }else{return}
+    
+  };
+
+  const AddBiometric = async () => {
     //update the username to InputName at firebase 
 
     const InputNameRef = ref(database, 'Controls/InputName')
     set(InputNameRef, name).catch((error) => {
       console.error("Error updating InputName in Firebase", error);
     });
-   
+    
 
     try {
       const response = await fetch('http://raspberry_pi_ip:8080'); //need to change the url
@@ -95,12 +152,31 @@ function AddUser() {
       // Reset any previous error
       setError('');
       // Optionally, handle the result accordingly, like updating UI
+
+       //setBiometricEmbedding
+       setBiometricEmbedding(null)
     } catch (err) {
       // Update the state with the error
       setError('Error: ' + err.message);
       // Optionally, handle errors, like showing error messages
+
+      //setBiometricEmbedding
+      setBiometricEmbedding(null)
     }
   };
+
+  // Render the error pop-up
+  const renderErrorPopup = () => {
+    if (!error) return null;
+
+    return (
+      <div className="error-popup">
+        <p>{error}</p>
+        <button onClick={() => setError('')}>Close</button>
+      </div>
+    );
+  };
+  
   return (
     <div className="my-profile">
       <div className="overlap-wrapper">
@@ -177,16 +253,17 @@ function AddUser() {
                 <span className="unit-au"> kg</span>
               </div>
               <div>
-              <button className="bio-verif-button" onClick={ () => {setIsModalOpen(true); AddNewUser(); }} id="setupProfileButton">
+              <button className="bio-verif-button" onClick={ () => {setIsModalOpen(true); AddBiometric() }} id="setupProfileButton">
                 Set Up Biometric Verification
               </button>
-              {renderModal()}
+              {result && renderModal()}
               {result && <div>Result: {JSON.stringify(result)}</div>}
-              {error && <div className="error-message">{error}</div>}
             </div>
-              <button className="done-button" onClick={handleSave}>
+              <button className="done-button" onClick={ () =>{ setIsSaveModalOpen(true); AddNewUser()}}>
                 Save
               </button>
+              {renderSaveModal()}
+              {error && <div className="error-message">{error}</div>}
             </div>
           </div>
         </div>
