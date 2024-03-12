@@ -10,7 +10,7 @@ import tickIcon from '../../imgs/Asset 51@720x.png';
 import tickWhite from '../../imgs/Asset 52@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
 import database from '../../firebase'; // Adjust the path as needed
-import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
+import { query, ref, onValue, orderByKey , startAt, set} from 'firebase/database'
 
 function ProfileHeader() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -48,7 +48,13 @@ function ProfileHeader() {
           {/* Dropdown items go here */}
           {userlist.map((user) => (
             //clicking on the user should change the user in the profile header
-            <div key={user} onClick={() => setUser(user)} >{user} </div>
+            <div key={user} onClick={() => {
+              setUser(user)
+              //update firebase
+              const UserRef = query(ref(database, 'Controls/User'));
+              set(UserRef, user);
+            }
+            } >{user} </div>
           ))}
           {/* <div>Option 1</div>
           <div>Option 2</div>
@@ -62,6 +68,10 @@ function ProfileHeader() {
 function MyProfile() {
   const [user, setUser] = useState('My')
   const [lastFetchedTime, setLastFetchedTime] = useState();
+  const [age, setAge] = useState();
+  const [height, setHeight] = useState();
+  const [weight, setWeight] = useState();
+  const [gender, setGender] = useState();
 
   useEffect(() => {
     const ESRef = query(ref(database, 'Controls/User'));
@@ -69,7 +79,23 @@ function MyProfile() {
     const data = snapshot.val();
     setUser(data );
     setLastFetchedTime(data) //for data render
-  });});
+  });
+
+  const Ref = query(ref(database, user + '/Params'));
+  onValue(Ref, (snapshot) => {
+  const age = snapshot.val()['Age'];
+  const height = snapshot.val()['Height'];
+  const weight = snapshot.val()['Weight'];
+  const gender = snapshot.val()['Gender'];
+
+  setAge(age);
+  setHeight(height);
+  setWeight(weight);
+  setGender(gender);
+  });
+
+
+});
 
 
   return (
@@ -137,21 +163,21 @@ function MyProfile() {
                         </div>
                         <div className="info-section">
                           <span className="label">Age:</span>
-                          <span className="value2">25</span>
+                          <span className="value2">{age}</span>
                           <span className="unit"> years</span>
                         </div>
                         <div className="info-section">
                           <span className="label">Gender:</span>
-                          <span className="value2">Male</span>
+                          <span className="value2">{gender}</span>
                         </div>
                         <div className="info-section">
                           <span className="label">Height:</span>
-                          <span className="value2">172</span>
+                          <span className="value2">{height}</span>
                           <span className="unit" style={{ right: '13px' }}> cm</span>
                         </div>
                         <div className="info-section">
                           <span className="label">Weight:</span>
-                          <span className="value2">72</span>
+                          <span className="value2">{weight}</span>
                           <span className="unit" style={{ right: '17px' }}> kg</span>
                         </div>
                         <button className="done-button">Done</button>
