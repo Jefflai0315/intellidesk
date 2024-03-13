@@ -103,6 +103,7 @@ if __name__ == "__main__":
     while True:
         BiometricRecroding = firebase_refs.child('Controls/BiometricRecording').get()
         if  BiometricRecroding == 1:
+            firebase_refs.child('Controls/').update({"PostureCamera":0}) # off the posture camera so we can use the camera for biometric recording
             num_images = 5
             interval = 3  # seconds
             img_dir = "SetUpImages"
@@ -113,5 +114,6 @@ if __name__ == "__main__":
 
             input_name = firebase_refs.child('Controls/InputName').get()
             face_recognition = FaceSetUp(similarity_threshold = 0.40, firebase_refs= firebase_refs)
-            face_recognition.add_face_embeddings(img_dir, input_name) # need to add input name , when user key in name from the app 
-            firebase_refs.child('Controls/').update({"BiometricRecording":0})
+            if input_name != "":
+                face_recognition.add_face_embeddings(img_dir, input_name) # need to add input name , when user key in name from the app 
+            firebase_refs.child('Controls/').update({"BiometricRecording":2})

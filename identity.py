@@ -18,12 +18,12 @@ def initialize_firebase():
     return db.reference()
 
 class FaceRecognition:
-    def __init__(self, img_dir, similarity_threshold=0.5, firebase_refs=None):
+    def __init__(self, similarity_threshold=0.5, firebase_refs=None):
         self.app = FaceAnalysis(providers=['CPUExecutionProvider'])
         self.app.prepare(ctx_id=0, det_size=(640, 640))
         self.firebase_refs = firebase_refs
         self.face_embeddings_ref = firebase_refs.child('Controls/FaceEmbeddings/')
-        self.known_embeddings = self.extract_known_embeddings(img_dir)
+        self.known_embeddings = self.extract_known_embeddings()
         self.similarity_threshold = similarity_threshold
 
 
@@ -40,7 +40,7 @@ class FaceRecognition:
 
 
 
-    def extract_known_embeddings(self, img_dir):
+    def extract_known_embeddings(self):
         known_embeddings = self.firebase_refs.child(f'Controls/FaceEmbeddings/').get()
         
 
@@ -99,36 +99,36 @@ if __name__ == "__main__":
     # cv2.imwrite("./output.jpg", result_img)  # Save the image
     start_time = datetime.now().timestamp()*1000
     last_time = time.time()
-    interval = 0
+    interval = 3
     cap = cv2.VideoCapture(0)
     while cap.isOpened():
         # cur_time = datetime.now().timestamp()*1000
-        current_time = time.time()
-        if current_time - last_time >= interval: # 3-second interval has passed
-            # Capture and process frame
-            last_time = current_time
-            success, image = cap.read()
-            cv2.imwrite("./static/images/identity.jpg", image)
-            img_path = "./static/images/identity.jpg"
+        if firebase_refs.child("Controls/PostureCamera").get()==1:
+            current_time = time.time()
+            if current_time - last_time >= interval: # 3-second interval has passed
+                # Capture and process frame
+                last_time = current_time
+                success, image = cap.read()
+                cv2.imwrite("./static/images/identity.jpg", image)
+                img_path = "./static/images/identity.jpg"
 
-            if not success:
-                print("Null.Frames")
-                cap.release()
-                break
-            else: 
-                face_recognition = FaceRecognition(img_dir,similarity_threshold = 0.40, firebase_refs= firebase_refs)
-                result_img, identity = face_recognition.identify_persons(img_path)
-                #update identity
-                if identity == "Unknown":
-                    firebase_refs.child(f'Controls/').update({'PostureNudge': 4})
-                    identity = ''
-                firebase_refs.child(f'Controls/').update({'User': identity})
+                if not success:
+                    print("Null.Frames")
+                    cap.release()
+                    break
+                else: 
+                    face_recognition = FaceRecognition(similarity_threshold = 0.40, firebase_refs= firebase_refs)
+                    result_img, identity = face_recognition.identify_persons(img_path)
+                    #update identity
+                    if identity == "Unknown":
+                        firebase_refs.child(f'Controls/').update({'PostureNudge': 4})
+                        identity = ''
+                    firebase_refs.child(f'Controls/').update({'User': identity})
 
-            cv2.imshow('Webcam', result_img)
+                cv2.imshow('Webcam', result_img)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             # self.firebase_refs['Session'].update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
-            
             break
     print('Finished.')
     cap.release()

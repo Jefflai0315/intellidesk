@@ -212,18 +212,20 @@ class PostureAnalyzer:
         while self.cap.isOpened():
             # cur_time = datetime.now().timestamp()*1000
             current_time = time.time()
-            if current_time - last_time >= 3:  # 3-second interval has passed
-                # Capture and process frame
-                last_time = current_time
-            # Capture frames.
-                image = self.read()
-            # Write frames.
-                cv2.imshow('Webcam', image)
+            PostureCamera = self.firebase_refs.child('Controls/PostureCamera').get()
+            if PostureCamera == 1:
+                if current_time - last_time >= 3:  # 3-second interval has passed
+                    # Capture and process frame
+                    last_time = current_time
+                # Capture frames.
+                    image = self.read()
+                # Write frames.
+                    cv2.imshow('Webcam', image)
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 self.firebase_refs.child(f'{self.user}/Session/').update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
                 # self.firebase_refs['Session'].update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
-             
+                
                 break
         print('Finished.')
         self.cap.release()
