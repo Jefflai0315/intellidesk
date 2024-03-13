@@ -144,6 +144,7 @@ function MyProfile() {
                 <div className="overlap-group-3">
                   <div className="profile-card">
                     <ProfileHeader />
+                    {/* <div className="buffer" />
                     <Link to='/EditUser'>
                       <button className="edit-button" >Edit</button>
                     </Link>
@@ -151,11 +152,17 @@ function MyProfile() {
                       <button className="add-button">
                         <span>+ user</span>
                       </button>
-                    </Link>
-                    <div className="profile-picture">
-                      <span>add profile photo</span>
-                    </div>
+                    </Link> */}
                     <div className="profile-info">
+                      <div className="buffer" />
+                      <Link to='/EditUser'>
+                        <button className="edit-button" >Edit</button>
+                      </Link>
+                      <Link to="/AddUser">
+                        <button className="add-button">
+                          <span>+ user</span>
+                        </button>
+                      </Link>
                       <div className="profile-info-item">
                         <div className="info-section">
                           <span className="label">Name:</span>

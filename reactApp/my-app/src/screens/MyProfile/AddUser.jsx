@@ -259,9 +259,6 @@ function AddUser() {
               <div className="group-8">
                 <div className="overlap-group-3">
                   <div className="profile-card-add-user">
-                    <div className="profile-picture">
-                      <span>add profile photo</span>
-                    </div>
                     <div className="profile-info">
             <div className="profile-info-item">
               <div className="info-section">

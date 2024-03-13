@@ -206,9 +206,6 @@ function AddUser() {
               <div className="group-8">
                 <div className="overlap-group-3">
                   <div className="profile-card-add-user">
-                    <div className="profile-picture">
-                      <span>add profile photo</span>
-                    </div>
                     <div className="profile-info">
             <div className="profile-info-item">
               <div className="info-section">
@@ -217,25 +214,25 @@ function AddUser() {
               </div>
               <div className="info-section">
                 <span className="label">Age:</span>
-                <input type="text" value={age} onChange={(e) => setAge(e.target.value)} className="profile-input age-input"/>
+                <input type="text" value={age} onChange={(e) => setAge(e.target.value)} className="profile-input age-input" style={{color: '#fff'}}/>
                 <span className="unit-au"> years</span>
               </div>
               <div className="info-section">
                 <span className="label">Gender:</span>
-                <input type="text" value={gender} onChange={(e) => setGender(e.target.value)} className="profile-input gender-input"/>
+                <input type="text" value={gender} onChange={(e) => setGender(e.target.value)} className="profile-input gender-input" style={{color: '#fff'}}/>
               </div>
               <div className="info-section">
                 <span className="label">Height:</span>
-                <input type="text" value={height} onChange={(e) => setHeight(e.target.value)} className="profile-input height-input"/>
+                <input type="text" value={height} onChange={(e) => setHeight(e.target.value)} className="profile-input height-input" style={{color: '#fff'}}/>
                 <span className="unit-au"> cm</span>
               </div>
               <div className="info-section">
                 <span className="label">Weight:</span>
-                <input type="text" value={weight} onChange={(e) => setWeight(e.target.value)} className="profile-input weight-input"/>
+                <input type="text" value={weight} onChange={(e) => setWeight(e.target.value)} className="profile-input weight-input" style={{color: '#fff'}}/>
                 <span className="unit-au"> kg</span>
               </div>
               <div>
-              <button className="bio-verif-button" onClick={ () => {setIsModalOpen(true); AddNewUser(); }} id="setupProfileButton">
+              <button className="bio-verif-button" onClick={ () => {setIsModalOpen(true); AddNewUser(); }} id="setupProfileButton" style={{color: '#fff'}}>
                 Set Up Biometric Verification
               </button>
               {result && renderModal()}

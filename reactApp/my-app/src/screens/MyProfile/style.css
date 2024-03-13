@@ -1958,22 +1958,43 @@
   
   .my-profile .edit-button {
     position: absolute; /* Position it relative to the profile card */
-    top: 140px; /* Position from the top */
+    top: 20px; /* Position from the top */
     left: 20px; /* Position from the right */
     font-family: "Open Sans Bold", Helvetica;
     color: #A9FF9B; /* Light green text color as seen in the image */
     background-color: #444444;
     border-radius: 5px;
+    width: 40px;
+    height: 25px;
+  }
+
+  .buffer {
+    display: inline-block;
+    background-color: #3B3B3B; /* Example button color */
+    padding: 17px 20px;
+    margin: 5px; /* Spacing between buttons */
+  }
+  
+  .edit-button:hover {
+    background-color: #101010;
+    cursor: pointer;
   }
 
   .my-profile .add-button {
     position: absolute; /* Position it relative to the profile card */
-    top: 140px; /* Position from the top */
+    top: 20px; /* Position from the top */
     right: 20px; /* Position from the right */
     font-family: "Open Sans Bold", Helvetica;
     color: #A9FF9B; /* Light green text color as seen in the image */
     background-color: #444444;
     border-radius: 5px;
+    width: 55px;
+    height: 25px;
+  }
+
+  .add-button:hover {
+    background-color: #101010;
+    cursor: pointer;
   }
   
   .my-profile .done-button {
@@ -1986,6 +2007,11 @@
     margin-top: 10px; /* Spacing above the button */
     display: flex;
     margin-left: auto;
+  }
+
+  .done-button:hover {
+    background-color: #101010;
+    cursor: pointer;
   }
 
   .my-profile .bio-verif-button {
@@ -2020,7 +2046,7 @@
     font-family: "Open Sans", Helvetica;
     font-size: 23px;
     right: 0;
-    margin-top: 12px;
+    /* margin-top: 10px; */
   }
 
   .my-profile .info-section .value2 {
@@ -2029,7 +2055,7 @@
     font-family: "Open Sans", Helvetica;
     font-size: 23px;
     right: 35px;
-    margin-top: 12px;
+    /* margin-top: 10px; */
   }
 
   .my-profile .info-section .unit {
@@ -2039,7 +2065,7 @@
     top: 3px; 
     right: 0; 
     padding-left: 5px;
-    margin-top: 12px;
+    margin-top: 5px;
   }
 
   .my-profile .info-section .unit-au {
@@ -2086,26 +2112,55 @@
 
   .my-profile .name-input {
     width: 60%; 
+    height: 17px;
+    position: relative;
+    right: 5px;
+    padding: 10px 7px; /* Add vertical and horizontal padding */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+    display: block;
+    line-height: 20px;
   }
 
   .my-profile .age-input {
-    width: 46.5%; 
+    width: 48.5%;
+    height: 25px; /* Adjust the height as needed to fit your design */
     position: relative;
     right: 35px;
+    padding: 10px 7px; /* Add vertical and horizontal padding */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+    display: block;
+    line-height: 20px;
   }
 
   .my-profile .gender-input {
     width: 60%; 
+    height: 17px;
+    position: relative;
+    right: 5px;
+    padding: 10px 7px; /* Add vertical and horizontal padding */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+    display: block;
+    line-height: 20px;
   }
 
   .my-profile .height-input {
-    width: 50%; 
+    width: 52.5%; 
+    height: 17px;
+    padding: 10px 7px; /* Add vertical and horizontal padding */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+    display: block;
+    line-height: 20px;
     position: relative;
     right: 25px;
   }
 
   .my-profile .weight-input {
-    width: 50%; 
+    width: 52.5%; 
+    height: 17px;
+    padding: 10px 7px; /* Add vertical and horizontal padding */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+    display: block;
+    line-height: 20px;
     position: relative;
     right: 25px;
   }
@@ -2137,8 +2192,8 @@
     font-size: 13px;
     font-family: "Open Sans", Helvetica;
     padding: 5px;
-    width: 45%; /* Adjust based on your layout */
-    text-align: center;
+    width: 80%; /* Adjust based on your layout */
+    text-align: right;
     margin-left: auto;
     text-decoration: underline;
   }
@@ -2148,6 +2203,4 @@
     border-radius: 4px; /* Rounds the corners of the input box */
     background-color: #757575;
   }
-
-  
   
