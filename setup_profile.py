@@ -99,14 +99,19 @@ def capture_images(output_dir, num_images, interval):
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    num_images = 5
-    interval = 3  # seconds
-    img_dir = "SetUpImages"
-
-    capture_images(img_dir, num_images, interval)
-    
-    # img_path = '/Users/jefflai/intellidesk-screen/test.jpg'
     firebase_refs = initialize_firebase()
-    input_name = firebase_refs.child('Controls/InputName').get()
-    face_recognition = FaceSetUp(similarity_threshold = 0.40, firebase_refs= firebase_refs)
-    face_recognition.add_face_embeddings(img_dir, input_name) # need to add input name , when user key in name from the app 
+    while True:
+        BiometricRecroding = firebase_refs.child('Controls/BiometricRecording').get()
+        if  BiometricRecroding == 1:
+            num_images = 5
+            interval = 3  # seconds
+            img_dir = "SetUpImages"
+
+            capture_images(img_dir, num_images, interval)
+            
+            # img_path = '/Users/jefflai/intellidesk-screen/test.jpg'
+
+            input_name = firebase_refs.child('Controls/InputName').get()
+            face_recognition = FaceSetUp(similarity_threshold = 0.40, firebase_refs= firebase_refs)
+            face_recognition.add_face_embeddings(img_dir, input_name) # need to add input name , when user key in name from the app 
+            firebase_refs.child('Controls/').update({"BiometricRecording":0})
