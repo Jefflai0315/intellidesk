@@ -10,7 +10,7 @@ import tickIcon from '../../imgs/Asset 51@720x.png';
 import tickWhite from '../../imgs/Asset 52@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
 import database from '../../firebase'; // Adjust the path as needed
-import { query, ref, set,update} from 'firebase/database'
+import { query, ref, set,update, onValue, off} from 'firebase/database'
 
 function AddUser() {
   // const [user, setUser] = useState('My')
@@ -27,6 +27,10 @@ function AddUser() {
    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
     const [biometricEmbedding, setBiometricEmbedding] = useState(null);
+
+  
+
+    
 
 
   const renderModal = () => {
@@ -55,12 +59,29 @@ function AddUser() {
               textAlign: 'center', 
               lineHeight: '1.3', 
             }}>
-              Proceed to your table to set up biometric verification.
+              Proceed to your table to set up biometric verification for {name}.
             </p>
+            <button 
+            onClick={() => startBiometricRecording()}
+            >
+            Start
+          </button>
+
         </div>
       </div>
     );
   };
+
+  const startBiometricRecording=() => {
+    setIsModalOpen(false);
+    const bioRecordRef = ref(database, 'Controls/BiometricRecording')
+    set(bioRecordRef, 1).catch((error) => {
+      console.error("Error turn on Biometric Recording in Firebase", error);
+    });
+    setResult('Recording')
+  }
+
+    
 
   const renderSaveModal = () => {
     if (!isSaveModalOpen || error) return null;
@@ -112,7 +133,7 @@ function AddUser() {
       setError('Please fill in all fields.');
     }
     // Update the error state to an empty string to clear any previous errors
-    if (!biometricEmbedding){
+    if (biometricEmbedding ===0){
       setError(prevError => (prevError ? `${prevError} \n Please set up biometric verification first.` : `Please set up biometric verification first.`));
     }
 
@@ -130,26 +151,31 @@ function AddUser() {
       console.error("Error updating InputName in Firebase", error);
     });
     
+    if (name !== ''){
+      try {
+        // const response = await fetch('http://raspberry_pi_ip:8080'); //need to change the url
+        // const jsonResult = await response.json();
 
-    try {
-      const response = await fetch('http://raspberry_pi_ip:8080'); //need to change the url
-      const jsonResult = await response.json();
+        // // Update the state with the result
+        const embeddingsRef = query(ref(database, 'Controls/FaceEmbeddings'));
+        onValue(embeddingsRef, (snapshot) => {
+          const embeddings = snapshot.val();
+          setResult("Successfully connected");})
 
-      // Update the state with the result
-      setResult(jsonResult);
-      // Reset any previous error
-      setError('');
-      // Optionally, handle the result accordingly, like updating UI
+        // Reset any previous error
+        setError('');
+        //TODO: setBiometricEmbedding
+        setBiometricEmbedding(1)
+      } catch (err) {
+        // Update the state with the error
+        setError('Error: ' + err.message);
+        // Optionally, handle errors, like showing error messages
 
-       //TODO: setBiometricEmbedding
-       //setBiometricEmbedding(jsonResult.biometricEmbedding)
-    } catch (err) {
-      // Update the state with the error
-      setError('Error: ' + err.message);
-      // Optionally, handle errors, like showing error messages
-
-      //setBiometricEmbedding
-      setBiometricEmbedding(null)
+        //setBiometricEmbedding
+        setBiometricEmbedding(0)
+      }
+    }else{
+      setError('Please fill in the name field first.');
     }
   };
 
@@ -160,10 +186,11 @@ function AddUser() {
     console.log('handle save')
      // Perform the save operation, e.g., update Firebase with the user data
      const UserDetailRef = query(ref(database, name + '/Params'));
-     update(UserDetailRef,{'Age': age, 'Gender': gender, 'Height': height, 'Weight': weight}).catch((error) => { console.error("Error updating InputName in Firebase", error);})
-     const embeddingRef = query(ref(database, 'Controls/FaceEmbeddings/'+name));
-     update(embeddingRef, biometricEmbedding).catch((error) => { console.error("Error updating biometricEmbedding in Firebase", error);})
-
+     update(UserDetailRef,{'Age': age, 'Gender': gender, 'Height': height, 'Weight': weight, "0": 80, "1":100, "2":120, "3":130,"4":150, "CaloriesBurnedGoal":500, "CaloriesBurned":0,"PsotureScore":0,"UprightStreak":0,"UprightTime":0}).catch((error) => { console.error("Error updating InputName in Firebase", error);})
+    //  const embeddingRef = query(ref(database, 'Controls/FaceEmbeddings/'+name));
+    //  update(embeddingRef, biometricEmbedding).catch((error) => { console.error("Error updating biometricEmbedding in Firebase", error);})
+    // embedding upload from another script
+    setBiometricEmbedding(0)
   };
 
 
