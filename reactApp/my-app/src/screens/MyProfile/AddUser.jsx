@@ -83,10 +83,11 @@ function AddUser() {
               style={{
               color: '#fff', 
               fontSize: '14px', 
-              textAlign: 'center', 
+              textAlign: 'left', 
               lineHeight: '1.5', 
+              padding: '15px 10px', 
             }}>
-              Proceed to your desk to set up biometric verification for {name}. 
+              Proceed to your desk to set up biometric verification for {name}. <br /><br />
               Once you are at your desk, center yourself in front of the desk and stand upright in front of it and click the 'Start' button.
             </p>
             <button 
@@ -330,14 +331,17 @@ function AddUser() {
               <button className="bio-verif-button" onClick={ () => {setIsModalOpen(true); AddBiometric() }} id="setupProfileButton">
                 Set Up Biometric Verification
               </button>
-              <span className="info-icon" onMouseDown={(e) => e.stopPropagation()} onClick={togglePopup} style={{ cursor: 'pointer', marginLeft: '10px', top: '213px', position: 'absolute', left: '50px', fontSize: '20px' }}>
+                <span className="info-icon" onMouseDown={(e) => e.stopPropagation()} onClick={togglePopup} style={{ cursor: 'pointer', marginLeft: '10px', top: '214px', position: 'absolute', left: '30px', fontSize: '20px', width: '23px', height: '23px', backgroundColor: '#444444', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',     borderRadius: '50%', padding: '5px', boxSizing: 'border-box' }}>
                 ℹ️
               </span>
               {isPopupOpen && (
                 <div className="popup" onMouseDown={(e) => e.stopPropagation()} style={{
                   position: 'absolute',
-                  background: '#101010',
+                  background: '#252525',
                   padding: '10px',
+                  width: '250px',
+                  lineHeight: '1.3',
+                  padding: '25px 13px',
                   borderRadius: '5px',
                   boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
                   left: '50%', // Adjust based on actual layout
@@ -345,7 +349,8 @@ function AddUser() {
                   transform: 'translateX(-50%)',
                   zIndex: 100, // Ensure it's above other content
                 }}>
-                  Steps on how to do Biometric Verification...TO DO
+                  Fill up all the relevant information fields above and click the 'Set Up Biometric Verification' button to proceed. <br /><br />
+                  Once you have set up biometric verification, you can save your profile by clicking the 'Save' button.
                 </div>
               )}
               {result && renderModal()}
