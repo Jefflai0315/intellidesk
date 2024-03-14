@@ -118,6 +118,23 @@ function AddUser() {
       console.error("Error turn on Biometric Recording in Firebase", error);
     });
     setResult('Recording')
+    // Listen for changes in the recording state
+  const unsubscribe = onValue(bioRecordRef, (snapshot) => {
+    const bioRecord = snapshot.val();
+    console.log(bioRecord);
+
+    // Check if recording is finished
+    if (bioRecord === 2) {
+      setResult('Finished');
+      // Reset the biometric recording state in Firebase
+      set(bioRecordRef, 0).catch((error) => {
+        console.error("Error resetting Biometric Recording in Firebase", error);
+      });
+
+      // Unsubscribe from the changes to stop listening once the desired state is reached
+      unsubscribe();
+    }
+  });
   }
 
     
@@ -201,7 +218,7 @@ function AddUser() {
         const embeddingsRef = query(ref(database, 'Controls/FaceEmbeddings'));
         onValue(embeddingsRef, (snapshot) => {
           const embeddings = snapshot.val();
-          setResult("Successfully connected");})
+          setResult("Success");})
 
         // Reset any previous error
         setError('');
