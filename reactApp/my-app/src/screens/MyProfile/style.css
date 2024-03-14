@@ -877,6 +877,7 @@
     position: absolute;
     top: 29px;
     width: 235px;
+    z-index: 0;
   }
   
   .my-profile .text-wrapper-15 {
@@ -2184,6 +2185,8 @@
     border-radius: 5px;
     width: 90%; /* or a fixed width */
     max-width: 275px; /* maximum width */
+    height: auto;
+    margin: auto;
   }
 
   .error-message {
@@ -2203,4 +2206,3 @@
     border-radius: 4px; /* Rounds the corners of the input box */
     background-color: #757575;
   }
-  

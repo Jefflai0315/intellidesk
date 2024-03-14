@@ -9,6 +9,7 @@ import moreIcon from '../../imgs/Group 27more.png';
 import tickIcon from '../../imgs/Asset 51@720x.png';
 import tickWhite from '../../imgs/Asset 52@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
+import standAtTable from '../../imgs/Asset 54@720x.png';
 import database from '../../firebase'; // Adjust the path as needed
 import { query, ref, set,update, onValue, off} from 'firebase/database'
 
@@ -20,18 +21,37 @@ function AddUser() {
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
   const [lastFetchedTime, setLastFetchedTime] = useState();
-   // State to store the fetched result
-   const [result, setResult] = useState(null);
-   // State to store any potential error
-   const [error, setError] = useState('');
-   const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
-    const [biometricEmbedding, setBiometricEmbedding] = useState(null);
+  // State to store the fetched result
+  const [result, setResult] = useState(null);
+  // State to store any potential error
+  const [error, setError] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
+  const [biometricEmbedding, setBiometricEmbedding] = useState(null);
 
-  
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-    
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
+  };  
 
+  const closePopup = (e) => {
+    // If the popup is open and the clicked target is not our "i" icon or the popup content itself,
+    // then close the popup.
+    if (isPopupOpen && !e.target.closest('.info-icon, .popup')) {
+      setIsPopupOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    // Add event listener to the document to close the popup when clicking anywhere on the screen.
+    document.addEventListener('click', closePopup);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      document.removeEventListener('click', closePopup);
+    };
+  }, [isPopupOpen]); // Depend on isPopupOpen so that the effect correctly handles its current state.
 
   const renderModal = () => {
     if (!isModalOpen) return null;
@@ -43,7 +63,7 @@ function AddUser() {
             onClick={() => setIsModalOpen(false)}
             style={{
               position: 'relative',
-              top: '-2px', // Distance from the top
+              top: '0', // Distance from the top
               left: '257px', // Distance from the right
               background: 'transparent',
               border: 'none',
@@ -53,20 +73,39 @@ function AddUser() {
             }}>
             X
           </button>
-            <p style={{
+          <img src={standAtTable} className="stand-at-table" style={{
+            maxWidth: '100%', // Ensures the image is not wider than the modal
+            height: '100px', // Maintains aspect ratio
+            display: 'block', // Ensures the image does not have extra space below (inline elements have space)
+            margin: '10px auto',
+          }} />
+            <p 
+              style={{
               color: '#fff', 
               fontSize: '14px', 
               textAlign: 'center', 
-              lineHeight: '1.3', 
+              lineHeight: '1.5', 
             }}>
-              Proceed to your table to set up biometric verification for {name}.
+              Proceed to your desk to set up biometric verification for {name}. 
+              Once you are at your desk, center yourself in front of the desk and stand upright in front of it and click the 'Start' button.
             </p>
             <button 
             onClick={() => startBiometricRecording()}
+            style={{
+              position: 'relative',
+              top: '0', // Distance from the top
+              left: '115px', // Distance from the right
+              background: '#444444',
+              border: 'none',
+              borderRadius: '5px',
+              fontSize: '15px', // Adjust the size as needed
+              color: '#A9FF9B',
+              cursor: 'pointer',
+              width: '70px',
+              height: '25px',}}
             >
             Start
           </button>
-
         </div>
       </div>
     );
@@ -134,10 +173,12 @@ function AddUser() {
     }
     // Update the error state to an empty string to clear any previous errors
     if (biometricEmbedding ===0){
+      console.log('line 157')
       setError(prevError => (prevError ? `${prevError} \n Please set up biometric verification first.` : `Please set up biometric verification first.`));
     }
 
     if (error ===''){
+      console.log('line 162')
       handleSave();
     }else{return}
     
@@ -191,6 +232,7 @@ function AddUser() {
     //  update(embeddingRef, biometricEmbedding).catch((error) => { console.error("Error updating biometricEmbedding in Firebase", error);})
     // embedding upload from another script
     setBiometricEmbedding(0)
+    setIsSaveModalOpen(true)
   };
 
 
@@ -271,10 +313,31 @@ function AddUser() {
               <button className="bio-verif-button" onClick={ () => {setIsModalOpen(true); AddBiometric() }} id="setupProfileButton">
                 Set Up Biometric Verification
               </button>
+              <span className="info-icon" onMouseDown={(e) => e.stopPropagation()} onClick={togglePopup} style={{ cursor: 'pointer', marginLeft: '10px', top: '213px', position: 'absolute', left: '50px', fontSize: '20px' }}>
+                ℹ️
+              </span>
+              {isPopupOpen && (
+                <div className="popup" onMouseDown={(e) => e.stopPropagation()} style={{
+                  position: 'absolute',
+                  background: '#101010',
+                  padding: '10px',
+                  borderRadius: '5px',
+                  boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
+                  left: '50%', // Adjust based on actual layout
+                  top: '30px', // Adjust based on actual layout
+                  transform: 'translateX(-50%)',
+                  zIndex: 100, // Ensure it's above other content
+                }}>
+                  Steps on how to do Biometric Verification...TO DO
+                </div>
+              )}
               {result && renderModal()}
-              {result && <div>Result: {JSON.stringify(result)}</div>}
+              {result && (
+                <div style={{textAlign: 'right', marginTop: '5px'}}>
+                Result: {JSON.stringify(result)}
+                </div>)}
             </div>
-              <button className="done-button" onClick={ () =>{ setIsSaveModalOpen(true); AddNewUser()}}>
+              <button className="done-button" onClick={ () =>{ AddNewUser()}}>
                 Save
               </button>
               {renderSaveModal()}
