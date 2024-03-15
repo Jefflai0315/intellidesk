@@ -78,11 +78,12 @@ function ProfileHeader() {
             key={item} 
             onClick={() => updateUserSelection(item)}
             style={{
-              backgroundColor: item === user ? '#A9FF9B' : 'transparent', // Highlight the selected user
-              color: item === user ? '#000' : '#fff', // Change text color for the selected user
+              backgroundColor: item === user ? 'rgb(68, 68, 68)' : '#3B3B3B', // Highlight the selected user
+              color: item === user ? '#A9FF9B' : '#fff', // Change text color for the selected user
               fontWeight: item === user ? 'bold' : 'normal',
               padding: '10px',
               cursor: 'pointer',
+              fontSize: '21px'
             }}
           >
             {item}
