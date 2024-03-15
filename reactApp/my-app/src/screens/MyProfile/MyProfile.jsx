@@ -19,7 +19,7 @@ function ProfileHeader() {
 
   useEffect(() => {
     const UserRef = query(ref(database, 'Controls/User'));
-  onValue(UserRef, (snapshot) => {
+    onValue(UserRef, (snapshot) => {
     const data = snapshot.val();
     setUser((prevUser) => {
       console.log('Updated user:', data);
@@ -38,30 +38,59 @@ function ProfileHeader() {
     setDropdownOpen(!dropdownOpen);
   };
   
+  const updateUserSelection = (selectedUser) => {
+    setUser(selectedUser); // Update state
+    setDropdownOpen(false); // Close dropdown
+    
+    // Update Firebase
+    const UserRef = query(ref(database, 'Controls/User'));
+    set(UserRef, selectedUser).catch(error => {
+      console.error("Error updating user in Firebase: ", error);
+    });
+  };
 
   return (
+    // <div className="profile-header" onClick={toggleDropdown}>
+    //   <h1>{user}</h1>
+    //   <span className={`dropdown-arrow ${dropdownOpen ? 'open' : ''}`}>◀</span>
+    //   {dropdownOpen && (
+    //     <div className="dropdown-content">
+    //       {/* Dropdown items go here */}
+    //       {userlist.map((user) => (
+    //         <div key={user} onClick={() => {
+    //           setUser(user)
+    //           //update firebase
+    //           const UserRef = query(ref(database, 'Controls/User'));
+    //           set(UserRef, user);
+    //         }
+    //         } >{user} </div>
+    //       ))}
+    //     </div>
+    //   )}
+    // </div>
     <div className="profile-header" onClick={toggleDropdown}>
-      <h1>{user}</h1>
-      <span className={`dropdown-arrow ${dropdownOpen ? 'open' : ''}`}>◀</span>
-      {dropdownOpen && (
-        <div className="dropdown-content">
-          {/* Dropdown items go here */}
-          {userlist.map((user) => (
-            //clicking on the user should change the user in the profile header
-            <div key={user} onClick={() => {
-              setUser(user)
-              //update firebase
-              const UserRef = query(ref(database, 'Controls/User'));
-              set(UserRef, user);
-            }
-            } >{user} </div>
-          ))}
-          {/* <div>Option 1</div>
-          <div>Option 2</div>
-          <div>Option 3</div> */}
-        </div>
-      )}
-    </div>
+    <h1>{user}</h1>
+    <span className={`dropdown-arrow ${dropdownOpen ? 'open' : ''}`}>◀</span>
+    {dropdownOpen && (
+      <div className="dropdown-content">
+        {userlist.map((item) => (
+          <div 
+            key={item} 
+            onClick={() => updateUserSelection(item)}
+            style={{
+              backgroundColor: item === user ? '#A9FF9B' : 'transparent', // Highlight the selected user
+              color: item === user ? '#000' : '#fff', // Change text color for the selected user
+              fontWeight: item === user ? 'bold' : 'normal',
+              padding: '10px',
+              cursor: 'pointer',
+            }}
+          >
+            {item}
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
   );
 }
 
