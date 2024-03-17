@@ -2192,6 +2192,8 @@
     max-width: 275px; /* maximum width */
     height: auto;
     margin: auto;
+    top: -250px;
+    position: relative;
   }
 
   .error-message {

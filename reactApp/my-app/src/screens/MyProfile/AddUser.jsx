@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { BotBar_Home } from "../../components/BotBar_Home";
 import "./style.css";
 import { Link } from 'react-router-dom';
@@ -31,6 +31,10 @@ function AddUser() {
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
+  const intervalId = useRef(null);
+  const [progressCount, setProgressCount] = useState(0);
+  const [progressMessage, setProgressMessage] = useState('');
+
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
   };  
@@ -52,6 +56,36 @@ function AddUser() {
       document.removeEventListener('click', closePopup);
     };
   }, [isPopupOpen]); // Depend on isPopupOpen so that the effect correctly handles its current state.
+
+  const trackBiometricRecording = () => {
+    setProgressCount(1); // Start with 1/5 images taken
+    setProgressMessage('Biometric verification setup in progress. 1/5 images taken.');
+
+    const intervalId = setInterval(() => {
+      setProgressCount((prevCount) => {
+        if (prevCount < 5) {
+          // Update message as long as count is less than 5
+          setProgressMessage(`Biometric verification setup in progress. ${prevCount + 1}/5 images taken.`);
+          return prevCount + 1;
+        } else {
+          // Once we reach 5, clear the interval and finalize message
+          clearInterval(intervalId.current);
+          setProgressMessage("Biometric verification setup complete.");
+          return prevCount; // No need to update count further
+        }
+      });
+    }, 3000); // Update every 3 seconds
+  };
+  const handleStartButtonClick = () => {
+    startBiometricRecording();
+    trackBiometricRecording();
+  };
+
+  useEffect(() => {
+    // Clean up the interval when component unmounts or modal closes
+    return () => clearInterval(intervalId.current);
+  }, []);
+
 
   const renderModal = () => {
     if (!isModalOpen) return null;
@@ -87,26 +121,36 @@ function AddUser() {
               lineHeight: '1.5', 
               padding: '15px 10px', 
             }}>
-              Proceed to your desk to set up biometric verification for {name}. <br /><br />
-              Once you are at your desk, center yourself in front of the desk and stand upright in front of it and click the 'Start' button.
+              {progressMessage || `Proceed to your desk to set up biometric verification for ${name}.
+              Once you are at your desk, center yourself in front of the desk and stand upright in front of it and click the 'Start' button.`}
+              {/* Proceed to your desk to set up biometric verification for {name}. <br /><br />
+              Once you are at your desk, center yourself in front of the desk and stand upright in front of it and click the 'Start' button. */}
             </p>
-            <button 
-            onClick={() => startBiometricRecording()}
-            style={{
-              position: 'relative',
-              top: '0', // Distance from the top
-              left: '115px', // Distance from the right
-              background: '#444444',
-              border: 'none',
-              borderRadius: '5px',
-              fontSize: '15px', // Adjust the size as needed
-              color: '#A9FF9B',
-              cursor: 'pointer',
-              width: '70px',
-              height: '25px',}}
-            >
-            Start
-          </button>
+            {progressCount === 0 && (
+              <button 
+              // onClick={() => handleStartButtonClick()}
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent event from propagating to parent elements
+                  handleStartButtonClick();
+                  setIsModalOpen(true);
+                }}
+                style={{
+                  position: 'relative',
+                  top: '0', // Distance from the top
+                  left: '115px', // Distance from the right
+                  background: '#444444',
+                  border: 'none',
+                  borderRadius: '5px',
+                  fontSize: '15px', // Adjust the size as needed
+                  color: '#A9FF9B',
+                  cursor: 'pointer',
+                  width: '70px',
+                  height: '25px',
+                }}
+              >
+                Start
+              </button>
+            )}
         </div>
       </div>
     );
@@ -353,6 +397,7 @@ function AddUser() {
                   Once you have set up biometric verification, you can save your profile by clicking the 'Save' button.
                 </div>
               )}
+              {/* Result update text */}
               {result && renderModal()}
               {result && (
                 <div style={{textAlign: 'right', marginTop: '5px'}}>
