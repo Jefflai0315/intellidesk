@@ -35,6 +35,8 @@ function AddUser() {
   const [progressCount, setProgressCount] = useState(0);
   const [progressMessage, setProgressMessage] = useState('');
 
+  const [bioRecordCompleted, setBioRecordCompleted] = useState(false);
+
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
   };  
@@ -58,9 +60,14 @@ function AddUser() {
   }, [isPopupOpen]); // Depend on isPopupOpen so that the effect correctly handles its current state.
 
   const trackBiometricRecording = () => {
+    let bioRecordCompleted = false;
     setProgressCount(1); // Start with 1/5 images taken
     setProgressMessage('Biometric verification setup in progress. 1/5 images taken.');
-
+  
+    // Reference to biometric recording control in Firebase
+    const bioRecordRef = ref(database, 'Controls/BiometricRecording');
+  
+    // Start an interval to update progress count and message
     const intervalId = setInterval(() => {
       setProgressCount((prevCount) => {
         if (prevCount < 5) {
@@ -68,14 +75,87 @@ function AddUser() {
           setProgressMessage(`Biometric verification setup in progress. ${prevCount + 1}/5 images taken.`);
           return prevCount + 1;
         } else {
-          // Once we reach 5, clear the interval and finalize message
-          clearInterval(intervalId.current);
-          setProgressMessage("Biometric verification setup complete.");
-          return prevCount; // No need to update count further
+          // If we have reached 5 but bioRecordCompleted is false, show "processing images..." message
+          if (!bioRecordCompleted) {
+            setProgressMessage("Processing images...");
+          }
+          // Don't update count or message further until bioRecordCompleted becomes true
+          return prevCount;
         }
       });
-    }, 3000); // Update every 3 seconds
+    }, 3000);
+  
+    // Listen for changes in the biometric recording state
+    const unsubscribe = onValue(bioRecordRef, (snapshot) => {
+      const bioRecord = snapshot.val();
+      if (bioRecord === 2) {
+        // Update flag to indicate that bioRecordRef is now 2
+        bioRecordCompleted = true;
+        // Update message to show biometric verification setup is complete
+        setProgressMessage("Biometric verification setup complete.");
+        // Clear the interval as we are done
+        clearInterval(intervalId);
+        // Unsubscribe from the changes to stop listening
+        unsubscribe();
+      }
+    });
   };
+  
+  // // Remember to define your useEffect hook to clean up on component unmount
+  // useEffect(() => {
+  //   // Assuming trackBiometricRecording() is called from here or somewhere relevant
+  //   return () => {
+  //     // Clean up tasks
+  //     clearInterval(intervalId); // Use the correct reference to intervalId here
+  //     // Unsubscribe from Firebase listeners if necessary
+  //   };
+  // }, []); // Add necessary dependencies
+
+  const [bioRecordStatus, setBioRecordStatus] = useState(null);
+
+  useEffect(() => {
+    const bioRecordRef = ref(database, 'Controls/BiometricRecording');
+  
+    // Listen for changes in the BiometricRecording value
+    const unsubscribe = onValue(bioRecordRef, (snapshot) => {
+      const value = snapshot.val();
+      setBioRecordStatus(value); // Update the state with the new value
+    });
+  
+    // Cleanup function to unsubscribe from the Firebase listener
+    return () => unsubscribe();
+  }, []); // Empty dependency array means this effect runs once on mount
+  
+
+  useEffect(() => {
+    const bioRecordRef = ref(database, 'Controls/BiometricRecording');
+  
+    const unsubscribe = onValue(bioRecordRef, (snapshot) => {
+      const value = snapshot.val();
+      if (value === 2 && progressCount === 5) { // Assuming '2' means completed
+        setBioRecordCompleted(true);
+      }
+    });
+  
+    return () => unsubscribe(); // Make sure to unsubscribe when the component unmounts or conditions change
+  }, []); // This might depend on specific variables, depending on your setup
+
+  useEffect(() => {
+    let intervalId;
+  
+    if (progressCount > 0 && progressCount < 7) {
+      intervalId = setInterval(() => {
+        setProgressCount((prevCount) => prevCount + 1);
+      }, 3000); // Update every 3 seconds until reaching 5
+    } else if (progressCount === 6) {
+      clearInterval(intervalId); // Stop the interval once we reach 5
+      // The rest is handled by the Firebase listener
+    }
+  
+    return () => clearInterval(intervalId); // Clean up on component unmount
+  }, [progressCount]);
+  
+
   const handleStartButtonClick = () => {
     startBiometricRecording();
     trackBiometricRecording();
@@ -86,7 +166,51 @@ function AddUser() {
     return () => clearInterval(intervalId.current);
   }, []);
 
-
+  const renderModalContent = () => {
+    // Conditionally render different content and styles based on state
+    if (progressCount === 0) {
+      return (
+        <p style={{ color: '#fff', fontSize: '14px', textAlign: 'left', lineHeight: '1.5', padding: '15px 10px' }}>
+          Proceed to your desk to set up biometric verification for {name}. <br />
+          <br />
+          Once you are at your desk, center yourself in front of the desk and stand upright in front of it and click the 'Start' button.
+        </p>
+      );
+    } else if (progressCount <= 5) {
+      return (
+        <p style={{ color: '#fff', fontSize: '14px', textAlign: 'center', lineHeight: '1.5', padding: '15px 10px' }}>
+          Biometric verification setup in progress.<br />
+          <br />
+          <span style={{ fontWeight: 'bold', fontSize: '18px', color: '#A9FF9B' }}>
+            {progressCount}/5 images taken
+          </span>
+          {console.log(progressCount)}
+          {console.log(bioRecordCompleted)}
+        </p>
+      );
+    } else if (progressCount === 6) {
+      return (
+        <p style={{ color: '#A9FF9B', fontSize: '18px', textAlign: 'center', lineHeight: '1.5', padding: '15px 10px' }}>
+          Processing images...{console.log(bioRecordCompleted)}
+          {console.log(progressCount)}
+        </p>
+      );
+    } else if (progressCount === 7 && bioRecordCompleted) {
+      return (
+        <p style={{ color: '#A9FF9B', fontSize: '20px', textAlign: 'center', lineHeight: '1.5', padding: '15px 10px' }}>
+          Biometric verification setup complete.{console.log(progressCount)}
+        </p>
+      );
+    } else if (progressCount === 7) {
+      // This condition handles the case where progressCount is 7 but bioRecordStatus isn't 2 yet
+      return (
+        <p style={{ color: '#A9FF9B', fontSize: '16px', textAlign: 'center', lineHeight: '1.5', padding: '15px 10px' }}>
+          Updating user database...{console.log(progressCount)}
+        </p>
+      );
+    }
+  };
+  
   const renderModal = () => {
     if (!isModalOpen) return null;
   
@@ -113,19 +237,7 @@ function AddUser() {
             display: 'block', // Ensures the image does not have extra space below (inline elements have space)
             margin: '10px auto',
           }} />
-            <p 
-              style={{
-              color: '#fff', 
-              fontSize: '14px', 
-              textAlign: 'left', 
-              lineHeight: '1.5', 
-              padding: '15px 10px', 
-            }}>
-              {progressMessage || `Proceed to your desk to set up biometric verification for ${name}.
-              Once you are at your desk, center yourself in front of the desk and stand upright in front of it and click the 'Start' button.`}
-              {/* Proceed to your desk to set up biometric verification for {name}. <br /><br />
-              Once you are at your desk, center yourself in front of the desk and stand upright in front of it and click the 'Start' button. */}
-            </p>
+          {renderModalContent()}
             {progressCount === 0 && (
               <button 
               // onClick={() => handleStartButtonClick()}
@@ -170,6 +282,7 @@ function AddUser() {
 
     // Check if recording is finished
     if (bioRecord === 2) {
+      setBioRecordCompleted(true);
       setResult('Finished');
       // Reset the biometric recording state in Firebase
       set(bioRecordRef, 0).catch((error) => {
@@ -181,8 +294,6 @@ function AddUser() {
     }
   });
   }
-
-    
 
   const renderSaveModal = () => {
     if (!isSaveModalOpen || error) return null;
@@ -248,6 +359,7 @@ function AddUser() {
 
   const AddBiometric = async () => {
     //update the username to InputName at firebase 
+    setBioRecordCompleted(false);
 
     const InputNameRef = ref(database, 'Controls/InputName')
     set(InputNameRef, name).catch((error) => {
@@ -382,7 +494,6 @@ function AddUser() {
                 <div className="popup" onMouseDown={(e) => e.stopPropagation()} style={{
                   position: 'absolute',
                   background: '#252525',
-                  padding: '10px',
                   width: '250px',
                   lineHeight: '1.3',
                   padding: '25px 13px',

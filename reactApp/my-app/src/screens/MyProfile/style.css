@@ -2192,7 +2192,7 @@
     max-width: 275px; /* maximum width */
     height: auto;
     margin: auto;
-    top: -250px;
+    top: 0;
     position: relative;
   }
 
