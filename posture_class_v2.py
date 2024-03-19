@@ -31,11 +31,9 @@ class PostureAnalyzer:
     def __init__(self, firebase_refs):
         self.firebase_refs = firebase_refs
         # print('firebase_refs', self.firebase_refs)
-        self.user = firebase_refs.child('Controls/User/').get()
+        self.user = firebase_refs.child('Controls/UserTable/').get()
         self.start_time = datetime.now().timestamp()*1000
         self.firebase_refs.child(f'{self.user}/Session/').update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
-        # self.firebase_refs['Session'].update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
-        # assert(1==2)
         self.standing_frames = 0
         self.current_standing_frames =0
         self.sitting_frames = 0 
@@ -112,40 +110,7 @@ class PostureAnalyzer:
         timer = Timer(10, self.reset_nudge)
         timer.start()
         return f'warning_{ind}'
-
-    def is_fist(self, hand_landmarks):
-    # Get the landmarks for the fingertips, MCP joints, and wrist
-        index_tip_y = hand_landmarks.landmark[8].y 
-        index_mcp_y = hand_landmarks.landmark[5].y 
-        middle_tip_y = hand_landmarks.landmark[12].y 
-        middle_mcp_y = hand_landmarks.landmark[9].y 
-        ring_tip_y = hand_landmarks.landmark[16].y 
-        ring_mcp_y = hand_landmarks.landmark[13].y 
-        pinky_tip_y = hand_landmarks.landmark[20].y
-        pinky_mcp_y = hand_landmarks.landmark[17].y 
-        print(hand_landmarks)
-
-        # Check for a fist gesture
-        if (index_tip_y > index_mcp_y and
-            middle_tip_y > middle_mcp_y and
-            ring_tip_y > ring_mcp_y and
-            pinky_tip_y > pinky_mcp_y ): 
-            return True
-        else:
-            return False
-        
-    def isolate_object(self, image, bbox):
-        # Crop the image
-        x_min, y_min, x_max, y_max = map(int, bbox)
-        # Crop the image
-        crop_img = image[y_min:y_max, x_min:x_max]
-
-        # Pad the cropped image to maintain original size
-        h, w, _ = image.shape
-        padded_img = np.zeros((h, w, 3), dtype=np.uint8)
-        padded_img[y_min:y_min+crop_img.shape[0], x_min:x_min+crop_img.shape[1]] = crop_img
-
-        return padded_img
+    
     
     def send_to_firebase(self, ref,data):
         if ref == 'Controls':
@@ -177,43 +142,37 @@ class PostureAnalyzer:
         }}
         return averaged_data
 
-# Store data points here
-    def detect_identity(self, firebase_refs):
-        img_dir = "Intellidesk"
-        # img_path= '/Users/jefflai/intellidesk-screen/XiongWei_10.jpg'
-        img_path = "static/images/frame.jpg"
-        face_recognition = FaceRecognition(img_dir,similarity_threshold = 0.4, firebase_refs= self.firebase_refs)
-        # face_recognition.add_face_embeddings('/Users/jefflai/intellidesk-screen/faceRecog/Intellidesk/XiongWei', 'XiongWei')
-        result_img, identity = face_recognition.identify_persons(img_path)
-
-        firebase_refs.child(f'Controls/').update({'User': identity})
-        image = result_img
-        return image 
 
 
     def average_and_send(self):
         averaged_data = self.calculate_average(self.data_points)
-        self.send_to_firebase('Posture',averaged_data)
-        print(averaged_data)
+        try:
+            self.send_to_firebase('Posture',averaged_data)
+            print(averaged_data)
+            print('send_to_firebase')
+        except Exception as e:
+            # print("No data captured, as cant detect side profile: " + averaged_data)
+            # print(e)
+            pass
         self.data_points.clear()
         # Reset the timer
-        print('send_to_firebase')
         timer = Timer(12, self.average_and_send)
         timer.start()
 
     def run(self):
         timer = Timer(12, self.average_and_send)
         timer.start()
-        # while self.cap.isOpened():
-        #     cur_time = datetime.now().timestamp()*1000
-        #     if (cur_time - self.last_firebase_update_time) >= self.update_interval:
-        #         self.last_firebase_update_time = cur_time
         last_time = time.time()
         while self.cap.isOpened():
             # cur_time = datetime.now().timestamp()*1000
             current_time = time.time()
             PostureCamera = self.firebase_refs.child('Controls/PostureCamera').get()
-            if PostureCamera == 1:
+            if PostureCamera == 2:
+                if self.start_time == None:
+                    self.user = firebase_refs.child('Controls/UserTable/').get()
+                    self.start_time = datetime.now().timestamp()*1000
+                    self.firebase_refs.child(f'{self.user}/Session/').update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
+        
                 if current_time - last_time >= 3:  # 3-second interval has passed
                     # Capture and process frame
                     last_time = current_time
@@ -221,12 +180,17 @@ class PostureAnalyzer:
                     image = self.read()
                 # Write frames.
                     cv2.imshow('Webcam', image)
+            elif PostureCamera == 0:
+                # print('PostureCamera is off')
+                if self.start_time != None:
+                    print('PostureCamera is off')
+                    self.firebase_refs.child(f'{self.user}/Session/').update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
+                self.start_time = None
+            
+
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
-                self.firebase_refs.child(f'{self.user}/Session/').update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
-                # self.firebase_refs['Session'].update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
-                
-                break
+                 break
         print('Finished.')
         self.cap.release()
         cv2.destroyAllWindows()
@@ -239,13 +203,11 @@ class PostureAnalyzer:
         timestamp = datetime.now().timestamp()*1000
         posture_category = None
         position_category = None
-        fist_detected = False
 
          # Colors.
         blue = (255, 127, 0)
         red = (50, 50, 255)
         green = (127, 255, 0)
-        dark_blue = (127, 20, 0)
         light_green = (127, 233, 100)
         yellow = (0, 255, 255)
         pink = (255, 0, 255)
@@ -265,13 +227,6 @@ class PostureAnalyzer:
 
         # save image to path = 'intellidesk/static/images'
         cv2.imwrite('static/images/frame.jpg', image)
-
-        # very lag to run this, so i seperate the script
-        # if (timestamp - self.last_identity_update_time) >= self.update_interval:
-        #     self.last_identity_update_time = timestamp
-        #     image = self.detect_identity(self.firebase_refs)
-
-
 
         # isolate user/person 
         # detect if there is a screen
@@ -394,11 +349,6 @@ class PostureAnalyzer:
                 scale = height/23 #assume 23cm actual height of laptop
                 eye_screen_distance = int(eye_screen_distance/scale)
                 cv2.putText(image, f'eye to screen distance: {eye_screen_distance}', (w - 800, 300) ,font, 0.9, green, 2)
-
-                current_time = datetime.now().timestamp()*1000
-                # print(current_time - self.last_firebase_update_time,' and ', self.update_interval)
-                # if (current_time - self.last_firebase_update_time) >= self.update_interval:
-                #     self.last_firebase_update_time = current_time
                 
 
                 eye_screen_angle = 90-abs(self.calculate_angle_2p(l_eye_x, l_eye_y, cords[0], cords[1]+height/2))
@@ -413,9 +363,6 @@ class PostureAnalyzer:
                 if len(self.screens_list) >0:
                     self.screens_list = []
 
-
-            
-        
 
             trunk_inclication = self.calculate_angle_2p( l_shldr_x, l_shldr_y,l_hip_x, l_hip_y)
             hip_angle = self.calculate_angle_3p(l_shldr_x, l_shldr_y, l_hip_x, l_hip_y, l_knee_x, l_knee_y)
@@ -480,20 +427,6 @@ class PostureAnalyzer:
             else:
                 position_category = "sitting"
                 self.sitting_frames += 1
-            # cv2.putText(image,"Standing : " + str(round(self.standing_frames/fps,1)) + "s", (10, 130), font, 0.9, green, 2)
-            # cv2.putText(image,"Sitting : " + str(round(self.sitting_frames/fps,1)) + "s", (int(w/3), 130), font, 0.9, light_green, 2)
-
-            # if position_category == "standing":
-            #     cv2.putText(image, 'standing', (int(w/2), int(h/2)-100), font, 0.9, red, 2)
-            
-            #     self.current_standing_frames += 1
-                # if (1/fps) *self.current_standing_frames > 5:
-                    # print("Please hold a fist to move the table up.")
-                    # cv2.putText(image, 'Please hold a fist to move the table up.', (int(w/2), int(h/2)), font, 0.9, red, 2)
-                    # cv2.putText(image, 'table movnig up .', (int(w/2), int(h/2)), font, 0.9, red, 2)
-            
-            # else:
-            #     self.current_standing_frames =0
 
             # Determine whether good posture or bad posture.
             # The threshold angles have been set based on intuition.
@@ -558,27 +491,14 @@ class PostureAnalyzer:
             # cv2.putText(image, time_string, (10, h - 100), font, 0.9, dark_blue, 2)
             cv2.putText(image, posture_category, (10, h - 100), font, 0.9, yellow, 2)
             cv2.putText(image, position_category, (10, h - 200), font, 0.9, yellow, 2)
-        
-            correction_string = 'Correction Count : ' + str(len(self.correction)) 
-            # cv2.putText(image, correction_string, (int(w/3), h - 100), font, 0.9, yellow , 2)
-            # Pose time.
-            bad_count_string = 'Prolong Bad Time : ' + str(round(prolong_bad_time,1)) + 's'
-            # cv2.putText(image, bad_count_string, (int(2*w/3), h - 100), font, 0.9, yellow, 2)
-            # Pose time.
-            time_string_perfect = 'Perfect Posture Time : ' + str(round(perfect_time, 1)) + 's'
-            # cv2.putText(image, time_string_perfect, (10, h - 20), font, 0.9, blue, 2)
-            # if self.good_pos_frames > 0:
-            time_string_good = 'Good Posture Time : ' + str(round(good_time, 1)) + 's'
-            # cv2.putText(image, time_string_good, ( int(w/3), h - 20), font, 0.9, green, 2)
-            # else:
-            time_string_bad = 'Bad Posture Time : ' + str(round(bad_time, 1)) + 's'
-            # cv2.putText(image, time_string_bad, (int(2*w/3), h - 20), font, 0.9, red, 2)
+
 
             # If you stay in bad posture for more than 3 minutes (180s) send an alert.
-            print(prolong_bad_time)
+            time_string_bad = ' Prolong Bad Posture Time : ' + str(round(prolong_bad_time, 1)) + '/' + str(0.6)+ 's'
+            cv2.putText(image, time_string_bad, (int(2*w/3), h - 20), font, 0.9, red, 2)
             if prolong_bad_time > 0.16: # 5 seconds
                 correction_type = self.sendWarning(1)
-
+            
                 self.prolong_bad =0
                 try:
                     print('updating corection')

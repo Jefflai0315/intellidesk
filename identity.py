@@ -103,29 +103,32 @@ if __name__ == "__main__":
     cap = cv2.VideoCapture(0)
     while cap.isOpened():
         # cur_time = datetime.now().timestamp()*1000
+        # if firebase_refs.child("Controls/PostureCamera").get()==1:
         if firebase_refs.child("Controls/PostureCamera").get()==1:
-            current_time = time.time()
-            if current_time - last_time >= interval: # 3-second interval has passed
+            # current_time = time.time()
+            # if current_time - last_time >= interval: # 3-second interval has passed
                 # Capture and process frame
-                last_time = current_time
-                success, image = cap.read()
-                cv2.imwrite("./static/images/identity.jpg", image)
-                img_path = "./static/images/identity.jpg"
+                # last_time = current_time
+            success, image = cap.read()
+            cv2.imwrite("./static/images/identity.jpg", image)
+            img_path = "./static/images/identity.jpg"
 
-                if not success:
-                    print("Null.Frames")
-                    cap.release()
-                    break
-                else: 
-                    face_recognition = FaceRecognition(similarity_threshold = 0.40, firebase_refs= firebase_refs)
-                    result_img, identity = face_recognition.identify_persons(img_path)
-                    #update identity
-                    if identity == "Unknown":
-                        firebase_refs.child(f'Controls/').update({'PostureNudge': 4})
-                        identity = ''
-                    firebase_refs.child(f'Controls/').update({'User': identity})
+            if not success:
+                print("Null.Frames")
+                cap.release()
+                break
+            else: 
+                face_recognition = FaceRecognition(similarity_threshold = 0.40, firebase_refs= firebase_refs)
+                result_img, identity = face_recognition.identify_persons(img_path)
+                #update identity
+                if identity == "Unknown":
+                    firebase_refs.child(f'Controls/').update({'PostureNudge': 4})
+                    identity = ''
+                firebase_refs.child(f'Controls/').update({'UserTable': identity})
+                firebase_refs.child("Controls/").update({'DetectUser': 0})
+                firebase_refs.child("Controls/").update({'PostureCamera': 2})
 
-                cv2.imshow('Webcam', result_img)
+            cv2.imshow('Webcam', result_img)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             # self.firebase_refs['Session'].update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
