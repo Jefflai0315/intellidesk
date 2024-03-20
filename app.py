@@ -224,7 +224,7 @@ class PostureAnalyzer:
                     self.firebase_refs.child("Controls/").update({'PostureCamera': 2})
                 print("identity: " , identity)
                 cv2.imshow('Webcam', result_img)
-                time.delay(2)
+                time.sleep(2)
 
 
             elif PostureCamera == 2:
