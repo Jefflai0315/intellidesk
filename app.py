@@ -47,7 +47,8 @@ class PostureAnalyzer:
         self.correction = []
         self.cap = cv2.VideoCapture(0)
         self.screens_list=[]
-        
+        self.faceRecognition =  FaceRecognition(similarity_threshold = 0.40, firebase_refs= firebase_refs)
+        self.face_recognition = FaceSetUp(similarity_threshold = 0.40, firebase_refs= firebase_refs)
 
         self.mp_pose = mp.solutions.pose
         self.pose = self.mp_pose.Pose()
@@ -199,9 +200,8 @@ class PostureAnalyzer:
                 # img_path = '/Users/jefflai/intellidesk-screen/test.jpg'
 
                 input_name = self.firebase_refs.child('Controls/InputName').get()
-                face_recognition = FaceSetUp(similarity_threshold = 0.40, firebase_refs= firebase_refs)
                 if input_name != "":
-                    face_recognition.add_face_embeddings(img_dir, input_name) # need to add input name , when user key in name from the app 
+                    self.face_recognition.add_face_embeddings(img_dir, input_name) # need to add input name , when user key in name from the app 
                 firebase_refs.child('Controls/').update({"BiometricRecording":2})
 
             if PostureCamera == 1:
@@ -214,8 +214,7 @@ class PostureAnalyzer:
                     self.cap.release()
                     break
                 else: 
-                    face_recognition = FaceRecognition(similarity_threshold = 0.40, firebase_refs= firebase_refs)
-                    result_img, identity = face_recognition.identify_persons(img_path)
+                    result_img, identity = self.faceRecognition.identify_persons(img_path)
                     #update identity
                     if identity == "Unknown":
                         self.firebase_refs.child(f'Controls/').update({'PostureNudge': 4})
