@@ -77,6 +77,7 @@ class FaceRecognition:
             embedding = face.embedding
             max_similarity = -1
             identity = 'Unknown'
+            self.known_embeddings = self.extract_known_embeddings()
             for name, known_embedding in self.known_embeddings.items():
                 similarity = self.cosine_similarity(embedding, known_embedding) 
                 print(f'similarity with {name} from User database: ',similarity)

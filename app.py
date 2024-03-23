@@ -204,7 +204,9 @@ class PostureAnalyzer:
                     BiometricRecroding = firebase_refs.child('Controls/BiometricRecording').get()
                 print('Biometric Recroding Done')
                 #List all blobs (files) in the specified folder
+                bucket = storage.bucket()
                 blobs = bucket.list_blobs(prefix=img_dir)
+                print(blobs)
 
                 # Download each blob (image) to local machine
                 for blob in blobs:
