@@ -8,6 +8,7 @@ import cv2
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
+from firebase_admin import initialize_app, storage
 from collections import defaultdict
 from threading import Timer
 from statistics import mean, mode
@@ -25,7 +26,8 @@ import os
 def initialize_firebase():
     cred = credentials.Certificate("intellidesk-174c9-firebase-adminsdk-garkf-abe9a9fb75.json")
     firebase_admin.initialize_app(cred, {
-        'databaseURL' : "https://intellidesk-174c9-default-rtdb.asia-southeast1.firebasedatabase.app/"
+        'databaseURL' : "https://intellidesk-174c9-default-rtdb.asia-southeast1.firebasedatabase.app/",
+        'storageBucket': 'intellidesk-174c9.appspot.com',
                               })
     return db.reference()
 
@@ -45,7 +47,7 @@ class PostureAnalyzer:
         self.prolong_bad = 0
         self.total_frames = 0
         self.correction = []
-        self.cap = cv2.VideoCapture(0)
+        # self.cap = cv2.VideoCapture(0)
         self.screens_list=[]
         self.faceRecognition =  FaceRecognition(similarity_threshold = 0.40, firebase_refs= firebase_refs)
         self.face_recognition = FaceSetUp(similarity_threshold = 0.40, firebase_refs= firebase_refs)
@@ -63,25 +65,25 @@ class PostureAnalyzer:
         self.last_identity_update_time = datetime.now().timestamp()*1000 
         self.update_interval = 20000
 
-    def capture_images(self,output_dir, num_images, interval):
-        # Create the output directory if it doesn't exist
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
+    # def capture_images(self,output_dir, num_images, interval):
+    #     # Create the output directory if it doesn't exist
+    #     if not os.path.exists(output_dir):
+    #         os.makedirs(output_dir)
 
 
-        # Capture images
-        for i in range(num_images):
-            # Wait for the specified interval
-            time.sleep(interval)
+    #     # Capture images
+    #     for i in range(num_images):
+    #         # Wait for the specified interval
+    #         time.sleep(interval)
 
-            # Capture frame from the camera
-            ret, frame = self.cap.read()
+    #         # Capture frame from the camera
+    #         ret, frame = self.cap.read()
 
-            # Save the captured frame as an image
-            image_path = os.path.join(output_dir, f"{i+1:03d}.jpg")
-            cv2.imwrite(image_path, frame)
-            cv2.imshow('frame', frame)
-            print(f"Saved image: {image_path}")
+    #         # Save the captured frame as an image
+    #         image_path = os.path.join(output_dir, f"{i+1:03d}.jpg")
+    #         cv2.imwrite(image_path, frame)
+    #         cv2.imshow('frame', frame)
+    #         print(f"Saved image: {image_path}")
 
     def findDistance(self,x1, y1, x2, y2):
         dist = m.sqrt((x2-x1)**2+(y2-y1)**2)
@@ -184,34 +186,56 @@ class PostureAnalyzer:
         timer = Timer(12, self.average_and_send)
         timer.start()
         last_time = time.time()
-        while self.cap.isOpened():
+        while True:
             # cur_time = datetime.now().timestamp()*1000
             current_time = time.time()
             PostureCamera = self.firebase_refs.child('Controls/PostureCamera').get()
             BiometricRecroding = firebase_refs.child('Controls/BiometricRecording').get()
             if  BiometricRecroding == 1:
-                self.firebase_refs.child('Controls/').update({"PostureCamera":0}) # off the posture camera so we can use the camera for biometric recording
-                num_images = 5
-                interval = 3  # seconds
+                # self.firebase_refs.child('Controls/').update({"PostureCamera":0}) # off the posture camera so we can use the camera for biometric recording
+                # num_images = 5
+                # interval = 3  # seconds
                 img_dir = "SetUpImages"
 
-                self.capture_images(img_dir, num_images, interval)
-                
+                # self.capture_images(img_dir, num_images, interval)
                 # img_path = '/Users/jefflai/intellidesk-screen/test.jpg'
+                while BiometricRecroding != 3: 
+                    time.sleep(2)
+                    BiometricRecroding = firebase_refs.child('Controls/BiometricRecording').get()
+                print('Biometric Recroding Done')
+                #List all blobs (files) in the specified folder
+                blobs = bucket.list_blobs(prefix=img_dir)
+
+                # Download each blob (image) to local machine
+                for blob in blobs:
+                    # Extract the file name from the blob's name
+                    file_name = os.path.basename(blob.name)
+                    # Define the local file path to save the downloaded image
+                    local_file_path = f"{img_dir}/{file_name}"  # Local path to save the downloaded image
+                    # Download the blob to the local file path
+                    blob.download_to_filename(local_file_path)
+                    print(f"Image downloaded from Firebase Storage and saved to: {local_file_path}")
 
                 input_name = self.firebase_refs.child('Controls/InputName').get()
                 if input_name != "":
                     self.face_recognition.add_face_embeddings(img_dir, input_name) # need to add input name , when user key in name from the app 
                 firebase_refs.child('Controls/').update({"BiometricRecording":2})
 
-            if PostureCamera == 1:
-                success, image = self.cap.read()
-                cv2.imwrite("./static/images/identity.jpg", image)
-                img_path = "./static/images/identity.jpg"
+            elif PostureCamera == 1:
+                # success, image = self.cap.read()
+                # cv2.imwrite("./static/images/identity.jpg", image)
+                # img_path = "./static/images/identity.jpg"
+                #gs://intellidesk-174c9.appspot.com/SetUpImages/images3.jpg
+                remote_img_path = "/home/pi/image.jpg"  
+                img_path = "home/pi/image.jpg"  # Local path to save the retrieved image
+                bucket = storage.bucket()
+                blob = bucket.blob(remote_img_path)
+                blob.download_to_filename(img_path)
 
-                if not success:
+
+                if not os.path.exists(img_path):
                     print("Null.Frames")
-                    self.cap.release()
+                    # self.cap.release()
                     break
                 else: 
                     result_img, identity = self.faceRecognition.identify_persons(img_path)
@@ -232,7 +256,7 @@ class PostureAnalyzer:
                     self.start_time = datetime.now().timestamp()*1000
                     self.firebase_refs.child(f'{self.user}/Session/').update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
         
-                if current_time - last_time >= 3:  # 3-second interval has passed
+                if current_time - last_time >= 1:  # 2-second interval has passed
                     # Capture and process frame
                     last_time = current_time
                 # Capture frames.
@@ -251,7 +275,7 @@ class PostureAnalyzer:
             if cv2.waitKey(1) & 0xFF == ord('q'):
                  break
         print('Finished.')
-        self.cap.release()
+        # self.cap.release()
         cv2.destroyAllWindows()
     
 
@@ -274,13 +298,25 @@ class PostureAnalyzer:
         # Font type.
         font = cv2.FONT_HERSHEY_SIMPLEX
 
-        success, image = self.cap.read()
-        if not success:
+        # success, image = self.cap.read()
+
+        img_path = "home/pi/image.jpg"  # Local path to save the retrieved image
+        bucket = storage.bucket()
+        blob = bucket.blob("/home/pi/image.jpg")
+        blob.download_to_filename(img_path)
+
+
+        if not os.path.exists(img_path):
             print("Null.Frames")
-            return self.cap.release()
+            # self.cap.release()
+            return
+        # if not success:
+        #     print("Null.Frames")
+        #     return self.cap.release()
+        image  = cv2.imread(img_path)
         
         # Get fps.
-        fps = self.cap.get(cv2.CAP_PROP_FPS)
+        # fps = self.cap.get(cv2.CAP_PROP_FPS)
         # Get height and width.
         h, w = image.shape[:2]
 
@@ -541,21 +577,20 @@ class PostureAnalyzer:
         
         
             # Calculate the time of remaining in a particular posture.
-            perfect_time = (1/fps) * self.perfect_pos_frames
-            good_time = (1 / fps) * self.good_pos_frames
-            bad_time =  (1 / fps) * self.bad_pos_frames 
-            prolong_bad_time = (1 / fps) * self.prolong_bad
+            # perfect_time = (1/fps) * self.perfect_pos_frames
+            # good_time = (1 / fps) * self.good_pos_frames
+            # bad_time =  (1 / fps) * self.bad_pos_frames 
 
-            time_string = 'Total Time : ' + str(round(self.total_frames *1/fps, 1)) + 's'
+            # time_string = 'Total Time : ' + str(round(self.total_frames *1, 1)) + 's'
             # cv2.putText(image, time_string, (10, h - 100), font, 0.9, dark_blue, 2)
             cv2.putText(image, posture_category, (10, h - 100), font, 0.9, yellow, 2)
             cv2.putText(image, position_category, (10, h - 200), font, 0.9, yellow, 2)
 
 
             # If you stay in bad posture for more than 3 minutes (180s) send an alert.
-            time_string_bad = ' Prolong Bad Posture Time : ' + str(round(prolong_bad_time, 1)) + '/' + str(0.6)+ 's'
+            time_string_bad = ' Prolong Bad Posture count : ' + str(self.prolong_bad) 
             cv2.putText(image, time_string_bad, (int(2*w/3), h - 20), font, 0.9, red, 2)
-            if prolong_bad_time > 0.16: # 5 seconds
+            if self.prolong_bad > 20: # 20 bad counts
                 correction_type = self.sendWarning(1)
             
                 self.prolong_bad =0
