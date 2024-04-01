@@ -115,6 +115,7 @@ class ObjectDetection:
 
         # Load model
         self.model = attempt_load("yolov7-tiny.pt", map_location=self.device)  # load FP32 model
+        # self.model = attempt_load("yolov7.pt",  map_location=self.device)
         self.stride = int(self.model.stride.max())
         self.imgsz = check_img_size(640, s=self.stride)
         self.mp_pose = mp.solutions.pose
@@ -219,8 +220,8 @@ class ObjectDetection:
                 # Crop the image to the largest person's bounding box
                 # cropped_image = image[y_min:y_max, x_min:x_max]
                 # Crop and pad the image
-            isolated_img = self.isolate_object(im0s, largest_person_cords)
-            isolated_img = cv2.cvtColor(isolated_img, cv2.COLOR_BGR2RGB)
+            isolated_image = self.isolate_object(im0s, largest_person_cords)
+            isolated_img = cv2.cvtColor(isolated_image, cv2.COLOR_BGR2RGB)
             keypoints = self.pose.process(isolated_img)
 
                 # Convert the image back to BGR.
@@ -231,4 +232,4 @@ class ObjectDetection:
        
         
 
-        return detection_results , lm , lmPose, largest_person_cords
+        return detection_results , lm , lmPose, largest_person_cords, isolated_image 

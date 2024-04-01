@@ -9,6 +9,7 @@ from firebase_admin import credentials
 from firebase_admin import db
 import time
 from datetime import datetime
+from detection import ObjectDetection
 
 def initialize_firebase():
     cred = credentials.Certificate("intellidesk-174c9-firebase-adminsdk-garkf-abe9a9fb75.json")
@@ -25,6 +26,7 @@ class FaceRecognition:
         self.face_embeddings_ref = firebase_refs.child('Controls/FaceEmbeddings/')
         self.known_embeddings = self.extract_known_embeddings()
         self.similarity_threshold = similarity_threshold
+        self.model = ObjectDetection()
 
 
     def add_face_embeddings(self, image_paths, Username): 
@@ -56,8 +58,9 @@ class FaceRecognition:
     def get_embedding(self, img_paths):
         embeddings = []
         for img_path in os.listdir(img_paths):
-            img = cv2.imread(img_paths + '/' + img_path)
-            faces = self.app.get(img)
+            _,_,_,_,isolated_image = self.model.detect(img_path, 0)
+            # img = cv2.imread(img_paths + '/' + img_path)
+            faces = self.app.get(isolated_image)
             if faces and len(faces) > 0:
                 embeddings.append(faces[0].embedding)
         return np.mean(embeddings, axis=0) if embeddings else None
@@ -69,9 +72,11 @@ class FaceRecognition:
         return np.dot(embedding1, embedding2) / (norm(embedding1) * norm(embedding2))
 
     def identify_persons(self, img_path):
-        img = cv2.imread(img_path)
-        cv2.imshow('Webcam', img)
-        faces = self.app.get(img)
+        _,_,_,_,isolated_image = self.model.detect(img_path, 0)
+        # img = cv2.imread(img_path)
+        cv2.imshow('Webcam', isolated_image)
+
+        faces = self.app.get(isolated_image)
         identity = 'Unknown'
         for face in faces:
             embedding = face.embedding
@@ -89,10 +94,10 @@ class FaceRecognition:
 
             # Draw bounding box and label
             bbox = face.bbox.astype(np.int32)
-            cv2.rectangle(img, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)
-            cv2.putText(img, identity, (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+            cv2.rectangle(isolated_image, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)
+            cv2.putText(isolated_image, identity, (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
-        return img, identity
+        return isolated_image, identity
 
 # if __name__ == "__main__":
 #     img_dir = "Intellidesk"

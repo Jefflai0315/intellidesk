@@ -169,6 +169,7 @@ class PostureAnalyzer:
 
     def average_and_send(self):
         averaged_data = self.calculate_average(self.data_points)
+        self.user = firebase_refs.child('Controls/UserTable/').get()
         try:
             self.send_to_firebase('Posture',averaged_data)
             print(averaged_data)
@@ -258,7 +259,7 @@ class PostureAnalyzer:
                     self.start_time = datetime.now().timestamp()*1000
                     self.firebase_refs.child(f'{self.user}/Session/').update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
         
-                if current_time - last_time >= 1:  # 2-second interval has passed
+                if current_time - last_time >= 0.1:  # 2-second interval has passed
                     # Capture and process frame
                     last_time = current_time
                 # Capture frames.
@@ -331,7 +332,7 @@ class PostureAnalyzer:
             #check duration 
             time_now = datetime.now()
             # results = self.model.predict(image) #yolo model
-            results, lm , lmPose, largest_person_cords= self.model.detect('static/images/frame.jpg', 0)
+            results, lm , lmPose, largest_person_cords, _= self.model.detect('static/images/frame.jpg', 0)
 
             for i in range(len(results)):
                 cords = results[i][0]
