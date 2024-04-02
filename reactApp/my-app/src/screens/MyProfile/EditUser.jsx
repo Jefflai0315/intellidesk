@@ -9,23 +9,18 @@ import moreIcon from '../../imgs/Group 27more.png';
 import tickIcon from '../../imgs/Asset 51@720x.png';
 import tickWhite from '../../imgs/Asset 52@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
-import database from '../../firebase'; // Adjust the path as needed
+import database from '../../firebase'; 
 import { query, ref, onValue, set, update} from 'firebase/database'
 
 function AddUser() {
-  // const [user, setUser] = useState('My')
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [gender, setGender] = useState('');
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
   const [lastFetchedTime, setLastFetchedTime] = useState();
-   // State to store the fetched result
    const [result, setResult] = useState(null);
-   // State to store any potential error
    const [error, setError] = useState('');
-
-
 
 
   useEffect(() => {
@@ -68,11 +63,11 @@ function AddUser() {
             onClick={() => setIsModalOpen(false)}
             style={{
               position: 'relative',
-              top: '-2px', // Distance from the top
-              left: '257px', // Distance from the right
+              top: '-2px', 
+              left: '257px', 
               background: 'transparent',
               border: 'none',
-              fontSize: '15px', // Adjust the size as needed
+              fontSize: '15px', 
               color: '#fff',
               cursor: 'pointer'
             }}>
@@ -102,11 +97,11 @@ function AddUser() {
             onClick={() => setIsSaveModalOpen(false)}
             style={{
               position: 'relative',
-              top: '-2px', // Distance from the top
-              left: '257px', // Distance from the right
+              top: '-2px', 
+              left: '257px', 
               background: 'transparent',
               border: 'none',
-              fontSize: '15px', // Adjust the size as needed
+              fontSize: '15px',
               color: '#fff',
               cursor: 'pointer'
             }}>
@@ -127,17 +122,14 @@ function AddUser() {
   };
 
   const handleSave = () => {
-    // Perform the save operation, e.g., update Firebase with the user data
     const UserDetailRef = query(ref(database, name + '/Params'));
     update(UserDetailRef,{'Age': age, 'Gender': gender, 'Height': height, 'Weight': weight}).catch((error) => { console.error("Error updating InputName in Firebase", error);
 
   })
   };
 
-  // Handler function for the button click
   const AddNewUser = async () => {
     //update the username to InputName at firebase 
-
     const InputNameRef = ref(database, 'Controls/InputName')
     set(InputNameRef, name).catch((error) => {
       console.error("Error updating InputName in Firebase", error);
@@ -150,13 +142,9 @@ function AddUser() {
 
       // Update the state with the result
       setResult(jsonResult);
-      // Reset any previous error
       setError('');
-      // Optionally, handle the result accordingly, like updating UI
     } catch (err) {
-      // Update the state with the error
       setError('Error: ' + err.message);
-      // Optionally, handle errors, like showing error messages
     }
   };
   return (

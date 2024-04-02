@@ -9,7 +9,7 @@ import moreIcon from '../../imgs/Group 27more.png';
 import tickIcon from '../../imgs/Asset 51@720x.png';
 import tickWhite from '../../imgs/Asset 52@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
-import database from '../../firebase'; // Adjust the path as needed
+import database from '../../firebase'; 
 import { query, ref, onValue, get, set} from 'firebase/database'
 
 function ProfileHeader() {
@@ -39,8 +39,8 @@ function ProfileHeader() {
   };
   
   const updateUserSelection = (selectedUser) => {
-    setUser(selectedUser); // Update state
-    setDropdownOpen(false); // Close dropdown
+    setUser(selectedUser); 
+    setDropdownOpen(false); 
     
     // Update Firebase
     const UserRef = query(ref(database, 'Controls/User'));
@@ -60,8 +60,8 @@ function ProfileHeader() {
             key={item} 
             onClick={() => updateUserSelection(item)}
             style={{
-              backgroundColor: item === user ? 'rgb(68, 68, 68)' : '#3B3B3B', // Highlight the selected user
-              color: item === user ? '#A9FF9B' : '#fff', // Change text color for the selected user
+              backgroundColor: item === user ? 'rgb(68, 68, 68)' : '#3B3B3B', 
+              color: item === user ? '#A9FF9B' : '#fff', 
               fontWeight: item === user ? 'bold' : 'normal',
               padding: '10px',
               cursor: 'pointer',
@@ -204,9 +204,6 @@ function MyProfile() {
           </div>
         </div>
       </div>
-      {/* <Link to="/AddUser">
-        <div className="add-user">Add User</div>
-      </Link> */}
     </div>
   );
 };

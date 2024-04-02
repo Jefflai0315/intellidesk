@@ -10,20 +10,17 @@ import tickIcon from '../../imgs/Asset 51@720x.png';
 import tickWhite from '../../imgs/Asset 52@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
 import standAtTable from '../../imgs/Asset 54@720x.png';
-import database from '../../firebase'; // Adjust the path as needed
+import database from '../../firebase'; 
 import { query, ref, set,update, onValue, off} from 'firebase/database'
 
 function AddUser() {
-  // const [user, setUser] = useState('My')
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [gender, setGender] = useState('');
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
   const [lastFetchedTime, setLastFetchedTime] = useState();
-  // State to store the fetched result
   const [result, setResult] = useState(null);
-  // State to store any potential error
   const [error, setError] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
@@ -42,44 +39,35 @@ function AddUser() {
   };  
 
   const closePopup = (e) => {
-    // If the popup is open and the clicked target is not our "i" icon or the popup content itself,
-    // then close the popup.
     if (isPopupOpen && !e.target.closest('.info-icon, .popup')) {
       setIsPopupOpen(false);
     }
   };
 
   useEffect(() => {
-    // Add event listener to the document to close the popup when clicking anywhere on the screen.
     document.addEventListener('click', closePopup);
 
-    // Cleanup the event listener on component unmount
     return () => {
       document.removeEventListener('click', closePopup);
     };
-  }, [isPopupOpen]); // Depend on isPopupOpen so that the effect correctly handles its current state.
+  }, [isPopupOpen]); 
 
   const trackBiometricRecording = () => {
     let bioRecordCompleted = false;
-    setProgressCount(1); // Start with 1/5 images taken
+    setProgressCount(1); 
     setProgressMessage('Biometric verification setup in progress. 1/5 images taken.');
   
-    // Reference to biometric recording control in Firebase
     const bioRecordRef = ref(database, 'Controls/BiometricRecording');
   
-    // Start an interval to update progress count and message
     const intervalId = setInterval(() => {
       setProgressCount((prevCount) => {
         if (prevCount < 5) {
-          // Update message as long as count is less than 5
           setProgressMessage(`Biometric verification setup in progress. ${prevCount + 1}/5 images taken.`);
           return prevCount + 1;
         } else {
-          // If we have reached 5 but bioRecordCompleted is false, show "processing images..." message
           if (!bioRecordCompleted) {
             setProgressMessage("Processing images...");
           }
-          // Don't update count or message further until bioRecordCompleted becomes true
           return prevCount;
         }
       });
@@ -89,27 +77,13 @@ function AddUser() {
     const unsubscribe = onValue(bioRecordRef, (snapshot) => {
       const bioRecord = snapshot.val();
       if (bioRecord === 2) {
-        // Update flag to indicate that bioRecordRef is now 2
         bioRecordCompleted = true;
-        // Update message to show biometric verification setup is complete
         setProgressMessage("Biometric verification setup complete.");
-        // Clear the interval as we are done
         clearInterval(intervalId);
-        // Unsubscribe from the changes to stop listening
         unsubscribe();
       }
     });
   };
-  
-  // // Remember to define your useEffect hook to clean up on component unmount
-  // useEffect(() => {
-  //   // Assuming trackBiometricRecording() is called from here or somewhere relevant
-  //   return () => {
-  //     // Clean up tasks
-  //     clearInterval(intervalId); // Use the correct reference to intervalId here
-  //     // Unsubscribe from Firebase listeners if necessary
-  //   };
-  // }, []); // Add necessary dependencies
 
   const [bioRecordStatus, setBioRecordStatus] = useState(null);
 
@@ -119,12 +93,12 @@ function AddUser() {
     // Listen for changes in the BiometricRecording value
     const unsubscribe = onValue(bioRecordRef, (snapshot) => {
       const value = snapshot.val();
-      setBioRecordStatus(value); // Update the state with the new value
+      setBioRecordStatus(value); 
     });
   
     // Cleanup function to unsubscribe from the Firebase listener
     return () => unsubscribe();
-  }, []); // Empty dependency array means this effect runs once on mount
+  }, []); 
   
 
   useEffect(() => {
@@ -132,13 +106,13 @@ function AddUser() {
   
     const unsubscribe = onValue(bioRecordRef, (snapshot) => {
       const value = snapshot.val();
-      if (value === 2 && progressCount === 5) { // Assuming '2' means completed
+      if (value === 2 && progressCount === 5) { 
         setBioRecordCompleted(true);
       }
     });
   
-    return () => unsubscribe(); // Make sure to unsubscribe when the component unmounts or conditions change
-  }, []); // This might depend on specific variables, depending on your setup
+    return () => unsubscribe(); 
+  }, []); 
 
   useEffect(() => {
     let intervalId;
@@ -146,13 +120,13 @@ function AddUser() {
     if (progressCount > 0 && progressCount < 7) {
       intervalId = setInterval(() => {
         setProgressCount((prevCount) => prevCount + 1);
-      }, 3000); // Update every 3 seconds until reaching 5
+      }, 3000); 
     } else if (progressCount === 6) {
-      clearInterval(intervalId); // Stop the interval once we reach 5
+      clearInterval(intervalId); 
       // The rest is handled by the Firebase listener
     }
   
-    return () => clearInterval(intervalId); // Clean up on component unmount
+    return () => clearInterval(intervalId); 
   }, [progressCount]);
   
 
@@ -162,12 +136,10 @@ function AddUser() {
   };
 
   useEffect(() => {
-    // Clean up the interval when component unmounts or modal closes
     return () => clearInterval(intervalId.current);
   }, []);
 
   const renderModalContent = () => {
-    // Conditionally render different content and styles based on state
     if (progressCount === 0) {
       return (
         <p style={{ color: '#fff', fontSize: '14px', textAlign: 'left', lineHeight: '1.5', padding: '15px 10px' }}>
@@ -202,7 +174,6 @@ function AddUser() {
         </p>
       );
     } else if (progressCount === 7) {
-      // This condition handles the case where progressCount is 7 but bioRecordStatus isn't 2 yet
       return (
         <p style={{ color: '#A9FF9B', fontSize: '16px', textAlign: 'center', lineHeight: '1.5', padding: '15px 10px' }}>
           Updating user database...{console.log(progressCount)}
@@ -221,39 +192,38 @@ function AddUser() {
             onClick={() => setIsModalOpen(false)}
             style={{
               position: 'relative',
-              top: '0', // Distance from the top
-              left: '257px', // Distance from the right
+              top: '0',
+              left: '257px', 
               background: 'transparent',
               border: 'none',
-              fontSize: '15px', // Adjust the size as needed
+              fontSize: '15px', 
               color: '#fff',
               cursor: 'pointer'
             }}>
             X
           </button>
           <img src={standAtTable} className="stand-at-table" style={{
-            maxWidth: '100%', // Ensures the image is not wider than the modal
-            height: '100px', // Maintains aspect ratio
-            display: 'block', // Ensures the image does not have extra space below (inline elements have space)
+            maxWidth: '100%', 
+            height: '100px',
+            display: 'block', 
             margin: '10px auto',
           }} />
           {renderModalContent()}
             {progressCount === 0 && (
               <button 
-              // onClick={() => handleStartButtonClick()}
                 onClick={(e) => {
-                  e.stopPropagation(); // Prevent event from propagating to parent elements
+                  e.stopPropagation(); 
                   handleStartButtonClick();
                   setIsModalOpen(true);
                 }}
                 style={{
                   position: 'relative',
-                  top: '0', // Distance from the top
-                  left: '115px', // Distance from the right
+                  top: '0', 
+                  left: '115px', 
                   background: '#444444',
                   border: 'none',
                   borderRadius: '5px',
-                  fontSize: '15px', // Adjust the size as needed
+                  fontSize: '15px', 
                   color: '#A9FF9B',
                   cursor: 'pointer',
                   width: '70px',
@@ -275,21 +245,16 @@ function AddUser() {
       console.error("Error turn on Biometric Recording in Firebase", error);
     });
     setResult('Recording')
-    // Listen for changes in the recording state
   const unsubscribe = onValue(bioRecordRef, (snapshot) => {
     const bioRecord = snapshot.val();
     console.log(bioRecord);
 
-    // Check if recording is finished
     if (bioRecord === 2) {
       setBioRecordCompleted(true);
       setResult('Finished');
-      // Reset the biometric recording state in Firebase
       set(bioRecordRef, 0).catch((error) => {
         console.error("Error resetting Biometric Recording in Firebase", error);
       });
-
-      // Unsubscribe from the changes to stop listening once the desired state is reached
       unsubscribe();
     }
   });
@@ -306,11 +271,11 @@ function AddUser() {
             onClick={() => setIsSaveModalOpen(false)}
             style={{
               position: 'relative',
-              top: '-2px', // Distance from the top
-              left: '257px', // Distance from the right
+              top: '-2px', 
+              left: '257px', 
               background: 'transparent',
               border: 'none',
-              fontSize: '15px', // Adjust the size as needed
+              fontSize: '15px', 
               color: '#fff',
               cursor: 'pointer'
             }}>
@@ -332,19 +297,11 @@ function AddUser() {
 
   // Handler function for the button click
   const AddNewUser = async () => {
-    //update the username to InputName at firebase 
-
-    // const InputNameRef = ref(database, 'Controls/InputName')
-    // set(InputNameRef, name).catch((error) => {
-    //   console.error("Error updating InputName in Firebase", error);
-    // });
     setError('');
 
     if (!name || !age || !gender || !height || !weight) {
-      // If any of the fields is empty, show an error message
       setError('Please fill in all fields.');
     }
-    // Update the error state to an empty string to clear any previous errors
     if (biometricEmbedding ===0){
       console.log('line 157')
       setError(prevError => (prevError ? `${prevError} \n Please set up biometric verification first.` : `Please set up biometric verification first.`));
@@ -368,25 +325,16 @@ function AddUser() {
     
     if (name !== ''){
       try {
-        // const response = await fetch('http://raspberry_pi_ip:8080'); //need to change the url
-        // const jsonResult = await response.json();
-
-        // // Update the state with the result
         const embeddingsRef = query(ref(database, 'Controls/FaceEmbeddings'));
         onValue(embeddingsRef, (snapshot) => {
           const embeddings = snapshot.val();
           setResult("Success");})
 
-        // Reset any previous error
         setError('');
-        //TODO: setBiometricEmbedding
         setBiometricEmbedding(1)
       } catch (err) {
-        // Update the state with the error
         setError('Error: ' + err.message);
-        // Optionally, handle errors, like showing error messages
 
-        //setBiometricEmbedding
         setBiometricEmbedding(0)
       }
     }else{
@@ -399,12 +347,9 @@ function AddUser() {
       return;
     }
     console.log('handle save')
-     // Perform the save operation, e.g., update Firebase with the user data
      const UserDetailRef = query(ref(database, name + '/Params'));
      update(UserDetailRef,{'Age': age, 'Gender': gender, 'Height': height, 'Weight': weight, "0": 80, "1":100, "2":120, "3":130,"4":150, "CaloriesBurnedGoal":500, "CaloriesBurned":0,"PsotureScore":0,"UprightStreak":0,"UprightTime":0}).catch((error) => { console.error("Error updating InputName in Firebase", error);})
-    //  const embeddingRef = query(ref(database, 'Controls/FaceEmbeddings/'+name));
-    //  update(embeddingRef, biometricEmbedding).catch((error) => { console.error("Error updating biometricEmbedding in Firebase", error);})
-    // embedding upload from another script
+
     setBiometricEmbedding(0)
     setIsSaveModalOpen(true)
   };

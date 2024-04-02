@@ -1884,7 +1884,7 @@
   }
 
   .my-profile .profile-card {
-    padding: 20px; /* Padding around the card */
+    padding: 20px; 
     background-color: #252525;
     border-radius: 25px;
     height: 95%;
@@ -1895,7 +1895,7 @@
   }
 
   .my-profile .profile-card-add-user {
-    padding: 20px; /* Padding around the card */
+    padding: 20px; 
     padding-top: 55px;
     background-color: #252525;
     border-radius: 25px;
@@ -1909,9 +1909,9 @@
   .my-profile .profile-header {
     font-family: "Open Sans", Helvetica;
     font-size: 13px;
-    color: #A9FF9B; /* Light green text color as seen in the image */
+    color: #A9FF9B; 
     background-color: #444444;
-    margin-top: 50px; /* Spacing under the header */
+    margin-top: 50px; 
     text-align: left;
     border-radius: 15px;
     height: 50px;
@@ -1927,28 +1927,28 @@
   
   .my-profile .header-border {
     height: 2px;
-    background-color: #A9FF9B; /* Light green line */
-    width: 100%; /* Full width */
-    margin: 10px 0; /* Spacing around the line */
+    background-color: #A9FF9B; 
+    width: 100%; 
+    margin: 10px 0; 
   }
   
   .my-profile .profile-picture {
-    background-color: #757575; /* Gray background for the picture */
-    border-radius: 50%; /* Circle shape */
-    width: 145px; /* Adjust size as needed */
-    height: 145px; /* Adjust size as needed */
-    margin: 20px auto; /* Center the circle */
+    background-color: #757575; 
+    border-radius: 50%; 
+    width: 145px; 
+    height: 145px; 
+    margin: 20px auto; 
     display: flex;
     align-items: center;
     justify-content: center;
   }
   
   .my-profile .profile-info {
-    background-color: #3B3B3B; /* Slightly lighter background for the info section */
+    background-color: #3B3B3B; 
     border-radius: 10px;
     font-family: "Open Sans", Helvetica;
     padding: 15px;
-    margin-top: 20px; /* Spacing above the info section */
+    margin-top: 20px; 
     position: relative;
   }
   
@@ -1956,19 +1956,19 @@
     display: flex;
     justify-content: space-between;
     font-family: "Open Sans", Helvetica;
-    margin-bottom: 10px; /* Spacing between items */
-    color: #ffffff; /* Text color for items */
+    margin-bottom: 10px; 
+    color: #ffffff; 
     position: relative;
     width: 100%;
     flex-direction: column;
   }
   
   .my-profile .edit-button {
-    position: absolute; /* Position it relative to the profile card */
-    top: 20px; /* Position from the top */
-    left: 20px; /* Position from the right */
+    position: absolute; 
+    top: 20px; 
+    left: 20px; 
     font-family: "Open Sans Bold", Helvetica;
-    color: #A9FF9B; /* Light green text color as seen in the image */
+    color: #A9FF9B; 
     background-color: #444444;
     border-radius: 5px;
     width: 40px;
@@ -1977,9 +1977,9 @@
 
   .buffer {
     display: inline-block;
-    background-color: #3B3B3B; /* Example button color */
+    background-color: #3B3B3B; 
     padding: 17px 20px;
-    margin: 5px; /* Spacing between buttons */
+    margin: 5px; 
   }
   
   .edit-button:hover {
@@ -1988,11 +1988,11 @@
   }
 
   .my-profile .add-button {
-    position: absolute; /* Position it relative to the profile card */
-    top: 20px; /* Position from the top */
-    right: 20px; /* Position from the right */
+    position: absolute; 
+    top: 20px; 
+    right: 20px; 
     font-family: "Open Sans Bold", Helvetica;
-    color: #A9FF9B; /* Light green text color as seen in the image */
+    color: #A9FF9B; 
     background-color: #444444;
     border-radius: 5px;
     width: 75px;
@@ -2011,7 +2011,7 @@
     border: none;
     padding: 5px;
     border-radius: 5px;
-    margin-top: 10px; /* Spacing above the button */
+    margin-top: 10px; 
     display: flex;
     margin-left: auto;
   }
@@ -2037,7 +2037,7 @@
     position: relative;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px; /* Add some space between each section */
+    margin-bottom: 20px; 
     width: 100%;
   }
 
@@ -2053,7 +2053,6 @@
     font-family: "Open Sans", Helvetica;
     font-size: 23px;
     right: 0;
-    /* margin-top: 10px; */
   }
 
   .my-profile .info-section .value2 {
@@ -2062,7 +2061,6 @@
     font-family: "Open Sans", Helvetica;
     font-size: 23px;
     right: 35px;
-    /* margin-top: 10px; */
   }
 
   .my-profile .info-section .unit {
@@ -2124,19 +2122,19 @@
     height: 17px;
     position: relative;
     right: 5px;
-    padding: 10px 7px; /* Add vertical and horizontal padding */
-    box-sizing: border-box; /* Include padding in the element's total width and height */
+    padding: 10px 7px; 
+    box-sizing: border-box; 
     display: block;
     line-height: 20px;
   }
 
   .my-profile .age-input {
     width: 48.5%;
-    height: 25px; /* Adjust the height as needed to fit your design */
+    height: 25px; 
     position: relative;
     right: 35px;
-    padding: 10px 7px; /* Add vertical and horizontal padding */
-    box-sizing: border-box; /* Include padding in the element's total width and height */
+    padding: 10px 7px; 
+    box-sizing: border-box; 
     display: block;
     line-height: 20px;
   }
@@ -2146,8 +2144,8 @@
     height: 17px;
     position: relative;
     right: 5px;
-    padding: 10px 7px; /* Add vertical and horizontal padding */
-    box-sizing: border-box; /* Include padding in the element's total width and height */
+    padding: 10px 7px; 
+    box-sizing: border-box; 
     display: block;
     line-height: 20px;
   }
@@ -2155,8 +2153,8 @@
   .my-profile .height-input {
     width: 52.5%; 
     height: 17px;
-    padding: 10px 7px; /* Add vertical and horizontal padding */
-    box-sizing: border-box; /* Include padding in the element's total width and height */
+    padding: 10px 7px; 
+    box-sizing: border-box; 
     display: block;
     line-height: 20px;
     position: relative;
@@ -2166,8 +2164,8 @@
   .my-profile .weight-input {
     width: 52.5%; 
     height: 17px;
-    padding: 10px 7px; /* Add vertical and horizontal padding */
-    box-sizing: border-box; /* Include padding in the element's total width and height */
+    padding: 10px 7px; 
+    box-sizing: border-box; 
     display: block;
     line-height: 20px;
     position: relative;
@@ -2181,7 +2179,7 @@
     right: 0;
     bottom: 0;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black background */
+    background-color: rgba(0, 0, 0, 0.5); 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2191,8 +2189,8 @@
     background-color: #3b3b3b;
     padding: 13px;
     border-radius: 5px;
-    width: 90%; /* or a fixed width */
-    max-width: 275px; /* maximum width */
+    width: 90%; 
+    max-width: 275px; 
     height: auto;
     margin: auto;
     top: 0;
@@ -2200,12 +2198,12 @@
   }
 
   .error-message {
-    color: #EE5757; /* Red color for error messages */
+    color: #EE5757; 
     margin-top: 5px;
     font-size: 13px;
     font-family: "Open Sans", Helvetica;
     padding: 5px;
-    width: 80%; /* Adjust based on your layout */
+    width: 80%; 
     text-align: right;
     margin-left: auto;
     text-decoration: underline;
