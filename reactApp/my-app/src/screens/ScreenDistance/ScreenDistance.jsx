@@ -10,7 +10,7 @@ import tableIcon from '../../imgs/Group 28table.png';
 import moreIcon from '../../imgs/Group 27more.png';
 import profileIcon from '../../imgs/Asset 41@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
-import database from '../../firebase'; // Adjust the path as needed
+import database from '../../firebase'; 
 import { query, ref, onValue, orderByKey, startAt } from 'firebase/database'
 
 function ScreenDistance() {
@@ -22,7 +22,7 @@ function ScreenDistance() {
     onValue(ESRef, (snapshot) => {
       const data = snapshot.val();
       setUser(data);
-      setLastFetched(data) //for data render
+      setLastFetched(data)
     });
   });
   return (
@@ -33,7 +33,7 @@ function ScreenDistance() {
           <div className="title">
             <div className="overlap-group">
               <img src={logoImage} alt="Intellidesk Logo" className="logo-wrapper" />
-              <div className="line" style={{ height: '2px', backgroundColor: '#A9FF9B', width: '100%' }}></div> {/* Replace the img tag with this div */}
+              <div className="line" style={{ height: '2px', backgroundColor: '#A9FF9B', width: '100%' }}></div> 
             </div>
           </div>
           <BotBar_Home className="bot-bar-home-instance-node" />
