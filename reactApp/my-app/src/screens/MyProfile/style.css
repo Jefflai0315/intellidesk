@@ -2086,19 +2086,18 @@
   }
 
   .my-profile .profile-header {
-    /* Other styles... */
-    cursor: pointer; /* Indicates clickable area */
+    cursor: pointer; 
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
   
   .my-profile .dropdown-arrow {
-    transition: transform 0.2s ease; /* Smooth transition for rotation */
+    transition: transform 0.2s ease; 
   }
   
   .my-profile .dropdown-arrow.open {
-    transform: rotate(-90deg); /* Rotates the arrow when open */
+    transform: rotate(-90deg); 
   }
   
   .my-profile .dropdown-content {
@@ -2213,7 +2212,7 @@
   }
 
   .profile-input {
-    width: 100%; /* Makes input take full width of its parent */
-    border-radius: 4px; /* Rounds the corners of the input box */
+    width: 100%; 
+    border-radius: 4px; 
     background-color: #757575;
   }

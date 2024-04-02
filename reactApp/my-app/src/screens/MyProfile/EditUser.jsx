@@ -219,7 +219,17 @@ function AddUser() {
               </div>
               <div className="info-section">
                 <span className="label">Gender:</span>
-                <input type="text" value={gender} onChange={(e) => setGender(e.target.value)} className="profile-input gender-input" style={{color: '#fff'}}/>
+                <select 
+                  value={gender} 
+                  onChange={(e) => setGender(e.target.value)}
+                  className="profile-input gender-input2" 
+                  style={{width: '61%', height: '25px', color: '#fff', backgroundColor: '#757575', boxSizing: 'border-box', border: '1.5px solid #000'}}
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Prefer not to disclose">Prefer not to disclose</option>
+                </select>
               </div>
               <div className="info-section">
                 <span className="label">Height:</span>
