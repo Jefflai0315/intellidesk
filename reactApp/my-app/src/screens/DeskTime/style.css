@@ -324,6 +324,10 @@
     width: 100%;
     margin: 0 auto;
   }
+
+  .desk-time .frame::-webkit-scrollbar {
+    display: none; 
+  }
   
   .desk-time .overlap-3 {
     height: 100%;

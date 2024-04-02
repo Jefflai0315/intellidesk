@@ -323,7 +323,7 @@ function AddUser() {
               textAlign: 'center', 
               lineHeight: '1.3', 
             }}>
-              User data Added
+              User data saved
             </p>
         </div>
       </div>

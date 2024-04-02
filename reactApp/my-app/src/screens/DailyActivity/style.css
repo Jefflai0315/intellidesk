@@ -324,6 +324,10 @@
     width: 100%;
     margin: 0 auto;
   }
+
+  .daily-activity .frame::-webkit-scrollbar {
+    display: none;
+  }
   
   .daily-activity .overlap-3 {
     height: 100%;

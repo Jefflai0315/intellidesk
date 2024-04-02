@@ -326,6 +326,10 @@
   margin: 0 auto;
 }
 
+.posture .frame::-webkit-scrollbar {
+  display: none;
+}
+
 .posture .overlap-3 {
   height: 110%;
   position: relative;

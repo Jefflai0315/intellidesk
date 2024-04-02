@@ -83,6 +83,10 @@
   margin: 0 auto;
 }
 
+.home .home-pg::-webkit-scrollbar {
+  display: none; 
+}
+
 .home .overlap-2 {
   height: 1214px;
   position: relative;
