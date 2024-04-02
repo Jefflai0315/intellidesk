@@ -13,7 +13,7 @@ import tickIcon from '../../imgs/Asset 51@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
 import { LineChart_DeskTime } from "../../components/LineChartDeskTime";
 import { BarChartSD_Home } from "../../components/BarChartSD_Home";
-import database from '../../firebase'; // Adjust the path as needed
+import database from '../../firebase'; 
 import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
 
 function Home() {
@@ -35,13 +35,6 @@ function Home() {
 
   });
 
-  // const UprightRef = query(ref(database, user.slice(0,-2)+'/Params'));
-  // onValue(UprightRef, (snapshot) => {
-  //   const UprightStreak = snapshot.val()['UprightStreak'];
-  //   const UprightTime = snapshot.val()['UprightTime'];
-  //   setUprightStreak(UprightStreak);
-  //   setUprightTime(UprightTime);
-  // });
   const now = new Date();
   const startDate = new Date(now.setDate(now.getDate()-1))
   
@@ -50,10 +43,7 @@ function Home() {
       onValue(postureRef, (snapshot) => {
         const data = snapshot.val();
         console.log(data);
-  
-        // if (data) {
         processPostureData(data, startDate);
-        // }
       });
 
       const processPostureData = (data,sdate) => {
@@ -67,17 +57,13 @@ function Home() {
       let uprightStreak = 0 
       let uprightTotal = 0
       let longestStreak = 0;
-     
-  
-      // console.log(counts)
     
       let labels = [];
         for (let i = 0; i < 24; i++) {
-          let hour = i.toString().padStart(2, '0') + ':00'; // Format: "HH:00"
+          let hour = i.toString().padStart(2, '0') + ':00'; 
           counts[hour] = { bad: 0, good: 0, perfect: 0 };
           
           labels.push(hour);
-          // console.log(counts)
       }
   
      
@@ -153,15 +139,12 @@ function Home() {
   onValue(CBRef, (snapshot) => {
     const CBdata = snapshot.val()['CaloriesBurned'];
     const CBGdata = snapshot.val()['CaloriesBurnedGoal'];
-
-    // if (data) {
     
     setCaloriesBurned(CBdata);
     setCaloriesBurnedGoal(CBGdata);
     console.log('CaloriesBurned' + ' ' + caloriesBurned)
     console.log('CaloriesBurnedGoal' + ' ' + caloriesBurnedGoal)
-    // }
-    setLastFetched(CBdata); // this line is to rerender the components only
+    setLastFetched(CBdata);
   });});
 
   return (
@@ -172,7 +155,7 @@ function Home() {
           <div className="title">
             <div className="overlap-group">
               <img src={logoImage} alt="Intellidesk Logo" className="logo-wrapper" />
-              <div className="line" style={{ height: '2px', backgroundColor: '#A9FF9B', width: '100%' }}></div> {/* Replace the img tag with this div */}
+              <div className="line" style={{ height: '2px', backgroundColor: '#A9FF9B', width: '100%' }}></div> 
             </div>
           </div>
           <div className="home-pg">
