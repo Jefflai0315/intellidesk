@@ -1,15 +1,13 @@
 import React, {useState,useEffect} from 'react';
 import GaugeComponent from 'react-gauge-component'
-import database from '../../firebase'; // Adjust the path as needed
+import database from '../../firebase'; 
 import { query, ref, onValue} from 'firebase/database'
-
 
 export const DAGauge = ({ score , user}) => {
   if (user === "My"){
     user = ''
   }
   else {
-    //remove last 2 characters (`s)
     user = user.slice(0, -2) +'/';
   }
   const [postureScore, setPostureScore] = useState('My')
@@ -24,13 +22,11 @@ export const DAGauge = ({ score , user}) => {
     const idealRangeStart = -5;
     const idealRangeEnd = 20;
   
-    // Calculate the distance from the ideal range
     const distanceToIdeal = Math.min(
       Math.abs(trunkInclination - idealRangeStart),
       Math.abs(trunkInclination - idealRangeEnd)
     );
   
-    // Calculate a continuous score based on the distance to the ideal range
     const maxScore = 100;
     const minScore = 50;
     const maxDistance = Math.max(idealRangeEnd - idealRangeStart, 0);
@@ -62,35 +58,33 @@ export const DAGauge = ({ score , user}) => {
                 ],
             }}
         />
-        {/* Overlay div to cover the labels */}
         <div style={{
           position: 'relative',
-          bottom: '65px', // Adjust this value so it covers the labels
+          bottom: '65px', 
           left: '0',
           margin: '0 auto',
-          width: '20%', // Make sure it spans the full width of the gauge
-          height: '30px', // Adjust height accordingly to cover the labels
-          backgroundColor: '#252525', // Match the gauge's background color
+          width: '20%', 
+          height: '30px', 
+          backgroundColor: '#252525',
           fontFamily: 'Helvetica',
         }} />
         <div style={{
           position: 'absolute',
-          bottom: '65px', // Adjust the position accordingly
+          bottom: '65px', 
           left: '50%',
           transform: 'translateX(-50%)',
-          fontSize: '30px', // Adjust the font size accordingly
+          fontSize: '30px', 
           color: 'white',
           fontFamily: 'Helvetica',
         }}>
-          {score}<span style={{ fontSize: '19px', color: '#D4D4D4' }}>{postureScore}%</span> {/* /100 is smaller */}
+          {score}<span style={{ fontSize: '19px', color: '#D4D4D4' }}>{postureScore}%</span>
       </div>
-      {/* Display the text "Score" below the score */}
       <div style={{
         position: 'absolute',
-        bottom: '48px', // Adjust the position accordingly
+        bottom: '48px', 
         left: '54%',
         transform: 'translateX(-50%)',
-        fontSize: '17px', // Adjust the font size accordingly
+        fontSize: '17px',
         color: 'white',
         zIndex: 10,
         fontFamily: 'Helvetica',
@@ -99,10 +93,10 @@ export const DAGauge = ({ score , user}) => {
       </div>
       <div style={{
         position: 'absolute',
-        bottom: '0', // Adjust the position accordingly
+        bottom: '0', 
         left: '54%',
         transform: 'translateX(-50%)',
-        fontSize: '17px', // Adjust the font size accordingly
+        fontSize: '17px', 
         color: 'white',
         zIndex: 10,
         fontFamily: 'Helvetica',
@@ -111,10 +105,10 @@ export const DAGauge = ({ score , user}) => {
       </div>
       <div style={{
         position: 'absolute',
-        bottom: '-20px', // Adjust the position accordingly
+        bottom: '-20px', 
         left: '64%',
         transform: 'translateX(-50%)',
-        fontSize: '15px', // Adjust the font size accordingly
+        fontSize: '15px', 
         color: 'white',
         zIndex: 10,
         fontFamily: 'Helvetica',

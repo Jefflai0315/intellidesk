@@ -4,22 +4,19 @@ import '../customChartTypes.js';
 import './style.css';
 import { PostureAngle } from "../../components/PostureAngle";
 
-import database from '../../firebase'; // Adjust the path as needed
+import database from '../../firebase'; 
 import { get,query, set, ref, onValue, orderByKey , startAt} from 'firebase/database'
-// import { ref, set , query, limitToLast, onValue, startAt, endAt, orderByKey} from 'firebase/database';
-
 
 export const BarChartPosture = ({user}) => {
   if (user === "My"){
     user = ''
   }
   else {
-    //remove last 2 characters (`s)
     user = user+'/';
   }
-  const [selectedTimeframeB, setselectedTimeframeB] = useState('7d'); // Default to 1 day
+  const [selectedTimeframeB, setselectedTimeframeB] = useState('7d'); 
   const [avgPerfect, setAvgPerfect] = useState('0 minutes'); 
-  const [avgGood, setAvgGood] = useState('0 minutes'); // Default to
+  const [avgGood, setAvgGood] = useState('0 minutes'); 
   const [avgBad, setAvgBad] = useState('0 minutes');
   const [avgAngle, setAvgAngle] = useState('0 degrees');
   const [longestPerfectStreak, setLongestPerfectStreak] = useState('0 minutes');
@@ -61,7 +58,6 @@ export const BarChartPosture = ({user}) => {
     useEffect(() => {
       const now = new Date();
   
-      // Calculate the start date based on the selected timeframe
       let startDate = new Date(now);
       switch (selectedTimeframeB) {
         case '1d':
@@ -77,19 +73,15 @@ export const BarChartPosture = ({user}) => {
           startDate = new Date(now.setMonth(now.getMonth() - 1));
           break;
         default:
-          startDate = now; // Default to current day as start date
+          startDate = now; 
       }
       console.log(selectedTimeframeB)
-      //convert startDate to UnixTimestamp
       startDate = startDate.getTime()
 
       const correctionRef = query(ref(database, user+'Correction'),startAt(startDate.toString()));
-      //count number of data in correctionRef
 
       get(correctionRef).then((snapshot) => {
-        // Check if the snapshot exists and has children
         if (snapshot.exists() && snapshot.hasChildren()) {
-          // Count the number of children (data entries)
           const numberOfEntries = snapshot.numChildren();
           setCorrections(numberOfEntries);}
         });
@@ -99,15 +91,10 @@ export const BarChartPosture = ({user}) => {
       startAt(startDate.toString()));
       onValue(postureRef, (snapshot) => {
         const data = snapshot.val();
-  
-        // if (data) {
         processPostureData(data, startDate);
-        // }
       });
       
     }, [selectedTimeframeB]);
-    // Function to get unique labels for legend
-
 
     const processPostureData = (data,sdate) => {
       let counts = {};
@@ -127,14 +114,13 @@ export const BarChartPosture = ({user}) => {
     let labels = [];
     if (selectedTimeframeB === '1d') {
       for (let i = 0; i < 24; i++) {
-        let hour = i.toString().padStart(2, '0') + ':00'; // Format: "HH:00"
+        let hour = i.toString().padStart(2, '0') + ':00'; 
         counts[hour] = { bad: 0, good: 0, perfect: 0 };
         
         labels.push(hour);
         console.log(counts)
     }
 
-   
     if (data != null) {
     Object.entries(data).forEach(([timestamp, { PostureQuality, TrunkInclination }]) => {
         const date = new Date(parseInt(timestamp));
@@ -169,8 +155,7 @@ export const BarChartPosture = ({user}) => {
 } else {
   console.log('else')
   const now = new Date();
-  const startDate = new Date(sdate); // selectedStartDate should be the Unix Timestamp of your start date
-  // const endDate = new Date(Math.max(...Object.keys(data).map(ts => parseInt(ts ))));
+  const startDate = new Date(sdate); 
   const endDate = new Date(now.setDate(now.getDate() ))
   
 
@@ -180,13 +165,10 @@ export const BarChartPosture = ({user}) => {
   }
   labels = Object.keys(counts).sort((a, b) => new Date(a.split('/').reverse().join('/')) - new Date(b.split('/').reverse().join('/'))); 
 
-
-  // Process the actual data
   if (data!= null){
   Object.entries(data).forEach(([timestamp, { PostureQuality, TrunkInclination }]) => {
     const date = new Date(parseInt(timestamp)).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
-    // console.log(counts)
-    if (counts[date]) { // This check is technically redundant now but left for clarity
+    if (counts[date]) { 
       counts[date][PostureQuality] += 1;
       angles.push(TrunkInclination);
 
@@ -199,7 +181,6 @@ export const BarChartPosture = ({user}) => {
       }
     }
   });}
-  
  }
 
 const badPostureData = labels.map(label => counts[label].bad);
@@ -225,7 +206,6 @@ const updateUprightStreakInFirebase = (data) => {
     console.error("Error updating upright streak in Firebase", error);});
 };
 
-// sum angles array divide by the array length
 console.log(totalPerfectTime)
 if (angles.length > 0){
 setAvgAngle((angles.reduce((accumulator, currentAngle) => accumulator + currentAngle, 0)/angles.length).toFixed(1));
@@ -256,7 +236,6 @@ setData({
 if (selectedTimeframeB !== '1d') { 
   setDateRange(`${labels[0]} - ${labels[labels.length - 1]}`);
 }else{
-  //today's date 
   const date = new Date();
   setDateRange(date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }));
   console.log(dateRange)
@@ -313,13 +292,11 @@ if (selectedTimeframeB !== '1d') {
       const idealRangeStart = -5;
       const idealRangeEnd = 20;
     
-      // Calculate the distance from the ideal range
       const distanceToIdeal = Math.min(
         Math.abs(trunkInclination - idealRangeStart),
         Math.abs(trunkInclination - idealRangeEnd)
       );
     
-      // Calculate a continuous score based on the distance to the ideal range
       const maxScore = 100;
       const minScore = 50;
       const maxDistance = Math.max(idealRangeEnd - idealRangeStart, 0);

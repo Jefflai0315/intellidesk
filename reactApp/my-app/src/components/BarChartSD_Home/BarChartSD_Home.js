@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import '../customChartTypes.js';
 import './style.css';
-import database from '../../firebase'; // Adjust the path as needed
+import database from '../../firebase'; 
 import { query, ref, onValue, orderByKey , startAt} from 'firebase/database'
 
 export const BarChartSD_Home = ({user}) => {
@@ -10,7 +10,6 @@ export const BarChartSD_Home = ({user}) => {
     user = ''
   }
   else {
-    //remove last 2 characters (`s)
     user = user.slice(0, -2) +'/';
   }
   const [avg, setAvg] = useState(0)
@@ -31,23 +30,20 @@ export const BarChartSD_Home = ({user}) => {
 
     useEffect(() => {
       const now = new Date();
-      let startDate = new Date(now.setDate(now.getDate()-1)) //today's data
+      let startDate = new Date(now.setDate(now.getDate()-1)) 
       const ESRef = query(ref(database, user+'EyeScreenDistance'), orderByKey(), 
-    startAt(startDate.getTime().toString())); // 7 days
+    startAt(startDate.getTime().toString())); 
     onValue(ESRef, (snapshot) => {
       const data = snapshot.val();
 
-
-      // if (data) {
       processESData(data, startDate);
-      // }
     });
   }, );
 
   const processESData = (data,sdate) => {
     let counts = [0,0,0];
     let avg = 0;
-    let min = 1000; // set largest value
+    let min = 1000;
   if (data)
 {  Object.entries(data).forEach(([timestamp, {Distance}]) => {
     avg += Distance;
@@ -67,11 +63,9 @@ export const BarChartSD_Home = ({user}) => {
   setAvg((avg/(counts.reduce((a, b) => a + b, 0)+0.0001)).toFixed(0));
   setClosest(min);
 }else {
-  // console.log("No data")
   setAvg('No activity')
   setClosest('No activity ')
 }
-  // console.log(counts);
   setChartData({
     datasets: [
       {...chartData.datasets[0], data: counts },
@@ -116,7 +110,7 @@ export const BarChartSD_Home = ({user}) => {
 
     return (  
       <>
-        <div style={{ position: 'absolute', top: '430px', width: '70%', height: '170px', left: '20px' }}> {/* Adjust the height as needed */}
+        <div style={{ position: 'absolute', top: '430px', width: '70%', height: '170px', left: '20px' }}> 
             <Bar data={chartData} options={options} />
         </div> 
         <div className="average-SD">

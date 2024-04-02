@@ -1,15 +1,15 @@
 .chartjs-legend ul {
   list-style: none;
-  display: flex; /* Aligns legend items in a row */
-  padding: 0; /* Removes default padding */
-  margin: 0; /* Removes default margin */
-  justify-content: center; /* Center the legend items horizontally */
+  display: flex; 
+  padding: 0; 
+  margin: 0;
+  justify-content: center; 
 }
 
 .chartjs-legend li {
   display: flex;
   align-items: center;
-  margin-right: 10px; /* Adds some space between the legend items */
+  margin-right: 10px; 
   color: #d3d3d3;
   font-family: "Open Sans", Helvetica;
   font-size: 13px;
@@ -17,14 +17,14 @@
 }
 
 .chartjs-legend li:last-child {
-  margin-right: 0; /* Removes margin from the last item */
+  margin-right: 0; 
 }
 
 .chartjs-legend li span {
   display: inline-block;
   width: 12px;
   height: 12px;
-  border-radius: 50%; /* Makes the legend icons circular */
+  border-radius: 50%; 
   margin-right: 5px;
   color: #d3d3d3;
   font-family: "Open Sans", Helvetica;
@@ -85,17 +85,17 @@
 }
 
 .overlap-group-4 .text-wrapper-27.active  {
-  color: white; /* Active state */
+  color: white; 
 }
 
 .overlap-group-4 .text-wrapper-29.active  {
-  color: white; /* Active state */
+  color: white; 
 }
 
 .overlap-group-4 .text-wrapper-28.active  {
-  color: white; /* Active state */
+  color: white; 
 }
 
 .text-wrapper-23.active {
-  color: white; /* Active state */
+  color: white; 
 }

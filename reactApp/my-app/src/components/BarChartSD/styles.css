@@ -1,15 +1,15 @@
 .chartjs-legend ul {
   list-style: none;
-  display: flex; /* Aligns legend items in a row */
-  padding: 0; /* Removes default padding */
-  margin: 0; /* Removes default margin */
-  justify-content: center; /* Center the legend items horizontally */
+  display: flex; 
+  padding: 0; 
+  margin: 0; 
+  justify-content: center; 
 }
 
 .chartjs-legend li {
   display: flex;
   align-items: center;
-  margin-right: 10px; /* Adds some space between the legend items */
+  margin-right: 10px;
   color: #d3d3d3;
   font-family: "Open Sans", Helvetica;
   font-size: 13px;
@@ -17,14 +17,14 @@
 }
 
 .chartjs-legend li:last-child {
-  margin-right: 0; /* Removes margin from the last item */
+  margin-right: 0; 
 }
 
 .chartjs-legend li span {
   display: inline-block;
   width: 12px;
   height: 12px;
-  border-radius: 50%; /* Makes the legend icons circular */
+  border-radius: 50%; 
   margin-right: 5px;
   color: #d3d3d3;
   font-family: "Open Sans", Helvetica;
@@ -85,60 +85,60 @@
 }
 
 .overlap-group-4 .text-wrapper-27.active  {
-  color: white; /* Active state */
+  color: white; 
 }
 
 .overlap-group-4 .text-wrapper-29.active  {
-  color: white; /* Active state */
+  color: white; 
 }
 
 .overlap-group-4 .text-wrapper-28.active  {
-  color: white; /* Active state */
+  color: white; 
 }
 
 .text-wrapper-23.active {
-  color: white; /* Active state */
+  color: white; 
 }
 
 .screen-distance-lineChart .day-selection {
-  background-color: #3B3B3B; /* Dark gray background */
-  border-radius: 10px; /* Rounded corners */
-  padding: 5px; /* Inner spacing */
-  display: flex; /* Center in div if needed */
+  background-color: #3B3B3B; 
+  border-radius: 10px; 
+  padding: 5px; 
+  display: flex; 
   justify-content: center;
   height: 26px;
   width: 90%;
-  margin: 0 auto; /* Center the buttons */
+  margin: 0 auto; 
   margin-bottom: 10px;
 }
 
 .screen-distance-lineChart .day-selection button {
-  padding: 10px; /* Adjust padding to make sure the button is large enough to be circular */
-  width: 25px; /* Set a fixed width */
-  height: 25px; /* Set a fixed height to match the width */
-  border-radius: 20px; /* Half the width/height to start with rounded edges */
+  padding: 10px; 
+  width: 25px; 
+  height: 25px; 
+  border-radius: 20px; 
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 8px; /* Adjust margin to ensure buttons are not too close together */
+  margin-left: 8px; 
   margin-right: 8px;
   border: 2px solid #3B3B3B;
   background-color: #3B3B3B;
-  color: #898989; /* Change to your preferred font color */
-  font-family: "Open Sans", Helvetica; /* Change to your preferred font-family */
+  color: #898989;
+  font-family: "Open Sans", Helvetica; 
   font-size: 14px;
   font-weight: bold;
 }
 
 .screen-distance-lineChart .day-selection button:hover {
-  background-color: #7B7B7B; /* Darker green background on hover */
+  background-color: #7B7B7B; 
 }
 
 .screen-distance-lineChart .day-selection button.active {
-  background-color: #7B7B7B; /* Lighter gray for the active button */
-  color: #FFFFFF; /* Keep the text white or change if needed */
+  background-color: #7B7B7B; 
+  color: #FFFFFF; 
   border: 2px solid #7B7B7B;
-  border-radius: 50%; /* This will make the button circular */
+  border-radius: 50%; 
   font-weight: bold;
   font-family: "Open Sans", Helvetica;
 }

@@ -1,6 +1,5 @@
 import Chart from 'chart.js';
 
-// Override the draw method of the Bar chart element
 Chart.elements.Rectangle.prototype.draw = function () {
     const ctx = this._chart.ctx;
     const vm = this._view;
@@ -15,7 +14,6 @@ Chart.elements.Rectangle.prototype.draw = function () {
     ctx.strokeStyle = vm.borderColor;
     ctx.lineWidth = vm.borderWidth;
   
-    // Rounded top
   ctx.moveTo(left + cornerRadius, top);
   ctx.lineTo(right - cornerRadius, top);
   ctx.quadraticCurveTo(right, top, right, top + cornerRadius);

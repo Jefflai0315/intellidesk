@@ -1,7 +1,7 @@
 
 import { Line } from 'react-chartjs-2';
 import React, { useEffect, useState } from 'react';
-import database from '../../firebase'; // Adjust the path as needed
+import database from '../../firebase'; 
 import { query, ref, onValue, orderByKey, startAt } from 'firebase/database'
 
 export const LineChart_DeskTime = ({ user }) => {
@@ -9,11 +9,10 @@ export const LineChart_DeskTime = ({ user }) => {
     user = ''
   }
   else {
-    //remove last 2 characters (`s)
     user = user.slice(0, -2) + '/';
   }
   const seconds = 3
-  const [selectedTimeframe, setSelectedTimeframe] = useState('7d'); // Default to 1 day
+  const [selectedTimeframe, setSelectedTimeframe] = useState('7d'); 
   const [sittingAvg, setSittingAvg] = useState(0)
   const [standingAvg, setStandingAvg] = useState(0)
   const [chartData, setChartData] = useState({
@@ -41,7 +40,6 @@ export const LineChart_DeskTime = ({ user }) => {
   useEffect(() => {
     const now = new Date();
 
-    // Calculate the start date based on the selected timeframe
     let startDate = new Date(now);
     switch (selectedTimeframe) {
       case '1d':
@@ -57,10 +55,9 @@ export const LineChart_DeskTime = ({ user }) => {
         startDate = new Date(now.setMonth(now.getMonth() - 1));
         break;
       default:
-        startDate = now; // Default to current day as start date
+        startDate = now; 
     }
     console.log(selectedTimeframe)
-    //convert startDate to UnixTimestamp
     startDate = startDate.getTime()
 
     const postureRef = query(ref(database, user + 'Posture'), orderByKey(),
@@ -68,9 +65,7 @@ export const LineChart_DeskTime = ({ user }) => {
     onValue(postureRef, (snapshot) => {
       const data = snapshot.val();
 
-      // if (data) {
       processSitStandData(data, startDate);
-      // }
     });
 
   }, [selectedTimeframe]);
@@ -82,9 +77,8 @@ export const LineChart_DeskTime = ({ user }) => {
     let labels = [];
 
     if (selectedTimeframe === '1d') {
-      // Initialize counts for each hour of the day
       for (let i = 0; i < 24; i++) {
-        let hour = i.toString().padStart(2, '0') + ':00'; // Format: "HH:00"
+        let hour = i.toString().padStart(2, '0') + ':00'; 
         counts[hour] = { sitting: 0, standing: 0 };
         labels.push(hour);
       }
@@ -102,8 +96,7 @@ export const LineChart_DeskTime = ({ user }) => {
       }
     } else {
       const now = new Date();
-      const startDate = new Date(sdate); // selectedStartDate should be the Unix Timestamp of your start date
-      // const endDate = new Date(Math.max(...Object.keys(data).map(ts => parseInt(ts ))));
+      const startDate = new Date(sdate); 
       const endDate = new Date(now.setDate(now.getDate()))
 
       for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
@@ -111,11 +104,10 @@ export const LineChart_DeskTime = ({ user }) => {
         counts[dateKey] = { sitting: 0, standing: 0 };
       }
 
-      // Process the actual data
       if (data != null) {
         Object.entries(data).forEach(([timestamp, { PostureMode }]) => {
           const date = new Date(parseInt(timestamp)).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
-          if (counts[date]) { // This check is technically redundant now but left for clarity
+          if (counts[date]) { 
             counts[date][PostureMode] += 1;
 
             if (PostureMode === "sitting") {
@@ -135,12 +127,8 @@ export const LineChart_DeskTime = ({ user }) => {
       return `${hours} hours ${mins} minutes`;
     };
 
-    // Prepare data for chart or output
     const standingData = labels.map(label => counts[label].standing);
     const sittingData = labels.map(label => counts[label].sitting);
-
-
-
 
     setSittingAvg(((totalSitting / sittingData.length)/60).toFixed(1));
     setStandingAvg(((totalStanding / standingData.length)/60).toFixed(1));
@@ -155,14 +143,12 @@ export const LineChart_DeskTime = ({ user }) => {
     });
   };
 
-  // Updated Custom Legend Component
   const CustomLegend = ({ chartData }) => {
     if (!chartData || !chartData) {
-      return null; // Ensures data is defined before rendering the legend
+      return null; 
     }
 
-    // Filtering out specific labels
-    const labelsToShow = ["standing", "sitting"]; // Add labels you want to show
+    const labelsToShow = ["standing", "sitting"]; 
     const uniqueLabels = Array.from(new Set(chartData.datasets
       .filter(dataset => labelsToShow.includes(dataset.label))
       .map(dataset => dataset.label)));
@@ -195,10 +181,10 @@ export const LineChart_DeskTime = ({ user }) => {
           id: 'y-axis-1',
           ticks: {
             beginAtZero: true,
-            stepSize: 5, // Adjust the step size as needed
+            stepSize: 5, 
           },
           gridLines: {
-            color: '#3C3C3C', // Change x-axis grid lines color
+            color: '#3C3C3C', 
           }
         },
       ],

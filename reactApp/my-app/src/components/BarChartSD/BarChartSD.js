@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import '../customChartTypes.js';
 import './styles.css';
-import database from '../../firebase.js'; // Adjust the path as needed
+import database from '../../firebase.js'; 
 import { query, ref, set, onValue, orderByKey, startAt } from 'firebase/database'
 import { Link } from 'react-router-dom';
 import { LineChart_SD } from "../../components/LineChartSD";
@@ -12,10 +12,9 @@ export const BarChartSD = ({ user }) => {
     user = ''
   }
   else {
-    //remove last 2 characters (`s)
     user = user + '/';
   }
-  const [selectedTimeframeB, setselectedTimeframeB] = useState('7d'); // Default to 1 day
+  const [selectedTimeframeB, setselectedTimeframeB] = useState('7d'); 
   const [selectedDay, setSelectedDay] = useState(null);
   const [avgDist, setAvgDist] = useState('0 hours');
   const [labels, setLabels] = useState([]);
@@ -81,7 +80,6 @@ export const BarChartSD = ({ user }) => {
   useEffect(() => {
     const now = new Date();
 
-    // Calculate the start date based on the selected timeframe
     let startDate = new Date(now);
     switch (selectedTimeframeB) {
       case '1d':
@@ -97,10 +95,9 @@ export const BarChartSD = ({ user }) => {
         startDate = new Date(now.setMonth(now.getMonth() - 1));
         break;
       default:
-        startDate = now; // Default to current day as start date
+        startDate = now; 
     }
-    // console.log(selectedTimeframeB)
-    //convert startDate to UnixTimestamp
+
     startDate = startDate.getTime()
 
     const postureRef = query(ref(database, user + 'EyeScreenDistance'), orderByKey(),
@@ -108,10 +105,8 @@ export const BarChartSD = ({ user }) => {
     onValue(postureRef, (snapshot) => {
       const data = snapshot.val();
 
-      // if (data) {
       processSDData(data, startDate);
       processLineChartData(data, selectedDay);
-      // }
     });
 
   }, [selectedTimeframeB, selectedDay]);
@@ -123,16 +118,13 @@ export const BarChartSD = ({ user }) => {
     let lineTotalFarTime = 0;
     let lineLabels = [];
 
-    // Initialize your structure to hold the data for the line chart
     let lineCounts = {
-      // Initialize with hours if necessary, or other structure for the selected day
     };
     for (let i = 0; i < 24; i++) {
-      let hour = i.toString().padStart(2, '0') + ':00'; // Format: "HH:00"
+      let hour = i.toString().padStart(2, '0') + ':00'; 
       lineCounts[hour] = { close: 0, perfect: 0, far: 0 };
       labels.push(hour);
 
-      // Filter and process data for the selected day
       if (data != null) {
         Object.entries(data).forEach(([timestamp, { Distance }]) => {
           const date = new Date(parseInt(timestamp));
@@ -168,30 +160,25 @@ export const BarChartSD = ({ user }) => {
     console.log(selectedDay + ' selected day')
     setLineChartData({
       labels: lineLabels,
-      // datasets: [
-      //   { ...lineChartData.datasets[0], data: LineCloseData },
-      //   { ...lineChartData.datasets[1], data: LinePerfectData },
-      //   { ...lineChartData.datasets[2], data: LineFarData },
-      // ],
 
       datasets: [
         {
           ...lineChartData.datasets[0],
           data: LineCloseData,
-          borderColor: '#EE5757', // Example color for the 'Too Close' dataset line
-          backgroundColor: '#EE5757', // Adjust the background color of the fill if needed
+          borderColor: '#EE5757', 
+          backgroundColor: '#EE5757', 
         },
         {
           ...lineChartData.datasets[1],
           data: LinePerfectData,
-          borderColor: '#78D06A', // Example color for the 'Perfect' dataset line
-          backgroundColor: '#78D06A', // Adjust the background color of the fill if needed
+          borderColor: '#78D06A', 
+          backgroundColor: '#78D06A',
         },
         {
           ...lineChartData.datasets[2],
           data: LineFarData,
-          borderColor: '#F4B54C', // Example color for the 'Too Far' dataset line
-          backgroundColor: '#F4B54C', // Adjust the background color of the fill if needed
+          borderColor: '#F4B54C', 
+          backgroundColor: '#F4B54C', 
         },
       ],
     });
@@ -199,8 +186,6 @@ export const BarChartSD = ({ user }) => {
 
   const processSDData = (data, sdate) => {
     let counts = {};
-    // console.log(data)
-
     let totalCloseTime = 0;
     let totalPerfectTime = 0;
     let totalFarTime = 0;
@@ -208,7 +193,7 @@ export const BarChartSD = ({ user }) => {
     let labels = [];
     if (selectedTimeframeB === '1d') {
       for (let i = 0; i < 24; i++) {
-        let hour = i.toString().padStart(2, '0') + ':00'; // Format: "HH:00"
+        let hour = i.toString().padStart(2, '0') + ':00'; 
         counts[hour] = { close: 0, perfect: 0, far: 0 };
         labels.push(hour);
       }
@@ -234,8 +219,7 @@ export const BarChartSD = ({ user }) => {
       }
     } else {
       const now = new Date();
-      const startDate = new Date(sdate); // selectedStartDate should be the Unix Timestamp of your start date
-      // const endDate = new Date(Math.max(...Object.keys(data).map(ts => parseInt(ts ))));
+      const startDate = new Date(sdate); 
       const endDate = new Date(now.setDate(now.getDate()))
 
       for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
@@ -243,13 +227,11 @@ export const BarChartSD = ({ user }) => {
         counts[dateKey] = { close: 0, perfect: 0, far: 0 };
       }
 
-
-      // Process the actual data
       if (data != null) {
         Object.entries(data).forEach(([timestamp, { Distance }]) => {
           const date = new Date(parseInt(timestamp)).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
           distance += Distance;
-          if (counts[date]) { // This check is technically redundant now but left for clarity
+          if (counts[date]) { 
             if (Distance < 50) {
               totalCloseTime += 1;
               counts[date]['close'] += 1;
@@ -274,8 +256,6 @@ export const BarChartSD = ({ user }) => {
       let ind = 0;
 
       Object.entries(counts).forEach(([date, data]) => {
-        // console.log(date, data)
-        // Check if all values for the hour are 0
         if (data.close === 0 && data.perfect === 0 && data.far === 0) {
         } else {
           availLables.push(ind);
@@ -285,15 +265,9 @@ export const BarChartSD = ({ user }) => {
       setAvailLabels(availLables);
     }
 
-    // Prepare data for chart or output
     const farData = labels.map(label => counts[label].far);
     const perfectData = labels.map(label => counts[label].perfect);
     const closeData = labels.map(label => counts[label].close);
-
-    // console.log('closedata' + closeData)
-    // console.log('labels' + labels)
-    // longestStandDuration = Math.max(...standingData);
-    // longestSitDuration = Math.max(...sittingData);
 
     let denom = 1;
     if (selectedTimeframeB === '1d') {
@@ -302,28 +276,15 @@ export const BarChartSD = ({ user }) => {
       denom = labels.length;
     }
 
-    // setTotalClose(formatTime(totalCloseTime/denom));
-    // setTotalOptimum(formatTime(totalOptimumTime/denom));
-    // setTotalFar(formatTime(totalFarTime/denom));
-    // setLongestStanding(formatTime(longestStandDuration));
-    // setLongestSitting(formatTime(longestSitDuration));
-    // setLongestBreak(formatTime(longestBreakDuration));
-
     setAvgDist((distance / (totalCloseTime + totalPerfectTime + totalFarTime + 0.0001)).toFixed(0));
     if (selectedTimeframeB !== '1d') {
       setDateRange(`${labels[0]} - ${labels[labels.length - 1]}`);
     } else {
-      //today's date 
       const date = new Date();
       setDateRange(date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }));
       console.log(dateRange)
     }
     console.log(farData,perfectData,closeData)
-
-    // let sitCaloriesBurned = 80
-    // let standCaloriesBurned = 88
-    // setCaloriesBurned(((totalStandTime /60) * standCaloriesBurned + (totalSitTime/60)* sitCaloriesBurned).toFixed(0))
-    // updateAvgCaloriesBurned(caloriesBurned); 
 
     setChartData({
       labels,
@@ -336,14 +297,11 @@ export const BarChartSD = ({ user }) => {
 
   };
 
-
   const formatTime = (minutes) => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
     return `${hours} hours ${mins} minutes`;
   };
-
-
 
   const getUniqueLabels = (datasets) => {
     const uniqueLabels = new Set();
@@ -351,13 +309,11 @@ export const BarChartSD = ({ user }) => {
     return Array.from(uniqueLabels);
   };
 
-  // Updated Custom Legend Component
   const CustomLegend = ({ chartData }) => {
     if (!chartData || !chartData.datasets) {
       return null;
     }
 
-    // Filtering out specific labels
     const labelsToShow = ["Too Close", "Perfect", "Too Far"];
     const uniqueLabels = Array.from(new Set(chartData.datasets
       .filter(dataset => labelsToShow.includes(dataset.label))
@@ -425,10 +381,10 @@ export const BarChartSD = ({ user }) => {
           id: 'y-axis-1',
           ticks: {
             beginAtZero: true,
-            stepSize: 5, // Adjust the step size as needed
+            stepSize: 5, 
           },
           gridLines: {
-            color: '#3C3C3C', // Change x-axis grid lines color
+            color: '#3C3C3C', 
           }
         },
       ],
@@ -452,7 +408,6 @@ export const BarChartSD = ({ user }) => {
             <a className={`text-wrapper-23 ${selectedTimeframeB === '1m' ? 'active' : ''}`} onClick={() => setselectedTimeframeB('1m')}>1m</a>
           </div>
         </div>
-        {/* <div className="text-wrapper-30">24/9 - 30/9</div> */}
         <div className="text-wrapper-30">{dateRange}</div>
       </div>
 
