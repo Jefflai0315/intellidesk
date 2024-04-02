@@ -409,8 +409,6 @@ function AddUser() {
     setIsSaveModalOpen(true)
   };
 
-
-  
   return (
     <div className="my-profile">
       <div className="overlap-wrapper">
@@ -509,16 +507,15 @@ function AddUser() {
                   padding: '25px 13px',
                   borderRadius: '5px',
                   boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
-                  left: '50%', // Adjust based on actual layout
-                  top: '30px', // Adjust based on actual layout
+                  left: '50%', 
+                  top: '30px', 
                   transform: 'translateX(-50%)',
-                  zIndex: 100, // Ensure it's above other content
+                  zIndex: 100, 
                 }}>
                   Fill up all the relevant information fields above and click the 'Set Up Biometric Verification' button to proceed. <br /><br />
                   Once you have set up biometric verification, you can save your profile by clicking the 'Save' button.
                 </div>
               )}
-              {/* Result update text */}
               {result && renderModal()}
               {result && (
                 <div style={{textAlign: 'right', marginTop: '5px'}}>

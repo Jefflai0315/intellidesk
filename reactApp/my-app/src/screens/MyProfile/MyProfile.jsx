@@ -50,24 +50,6 @@ function ProfileHeader() {
   };
 
   return (
-    // <div className="profile-header" onClick={toggleDropdown}>
-    //   <h1>{user}</h1>
-    //   <span className={`dropdown-arrow ${dropdownOpen ? 'open' : ''}`}>◀</span>
-    //   {dropdownOpen && (
-    //     <div className="dropdown-content">
-    //       {/* Dropdown items go here */}
-    //       {userlist.map((user) => (
-    //         <div key={user} onClick={() => {
-    //           setUser(user)
-    //           //update firebase
-    //           const UserRef = query(ref(database, 'Controls/User'));
-    //           set(UserRef, user);
-    //         }
-    //         } >{user} </div>
-    //       ))}
-    //     </div>
-    //   )}
-    // </div>
     <div className="profile-header" onClick={toggleDropdown}>
     <h1>{user}</h1>
     <span className={`dropdown-arrow ${dropdownOpen ? 'open' : ''}`}>◀</span>
@@ -174,15 +156,6 @@ function MyProfile() {
                 <div className="overlap-group-3">
                   <div className="profile-card">
                     <ProfileHeader />
-                    {/* <div className="buffer" />
-                    <Link to='/EditUser'>
-                      <button className="edit-button" >Edit</button>
-                    </Link>
-                    <Link to="/AddUser">
-                      <button className="add-button">
-                        <span>+ user</span>
-                      </button>
-                    </Link> */}
                     <div className="profile-info">
                       <div className="buffer" />
                       <Link to='/EditUser'>
@@ -190,7 +163,7 @@ function MyProfile() {
                       </Link>
                       <Link to="/AddUser">
                         <button className="add-button">
-                          <span>+ user</span>
+                          <span>Add User</span>
                         </button>
                       </Link>
                       <div className="profile-info-item">
