@@ -10,6 +10,7 @@ import tickIcon from '../../imgs/Asset 51@720x.png';
 import tickWhite from '../../imgs/Asset 52@720x.png';
 import goalsIcon from '../../imgs/Asset 14@720x.png';
 import standAtTable from '../../imgs/Asset 54@720x.png';
+import sitAtTable from '../../imgs/Asset 55@720x.png';
 import database from '../../firebase'; 
 import { query, ref, set,update, onValue, off} from 'firebase/database'
 
@@ -145,7 +146,7 @@ function AddUser() {
         <p style={{ color: '#fff', fontSize: '14px', textAlign: 'left', lineHeight: '1.5', padding: '15px 10px' }}>
           Proceed to your desk to set up biometric verification for {name}. <br />
           <br />
-          Once you are at your desk, center yourself in front of the desk and stand upright in front of it and click the 'Start' button.
+          Once you are at your desk, center yourself in front of the desk and sit upright in front of it and click the 'Start' button.
         </p>
       );
     } else if (progressCount <= 5) {
@@ -202,7 +203,7 @@ function AddUser() {
             }}>
             X
           </button>
-          <img src={standAtTable} className="stand-at-table" style={{
+          <img src={sitAtTable} className="stand-at-table" style={{
             maxWidth: '100%', 
             height: '100px',
             display: 'block', 
