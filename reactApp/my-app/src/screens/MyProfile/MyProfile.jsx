@@ -12,87 +12,134 @@ import goalsIcon from '../../imgs/Asset 14@720x.png';
 import database from '../../firebase'; 
 import { query, ref, onValue, get, set} from 'firebase/database'
 
-function ProfileHeader() {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [user, setUser] = useState('');
-  const [userlist, setUserlist] = useState([]);
+// function ProfileHeader() {
+//   const [dropdownOpen, setDropdownOpen] = useState(false);
+//   const [user, setUser] = useState('');
+//   const [userlist, setUserlist] = useState([]);
 
-  useEffect(() => {
-    const UserRef = query(ref(database, 'Controls/User'));
-    onValue(UserRef, (snapshot) => {
-    const data = snapshot.val();
-    setUser((prevUser) => {
-      console.log('Updated user:', data);
-      return data;
-    });
-     })
-    const usersRef = query(ref(database, 'Controls/FaceEmbeddings'));
-    onValue(usersRef, (snapshot) => {
-      const data = snapshot.val();
-      setUserlist(Object.keys(data));
-    })
+//   useEffect(() => {
+//     const UserRef = query(ref(database, 'Controls/User'));
+//     onValue(UserRef, (snapshot) => {
+//     const data = snapshot.val();
+//     setUser((prevUser) => {
+//       console.log('Updated user:', data);
+//       return data;
+//     });
+//      })
+//     const usersRef = query(ref(database, 'Controls/FaceEmbeddings'));
+//     onValue(usersRef, (snapshot) => {
+//       const data = snapshot.val();
+//       setUserlist(Object.keys(data));
+//     })
 
-  },[]);
+//   },[]);
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
+//   const toggleDropdown = () => {
+//     setDropdownOpen(!dropdownOpen);
+//   };
   
-  const updateUserSelection = (selectedUser) => {
-    setUser(selectedUser); 
-    setDropdownOpen(false); 
+//   const updateUserSelection = (selectedUser) => {
+//     setUser(selectedUser); 
+//     setDropdownOpen(false); 
     
-    // Update Firebase
-    const UserRef = query(ref(database, 'Controls/User'));
-    set(UserRef, selectedUser).catch(error => {
-      console.error("Error updating user in Firebase: ", error);
-    });
-  };
+//     // Update Firebase
+//     const UserRef = query(ref(database, 'Controls/User'));
+//     set(UserRef, selectedUser).catch(error => {
+//       console.error("Error updating user in Firebase: ", error);
+//     });
+//   };
 
-  return (
-    <div className="profile-header" onClick={toggleDropdown}>
-    <h1>{user}</h1>
-    <span className={`dropdown-arrow ${dropdownOpen ? 'open' : ''}`}>◀</span>
-    {dropdownOpen && (
-      <div className="dropdown-content">
-        {userlist.map((item) => (
-          <div 
-            key={item} 
-            onClick={() => updateUserSelection(item)}
-            style={{
-              backgroundColor: item === user ? 'rgb(68, 68, 68)' : '#3B3B3B', 
-              color: item === user ? '#A9FF9B' : '#fff', 
-              fontWeight: item === user ? 'bold' : 'normal',
-              padding: '10px',
-              cursor: 'pointer',
-              fontSize: '21px'
-            }}
-          >
-            {item}
-          </div>
-        ))}
-      </div>
-    )}
-  </div>
-  );
-}
+//   return (
+//     <div className="profile-header" onClick={toggleDropdown}>
+//     <h1>{user}</h1>
+//     <span className={`dropdown-arrow ${dropdownOpen ? 'open' : ''}`}>◀</span>
+//     {dropdownOpen && (
+//       <div className="dropdown-content">
+//         {userlist.map((item) => (
+//           <div 
+//             key={item} 
+//             onClick={() => updateUserSelection(item)}
+//             style={{
+//               backgroundColor: item === user ? 'rgb(68, 68, 68)' : '#3B3B3B', 
+//               color: item === user ? '#A9FF9B' : '#fff', 
+//               fontWeight: item === user ? 'bold' : 'normal',
+//               padding: '10px',
+//               cursor: 'pointer',
+//               fontSize: '21px'
+//             }}
+//           >
+//             {item}
+//           </div>
+//         ))}
+//       </div>
+//     )}
+//   </div>
+//   );
+// }
 
 function MyProfile() {
-  const [user, setUser] = useState('')
+  // const [user, setUser] = useState('')
+  // const [lastFetchedTime, setLastFetchedTime] = useState();
+  // const [age, setAge] = useState();
+  // const [height, setHeight] = useState();
+  // const [weight, setWeight] = useState();
+  // const [gender, setGender] = useState();
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const ESRef = query(ref(database, 'Controls/User'));
+  //     const esSnapshot = await get(ESRef);
+  //     const userData = esSnapshot.val();
+      
+  //     setUser(userData);
+  //     setLastFetchedTime(userData);
+
+  //     const userRef = query(ref(database, userData + '/Params'));
+  //     const userSnapshot = await get(userRef);
+  //     const userParams = userSnapshot.val();
+
+  //     setAge(userParams.Age);
+  //     setHeight(userParams.Height);
+  //     setWeight(userParams.Weight);
+  //     setGender(userParams.Gender);
+  //   };
+
+  //   fetchData();
+  // }, []);
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [user, setUser] = useState('');
+  const [userList, setUserList] = useState([]);
   const [lastFetchedTime, setLastFetchedTime] = useState();
   const [age, setAge] = useState();
   const [height, setHeight] = useState();
   const [weight, setWeight] = useState();
   const [gender, setGender] = useState();
 
+  // Combining useEffects
   useEffect(() => {
+    // Fetch User and User List
+    const UserRef = query(ref(database, 'Controls/User'));
+    onValue(UserRef, (snapshot) => {
+      const data = snapshot.val();
+      console.log('Updated user:', data);
+      setUser(data);
+    });
+
+    const usersRef = query(ref(database, 'Controls/FaceEmbeddings'));
+    onValue(usersRef, (snapshot) => {
+      const data = snapshot.val();
+      setUserList(Object.keys(data));
+    });
+
+    // Fetch User Details
     const fetchData = async () => {
       const ESRef = query(ref(database, 'Controls/User'));
       const esSnapshot = await get(ESRef);
       const userData = esSnapshot.val();
       
       setUser(userData);
-      setLastFetchedTime(userData);
+      setLastFetchedTime(userData); // This seems redundant with setUser, you might want to review this logic.
 
       const userRef = query(ref(database, userData + '/Params'));
       const userSnapshot = await get(userRef);
@@ -106,6 +153,32 @@ function MyProfile() {
 
     fetchData();
   }, []);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const updateUserSelection = (selectedUser) => {
+    
+    const usersRef = query(ref(database, selectedUser + '/Params'));
+    onValue(usersRef, (snapshot) => {
+      const data = snapshot.val();
+      setAge(data.Age);
+      setHeight(data.Height);
+      setWeight(data.Weight);
+      setGender(data.Gender);
+    });
+
+    setUser(selectedUser);
+    
+    setDropdownOpen(false);
+
+    // Update Firebase
+    const UserRef = query(ref(database, 'Controls/User'));
+    set(UserRef, selectedUser).catch(error => {
+      console.error("Error updating user in Firebase: ", error);
+    });
+  };
 
 
   return (
@@ -155,7 +228,31 @@ function MyProfile() {
               <div className="group-8">
                 <div className="overlap-group-3">
                   <div className="profile-card">
-                    <ProfileHeader />
+                    {/* <ProfileHeader /> */}
+                    <div className="profile-header" onClick={toggleDropdown}>
+                      <h1>{user}</h1>
+                      <span className={`dropdown-arrow ${dropdownOpen ? 'open' : ''}`}>◀</span>
+                      {dropdownOpen && (
+                      <div className="dropdown-content">
+                        {userList.map((item) => (
+                          <div 
+                            key={item} 
+                            onClick={() => updateUserSelection(item)}
+                            style={{
+                              backgroundColor: item === user ? 'rgb(68, 68, 68)' : '#3B3B3B', 
+                              color: item === user ? '#A9FF9B' : '#fff', 
+                              fontWeight: item === user ? 'bold' : 'normal',
+                              padding: '10px',
+                              cursor: 'pointer',
+                              fontSize: '21px'
+                            }}
+                          >
+                            {item}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                     <div className="profile-info">
                       <div className="buffer" />
                       <Link to='/EditUser'>
