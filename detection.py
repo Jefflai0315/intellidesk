@@ -186,6 +186,7 @@ class ObjectDetection:
         largest_person_cords = None
         lm = None  # Initialize to None
         lmPose = None  # Initialize to None
+        isolated_image = im0s
         for i, det in enumerate(pred):  # detections per image
            
             if len(det):

@@ -19,7 +19,7 @@ def initialize_firebase():
     return db.reference()
 
 class FaceRecognition:
-    def __init__(self, similarity_threshold=0.5, firebase_refs=None):
+    def __init__(self, similarity_threshold=0.4, firebase_refs=None):
         self.app = FaceAnalysis(providers=['CPUExecutionProvider'])
         self.app.prepare(ctx_id=0, det_size=(640, 640))
         self.firebase_refs = firebase_refs
@@ -78,7 +78,22 @@ class FaceRecognition:
 
         faces = self.app.get(isolated_image)
         identity = 'Unknown'
-        for face in faces:
+        # global_max_similarity = -1
+        # global_identity = 'Unknown'
+        largest_bbox_index = None
+        largest_bbox_size = -1
+
+        for i, face in enumerate(faces):
+            bbox = face.bbox.astype(np.int32)
+            bbox_size = (bbox[2] - bbox[0]) * (bbox[3] - bbox[1])  # Calculate bounding box size
+            
+            if bbox_size > largest_bbox_size:
+                largest_bbox_size = bbox_size
+                largest_bbox_index = i
+
+        largest_face = faces[largest_bbox_index] if largest_bbox_index is not None else None
+
+        if largest_face is not None:
             embedding = face.embedding
             max_similarity = -1
             identity = 'Unknown'
@@ -92,12 +107,30 @@ class FaceRecognition:
                    
                     identity = name if similarity > self.similarity_threshold else 'Unknown'
 
-            # Draw bounding box and label
-            bbox = face.bbox.astype(np.int32)
+        # for face in faces:
+        #     embedding = face.embedding
+        #     max_similarity = -1
+        #     identity = 'Unknown'
+        #     self.known_embeddings = self.extract_known_embeddings()
+        #     for name, known_embedding in self.known_embeddings.items():
+        #         similarity = self.cosine_similarity(embedding, known_embedding) 
+        #         print(f'similarity with {name} from User database: ',similarity)
+
+        #         if similarity > max_similarity:
+        #             max_similarity = similarity
+                   
+        #             identity = name if similarity > self.similarity_threshold else 'Unknown'
+
+        #     if max_similarity > global_max_similarity:
+        #         global_max_similarity = max_similarity
+        #         global_identity = identity
+
+        #     # Draw bounding box and label
+        #     bbox = face.bbox.astype(np.int32)
             cv2.rectangle(isolated_image, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)
             cv2.putText(isolated_image, identity, (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
-        return isolated_image, identity
+        return isolated_image, identity #global_identity
 
 # if __name__ == "__main__":
 #     img_dir = "Intellidesk"

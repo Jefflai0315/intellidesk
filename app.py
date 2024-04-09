@@ -49,7 +49,7 @@ class PostureAnalyzer:
         self.correction = []
         # self.cap = cv2.VideoCapture(0)
         self.screens_list=[]
-        self.faceRecognition =  FaceRecognition(similarity_threshold = 0.40, firebase_refs= firebase_refs)
+        self.faceRecognition =  FaceRecognition(similarity_threshold = 0.35, firebase_refs= firebase_refs)
         self.face_recognition = FaceSetUp(similarity_threshold = 0.40, firebase_refs= firebase_refs)
 
         self.mp_pose = mp.solutions.pose
@@ -229,6 +229,7 @@ class PostureAnalyzer:
                 # cv2.imwrite("./static/images/identity.jpg", image)
                 # img_path = "./static/images/identity.jpg"
                 #gs://intellidesk-174c9.appspot.com/SetUpImages/images3.jpg
+                time.sleep(3)
                 remote_img_path = "/home/pi/image.jpg"  
                 img_path = "home/pi/image.jpg"  # Local path to save the retrieved image
                 bucket = storage.bucket()
@@ -252,20 +253,19 @@ class PostureAnalyzer:
                 cv2.imshow('Webcam', result_img)
                 time.sleep(2)
 
-
             elif PostureCamera == 2:
                 if self.start_time == None:
                     self.user = self.firebase_refs.child('Controls/UserTable/').get()
                     self.start_time = datetime.now().timestamp()*1000
                     self.firebase_refs.child(f'{self.user}/Session/').update({str(int(self.start_time)):str(int(datetime.now().timestamp()*1000))})
         
-                if current_time - last_time >= 0.1:  # 2-second interval has passed
-                    # Capture and process frame
-                    last_time = current_time
+                # if current_time - last_time >= 0.1:  # 2-second interval has passed
+                #     # Capture and process frame
+                #     last_time = current_time
                 # Capture frames.
-                    image = self.read()
+                image = self.read()
                 # Write frames.
-                    cv2.imshow('Webcam', image)
+                cv2.imshow('Webcam', image)
             elif PostureCamera == 0:
                 # print('PostureCamera is off')
                 if self.start_time != None:
@@ -593,7 +593,7 @@ class PostureAnalyzer:
             # If you stay in bad posture for more than 3 minutes (180s) send an alert.
             time_string_bad = ' Prolong Bad Posture count : ' + str(self.prolong_bad) 
             cv2.putText(image, time_string_bad, (int(2*w/3), h - 20), font, 0.9, red, 2)
-            if self.prolong_bad > 20: # 20 bad counts
+            if self.prolong_bad > 5: # 5 bad counts
                 correction_type = self.sendWarning(1)
             
                 self.prolong_bad =0
