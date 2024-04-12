@@ -349,7 +349,7 @@ function AddUser() {
     }
     console.log('handle save')
      const UserDetailRef = query(ref(database, name + '/Params'));
-     update(UserDetailRef,{'Age': age, 'Gender': gender, 'Height': height, 'Weight': weight, "0": 80, "1":100, "2":120, "3":130,"4":150, "CaloriesBurnedGoal":500, "CaloriesBurned":0,"PsotureScore":0,"UprightStreak":0,"UprightTime":0}).catch((error) => { console.error("Error updating InputName in Firebase", error);})
+     update(UserDetailRef,{'Age': age, 'Gender': gender, 'Height': height, 'Weight': weight, "0": 65, "1":65, "2":80, "3":110,"4":129, "CaloriesBurnedGoal":500, "CaloriesBurned":0,"PostureScore":0,"UprightStreak":0,"UprightTime":0}).catch((error) => { console.error("Error updating InputName in Firebase", error);})
 
     setBiometricEmbedding(0)
     setIsSaveModalOpen(true)
